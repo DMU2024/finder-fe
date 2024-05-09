@@ -1,11 +1,33 @@
+import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
 import { Map } from "react-kakao-maps-sdk";
 
+import { getCoord2Region } from "../../apis/coord2region";
+import { getAddressRequest } from "../../apis/searchAddress";
 import usePositionStore from "../../stores/position";
 
 function KakaoMap() {
-  const { latitude, longitude, setLatitude, setLongitude } = usePositionStore();
+  const {
+    latitude,
+    longitude,
+    address,
+    setLatitude,
+    setLongitude,
+    setAddress
+  } = usePositionStore();
   const mapRef = useRef<kakao.maps.Map>(null);
+
+  const getAddress = () => {
+    getAddressRequest(address)
+      .then((data) => {
+        const doc = data.documents[0];
+
+        setLatitude(Number(doc.y));
+        setLongitude(Number(doc.x));
+        setAddress(doc.address_name);
+      })
+      .catch((e: AxiosError) => console.error(e));
+  };
 
   const getPosition = () => {
     if (navigator.geolocation) {
@@ -27,8 +49,16 @@ function KakaoMap() {
     getPosition();
   }, []);
 
+  useEffect(() => {
+    getCoord2Region(latitude, longitude)
+      .then((data) => setAddress(data.documents[0].address_name))
+      .catch((e: AxiosError) => console.error(e));
+  }, [latitude, longitude]);
+
   return (
     <>
+      <input value={address} onChange={(e) => setAddress(e.target.value)} />
+      <button onClick={() => getAddress()}>검색</button>
       <button onClick={() => getPosition()}>현재 위치로</button>
       <Map
         ref={mapRef}

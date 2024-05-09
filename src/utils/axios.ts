@@ -6,9 +6,9 @@ const Instance = axios.create({
   baseURL: BASE_URL
 });
 
-Instance.interceptors.request.use((config) => {
-  console.info("calling api");
-  return config;
+const KakaoInstance = axios.create({
+  baseURL: "https://dapi.kakao.com/v2/local",
+  headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST}` }
 });
 
-export default Instance;
+export { Instance, KakaoInstance };
