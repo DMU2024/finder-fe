@@ -1,5 +1,11 @@
+import KakaoMap from "../components/Main/KakaoMap";
+
 function MainPage() {
-  return <div></div>;
+  return (
+    <>
+      <KakaoMap />
+    </>
+  );
 }
 
 export default MainPage;
