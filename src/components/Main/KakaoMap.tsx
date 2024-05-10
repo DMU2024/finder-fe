@@ -37,7 +37,19 @@ function KakaoMap() {
           setLongitude(position.coords.longitude);
           mapRef.current?.setLevel(3);
         },
-        (err: GeolocationPositionError) => alert(err.message),
+        (err: GeolocationPositionError) => {
+          switch (err.code) {
+            case GeolocationPositionError.PERMISSION_DENIED:
+              alert("위치 권한을 허용해주세요.");
+              break;
+            case GeolocationPositionError.POSITION_UNAVAILABLE:
+              alert("이용 불가능한 위치입니다.");
+              break;
+            case GeolocationPositionError.TIMEOUT:
+              console.error("연결시간 초과");
+              break;
+          }
+        },
         { enableHighAccuracy: true, timeout: 10 }
       );
     } else {
