@@ -10,11 +10,15 @@
     "@types/node": "^16.18.89",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "axios": "^1.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-kakao-maps-sdk": "^1.1.26",
+    "react-router-dom": "^6.23.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -24,7 +28,8 @@
     "format": "prettier --cache --write .",
     "lint": "eslint --cache .",
     "lint-fix": "eslint --cache --fix .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "dev": "concurrently \"npm start\" \"npx json-server --watch --port 4000 mock.json\""
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -52,6 +58,7 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "husky": "^9.0.11",
+    "json-server": "^1.0.0-alpha.23",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5"
   }

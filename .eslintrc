@@ -41,6 +41,15 @@
           "caseInsensitive": true
         }
       }
+    ],
+    "react/jsx-sort-props": [
+      "warn",
+      {
+        "callbacksLast": true,
+        "shorthandFirst": true,
+        "ignoreCase": true,
+        "reservedFirst": true
+      }
     ]
   }
 }
