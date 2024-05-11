@@ -1,3 +1,5 @@
+import { Button, Card, makeStyles } from "@fluentui/react-components";
+import { LocationRegular } from "@fluentui/react-icons";
 import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
 import { Map } from "react-kakao-maps-sdk";
@@ -5,12 +7,39 @@ import { Map } from "react-kakao-maps-sdk";
 import { getCoord2Region } from "../../apis/coord2region";
 import { getAddressRequest } from "../../apis/searchAddress";
 import usePositionStore from "../../stores/position";
+import { contentMargin, headerHeight } from "../../styles/margin";
+
+const useStyle = makeStyles({
+  root: {
+    height: `calc(100vh - ${headerHeight} - ${contentMargin} - 72px)`
+  },
+  title: {
+    display: "flex"
+  },
+  position: {
+    marginLeft: "auto"
+  },
+  map: {
+    width: "100%",
+    height: "100%",
+    padding: 0,
+    borderRadius: "24px"
+  },
+  control: {
+    position: "absolute",
+    top: "14px",
+    right: "14px",
+    zIndex: 1
+  }
+});
 
 const DEFAULT_LATITUDE = 37.564214;
 const DEFAULT_LONGITUDE = 127.001699;
 const DEFAULT_LEVEL = 3;
 
 function KakaoMap() {
+  const styles = useStyle();
+
   const {
     latitude,
     longitude,
@@ -75,27 +104,41 @@ function KakaoMap() {
   useEffect(() => {
     getCoord2Region(latitude, longitude)
       .then((data) => setAddress(data.documents[0].address_name))
-      .catch((e: AxiosError) => console.error(e));
+      .catch((e: AxiosError) => setAddress("알 수 없는 위치"));
   }, [latitude, longitude]);
 
   return (
-    <div>
-      <input value={address} onChange={(e) => setAddress(e.target.value)} />
-      <button onClick={() => getAddress()}>검색</button>
-      <button onClick={() => getPosition()}>현재 위치로</button>
-      <Map
-        ref={mapRef}
-        center={{ lat: latitude, lng: longitude }}
-        isPanto={true}
-        level={DEFAULT_LEVEL}
-        style={{ width: "500px", height: "500px" }}
-        onDragEnd={(map) => {
-          const center = map.getCenter();
+    <div className={styles.root}>
+      <div className={styles.title}>
+        <h1>지도</h1>
+        <h3>MAP</h3>
+        <h5 className={styles.position}>
+          <LocationRegular />
+          {address}
+        </h5>
+      </div>
+      <Card className={styles.map}>
+        <Map
+          ref={mapRef}
+          center={{ lat: latitude, lng: longitude }}
+          isPanto={true}
+          level={DEFAULT_LEVEL}
+          style={{ width: "100%", height: "100%" }}
+          onDragEnd={(map) => {
+            const center = map.getCenter();
 
-          setLatitude(center.getLat());
-          setLongitude(center.getLng());
-        }}
-      />
+            setLatitude(center.getLat());
+            setLongitude(center.getLng());
+          }}
+        />
+        <Button
+          className={styles.control}
+          shape="circular"
+          onClick={() => getPosition()}
+        >
+          현재 위치로
+        </Button>
+      </Card>
     </div>
   );
 }

@@ -21,7 +21,8 @@ const useStyles = makeStyles({
   content: {
     display: "flex",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
-    margin: contentMargin
+    margin: contentMargin,
+    gap: "32px"
   }
 });
 
