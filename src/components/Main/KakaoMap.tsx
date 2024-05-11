@@ -6,6 +6,10 @@ import { getCoord2Region } from "../../apis/coord2region";
 import { getAddressRequest } from "../../apis/searchAddress";
 import usePositionStore from "../../stores/position";
 
+const DEFAULT_LATITUDE = 37.564214;
+const DEFAULT_LONGITUDE = 127.001699;
+const DEFAULT_LEVEL = 3;
+
 function KakaoMap() {
   const {
     latitude,
@@ -33,9 +37,7 @@ function KakaoMap() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position: GeolocationPosition) => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-          mapRef.current?.setLevel(3);
+          setPosition(position.coords.latitude, position.coords.longitude);
         },
         (err: GeolocationPositionError) => {
           switch (err.code) {
@@ -49,16 +51,25 @@ function KakaoMap() {
               console.error("연결시간 초과");
               break;
           }
+          setPosition(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
         },
-        { enableHighAccuracy: true, timeout: 10 }
+        { enableHighAccuracy: true, timeout: 10000 }
       );
     } else {
       alert("Geolocation을 사용할 수 없는 환경입니다.");
     }
   };
 
+  const setPosition = (latitude: number, longitude: number) => {
+    setLatitude(latitude);
+    setLongitude(longitude);
+    mapRef.current?.setLevel(DEFAULT_LEVEL);
+  };
+
   useEffect(() => {
-    getPosition();
+    if (latitude == 0 || longitude == 0) {
+      getPosition();
+    }
   }, []);
 
   useEffect(() => {
@@ -68,7 +79,7 @@ function KakaoMap() {
   }, [latitude, longitude]);
 
   return (
-    <>
+    <div>
       <input value={address} onChange={(e) => setAddress(e.target.value)} />
       <button onClick={() => getAddress()}>검색</button>
       <button onClick={() => getPosition()}>현재 위치로</button>
@@ -76,8 +87,8 @@ function KakaoMap() {
         ref={mapRef}
         center={{ lat: latitude, lng: longitude }}
         isPanto={true}
-        level={3}
-        style={{ width: "100vw", height: "100vh" }}
+        level={DEFAULT_LEVEL}
+        style={{ width: "500px", height: "500px" }}
         onDragEnd={(map) => {
           const center = map.getCenter();
 
@@ -85,7 +96,7 @@ function KakaoMap() {
           setLongitude(center.getLng());
         }}
       />
-    </>
+    </div>
   );
 }
 

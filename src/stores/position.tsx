@@ -10,9 +10,9 @@ interface User {
 }
 
 const usePositionStore = create<User>((set) => ({
-  latitude: 37.564214,
+  latitude: 0,
   setLatitude: (lat: number) => set({ latitude: lat }),
-  longitude: 127.001699,
+  longitude: 0,
   setLongitude: (lng: number) => set({ longitude: lng }),
   address: "",
   setAddress: (addr: string) => set({ address: addr })
