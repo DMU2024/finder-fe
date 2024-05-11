@@ -2,22 +2,24 @@ import { Depths } from "@fluentui/react";
 import { makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
 
+import { contentMargin, headerHeight } from "../styles/margin";
+
 const useStyles = makeStyles({
   root: {
     alignItems: "center",
     display: "flex",
     width: "100%",
-    height: "80px",
+    height: headerHeight,
     backgroundColor: "white",
     boxShadow: Depths.depth16
   },
   title: {
-    marginLeft: "32px"
+    marginLeft: contentMargin
   },
   menu: {
     display: "flex",
     marginLeft: "auto",
-    marginRight: "32px",
+    marginRight: contentMargin,
     gap: "32px"
   }
 });

@@ -7,6 +7,7 @@ import DetailPage from "./pages/DetailPage";
 import MainPage from "./pages/MainPage";
 import SearchPage from "./pages/SearchPage";
 import WritePage from "./pages/WritePage";
+import { contentMargin, headerHeight } from "./styles/margin";
 
 const useStyles = makeStyles({
   root: {
@@ -14,9 +15,13 @@ const useStyles = makeStyles({
     height: "100vh",
     backgroundColor: "#FAFAFA"
   },
+  wrapper: {
+    width: "100vw"
+  },
   content: {
-    width: "100vw",
-    height: "100%"
+    display: "flex",
+    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    margin: contentMargin
   }
 });
 
@@ -27,14 +32,16 @@ function App() {
     <Router>
       <div className={styles.root}>
         <Sidebar />
-        <div className={styles.content}>
+        <div className={styles.wrapper}>
           <Header />
-          <Routes>
-            <Route element={<MainPage />} path="/" />
-            <Route element={<SearchPage />} path="/search" />
-            <Route element={<WritePage />} path="/write" />
-            <Route element={<DetailPage />} path="/detail/:id" />
-          </Routes>
+          <div className={styles.content}>
+            <Routes>
+              <Route element={<MainPage />} path="/" />
+              <Route element={<SearchPage />} path="/search" />
+              <Route element={<WritePage />} path="/write" />
+              <Route element={<DetailPage />} path="/detail/:id" />
+            </Routes>
+          </div>
         </div>
       </div>
     </Router>
