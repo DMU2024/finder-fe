@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import WriteButton from "./components/WriteButton";
 import DetailPage from "./pages/DetailPage";
 import MainPage from "./pages/MainPage";
 import SearchPage from "./pages/SearchPage";
@@ -33,6 +34,7 @@ function App() {
     <Router>
       <div className={styles.root}>
         <Sidebar />
+        <WriteButton />
         <div className={styles.wrapper}>
           <Header />
           <div className={styles.content}>

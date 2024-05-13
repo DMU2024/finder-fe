@@ -15,11 +15,13 @@ import {
 } from "@fluentui/react-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { sideBarWidth } from "../styles/size";
+
 const useStyle = makeStyles({
   root: {
     display: "flex",
-    width: "64px",
-    minWidth: "64px",
+    width: sideBarWidth,
+    minWidth: sideBarWidth,
     height: "100%"
   },
   toolbar: {
