@@ -16,6 +16,7 @@ import {
 } from "@fluentui/react-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import useOptionStore from "../stores/option";
 import { sideBarWidth } from "../styles/size";
 
 const useStyle = makeStyles({
@@ -55,6 +56,7 @@ function Sidebar() {
   const styles = useStyle();
   const navigate = useNavigate();
   const location = useLocation();
+  const { setIsDarkTheme } = useOptionStore();
 
   const getTab = () => {
     switch (location.pathname) {
@@ -68,7 +70,10 @@ function Sidebar() {
   return (
     <InlineDrawer open separator className={styles.root}>
       <Toolbar className={styles.toolbar}>
-        <ToolbarButton icon={<NavigationRegular />} />
+        <ToolbarButton
+          icon={<NavigationRegular />}
+          onClick={() => setIsDarkTheme()}
+        />
       </Toolbar>
       <TabList
         vertical
