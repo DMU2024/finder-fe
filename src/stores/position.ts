@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface User {
+interface Position {
   latitude: number;
   setLatitude: (latitude: number) => void;
   longitude: number;
@@ -9,10 +9,10 @@ interface User {
   setAddress: (address: string) => void;
 }
 
-const usePositionStore = create<User>((set) => ({
-  latitude: 37.564214,
+const usePositionStore = create<Position>((set) => ({
+  latitude: 0,
   setLatitude: (lat: number) => set({ latitude: lat }),
-  longitude: 127.001699,
+  longitude: 0,
   setLongitude: (lng: number) => set({ longitude: lng }),
   address: "",
   setAddress: (addr: string) => set({ address: addr })

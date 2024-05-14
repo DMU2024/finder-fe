@@ -1,3 +1,6 @@
+import { Depths } from "@fluentui/react";
+import { Button, Card, makeStyles } from "@fluentui/react-components";
+import { LocationRegular } from "@fluentui/react-icons";
 import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
 import { Map } from "react-kakao-maps-sdk";
@@ -5,8 +8,59 @@ import { Map } from "react-kakao-maps-sdk";
 import { getCoord2Region } from "../../apis/coord2region";
 import { getAddressRequest } from "../../apis/searchAddress";
 import usePositionStore from "../../stores/position";
+import { mainColor } from "../../styles/color";
+import { contentMargin, headerHeight } from "../../styles/margin";
+
+const useStyle = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    gap: "15px"
+  },
+  title: {
+    display: "flex",
+    alignItems: "baseline",
+    marginTop: "68px",
+    marginLeft: "8px"
+  },
+  titleKor: {
+    fontSize: "48px",
+    fontWeight: "bold"
+  },
+  titleEng: {
+    fontSize: "20px",
+    fontWeight: "bold",
+    color: mainColor
+  },
+  position: {
+    marginLeft: "auto",
+    color: mainColor,
+    fontSize: "14px",
+    fontWeight: "bold"
+  },
+  map: {
+    width: "100%",
+    height: "100%",
+    padding: 0,
+    borderRadius: "20px",
+    boxShadow: Depths.depth16
+  },
+  control: {
+    position: "absolute",
+    top: "14px",
+    right: "14px",
+    zIndex: 1
+  }
+});
+
+const DEFAULT_LATITUDE = 37.564214;
+const DEFAULT_LONGITUDE = 127.001699;
+const DEFAULT_LEVEL = 3;
 
 function KakaoMap() {
+  const styles = useStyle();
+
   const {
     latitude,
     longitude,
@@ -33,9 +87,7 @@ function KakaoMap() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position: GeolocationPosition) => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-          mapRef.current?.setLevel(3);
+          setPosition(position.coords.latitude, position.coords.longitude);
         },
         (err: GeolocationPositionError) => {
           switch (err.code) {
@@ -49,43 +101,66 @@ function KakaoMap() {
               console.error("연결시간 초과");
               break;
           }
+          setPosition(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
         },
-        { enableHighAccuracy: true, timeout: 10 }
+        { enableHighAccuracy: true, timeout: 10000 }
       );
     } else {
       alert("Geolocation을 사용할 수 없는 환경입니다.");
     }
   };
 
+  const setPosition = (latitude: number, longitude: number) => {
+    setLatitude(latitude);
+    setLongitude(longitude);
+    mapRef.current?.setLevel(DEFAULT_LEVEL);
+  };
+
   useEffect(() => {
-    getPosition();
+    if (latitude == 0 || longitude == 0) {
+      getPosition();
+    }
   }, []);
 
   useEffect(() => {
     getCoord2Region(latitude, longitude)
       .then((data) => setAddress(data.documents[0].address_name))
-      .catch((e: AxiosError) => console.error(e));
+      .catch((e: AxiosError) => setAddress("알 수 없는 위치"));
   }, [latitude, longitude]);
 
   return (
-    <>
-      <input value={address} onChange={(e) => setAddress(e.target.value)} />
-      <button onClick={() => getAddress()}>검색</button>
-      <button onClick={() => getPosition()}>현재 위치로</button>
-      <Map
-        ref={mapRef}
-        center={{ lat: latitude, lng: longitude }}
-        isPanto={true}
-        level={3}
-        style={{ width: "100vw", height: "100vh" }}
-        onDragEnd={(map) => {
-          const center = map.getCenter();
+    <div className={styles.root}>
+      <div className={styles.title}>
+        <div className={styles.titleKor}>지도</div>
+        <div className={styles.titleEng}>MAP</div>
+        <div className={styles.position}>
+          <LocationRegular />
+          {` ${address}`}
+        </div>
+      </div>
+      <Card className={styles.map}>
+        <Map
+          ref={mapRef}
+          center={{ lat: latitude, lng: longitude }}
+          isPanto={true}
+          level={DEFAULT_LEVEL}
+          style={{ width: "100%", height: "100%" }}
+          onDragEnd={(map) => {
+            const center = map.getCenter();
 
-          setLatitude(center.getLat());
-          setLongitude(center.getLng());
-        }}
-      />
-    </>
+            setLatitude(center.getLat());
+            setLongitude(center.getLng());
+          }}
+        />
+        <Button
+          className={styles.control}
+          shape="circular"
+          onClick={() => getPosition()}
+        >
+          현재 위치로
+        </Button>
+      </Card>
+    </div>
   );
 }
 
