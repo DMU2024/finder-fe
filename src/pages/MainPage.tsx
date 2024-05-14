@@ -2,8 +2,16 @@ import { makeStyles } from "@fluentui/react-components";
 
 import ItemList from "../components/Main/ItemList";
 import KakaoMap from "../components/Main/KakaoMap";
+import Notificiation from "../components/Main/Notification";
 
 const useStyles = makeStyles({
+  root: {
+    flex: 1
+  },
+  content: {
+    display: "flex",
+    gap: "32px"
+  },
   left: {
     width: "40%"
   },
@@ -16,14 +24,17 @@ function MainPage() {
   const styles = useStyles();
 
   return (
-    <>
-      <div className={styles.left}>
-        <ItemList />
+    <div className={styles.root}>
+      <Notificiation />
+      <div className={styles.content}>
+        <div className={styles.left}>
+          <ItemList />
+        </div>
+        <div className={styles.right}>
+          <KakaoMap />
+        </div>
       </div>
-      <div className={styles.right}>
-        <KakaoMap />
-      </div>
-    </>
+    </div>
   );
 }
 

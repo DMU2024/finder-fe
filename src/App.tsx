@@ -1,4 +1,4 @@
-import { makeStyles } from "@fluentui/react-components";
+import { makeStyles, tokens } from "@fluentui/react-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     height: "100vh",
-    backgroundColor: "#FAFAFA"
+    backgroundColor: tokens.colorNeutralBackground2
   },
   wrapper: {
     width: "100vw"
@@ -22,8 +22,7 @@ const useStyles = makeStyles({
   content: {
     display: "flex",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
-    margin: contentMargin,
-    gap: "32px"
+    margin: contentMargin
   }
 });
 

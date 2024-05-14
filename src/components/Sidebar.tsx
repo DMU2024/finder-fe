@@ -4,7 +4,8 @@ import {
   TabList,
   Toolbar,
   ToolbarButton,
-  makeStyles
+  makeStyles,
+  tokens
 } from "@fluentui/react-components";
 import {
   DocumentBulletListRegular,
@@ -22,7 +23,8 @@ const useStyle = makeStyles({
     display: "flex",
     width: sideBarWidth,
     minWidth: sideBarWidth,
-    height: "100%"
+    height: "100%",
+    backgroundColor: tokens.colorNeutralBackground1
   },
   toolbar: {
     width: "100%",
@@ -37,7 +39,15 @@ const useStyle = makeStyles({
     gap: "32px"
   },
   tab: {
-    justifyContent: "center"
+    justifyContent: "center",
+    "&>span": {
+      width: "60px",
+      height: "60px",
+      "&>svg": {
+        width: "30px",
+        height: "30px"
+      }
+    }
   }
 });
 

@@ -1,3 +1,3 @@
-const sideBarWidth = "64px";
+const sideBarWidth = "92px";
 
 export { sideBarWidth };

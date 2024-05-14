@@ -1,25 +1,36 @@
+import { Depths } from "@fluentui/react";
 import { Card, makeStyles } from "@fluentui/react-components";
 
 import Item from "./Item";
+import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
 
 const useStyles = makeStyles({
   root: {
-    height: `calc(100vh - ${headerHeight} - ${contentMargin} - 72px)`
+    display: "flex",
+    flexDirection: "column",
+    height: `calc(100vh - ${headerHeight} - ${contentMargin})`
   },
   title: {
-    fontSize: "18px",
+    marginLeft: "8px",
+    fontSize: "20px",
     fontWeight: "bold"
   },
   subtitle: {
-    fontSize: "16px",
+    marginLeft: "8px",
+    color: mainColor,
+    fontSize: "14px",
     fontWeight: "bold"
   },
   list: {
     height: "100%",
     marginTop: "18px",
-    borderRadius: "24px",
-    overflow: "auto"
+    borderRadius: "20px",
+    boxShadow: Depths.depth16,
+    overflow: "auto",
+    "::-webkit-scrollbar": {
+      display: "none"
+    }
   }
 });
 

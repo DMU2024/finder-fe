@@ -1,3 +1,4 @@
+import { Depths } from "@fluentui/react";
 import { Button, Card, makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
 import { AxiosError } from "axios";
@@ -7,23 +8,43 @@ import { Map } from "react-kakao-maps-sdk";
 import { getCoord2Region } from "../../apis/coord2region";
 import { getAddressRequest } from "../../apis/searchAddress";
 import usePositionStore from "../../stores/position";
+import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
 
 const useStyle = makeStyles({
   root: {
-    height: `calc(100vh - ${headerHeight} - ${contentMargin} - 72px)`
+    display: "flex",
+    flexDirection: "column",
+    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    gap: "15px"
   },
   title: {
-    display: "flex"
+    display: "flex",
+    alignItems: "baseline",
+    marginTop: "68px",
+    marginLeft: "8px"
+  },
+  titleKor: {
+    fontSize: "48px",
+    fontWeight: "bold"
+  },
+  titleEng: {
+    fontSize: "20px",
+    fontWeight: "bold",
+    color: mainColor
   },
   position: {
-    marginLeft: "auto"
+    marginLeft: "auto",
+    color: mainColor,
+    fontSize: "14px",
+    fontWeight: "bold"
   },
   map: {
     width: "100%",
     height: "100%",
     padding: 0,
-    borderRadius: "24px"
+    borderRadius: "20px",
+    boxShadow: Depths.depth16
   },
   control: {
     position: "absolute",
@@ -110,12 +131,12 @@ function KakaoMap() {
   return (
     <div className={styles.root}>
       <div className={styles.title}>
-        <h1>지도</h1>
-        <h3>MAP</h3>
-        <h5 className={styles.position}>
+        <div className={styles.titleKor}>지도</div>
+        <div className={styles.titleEng}>MAP</div>
+        <div className={styles.position}>
           <LocationRegular />
-          {address}
-        </h5>
+          {` ${address}`}
+        </div>
       </div>
       <Card className={styles.map}>
         <Map
