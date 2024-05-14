@@ -33,6 +33,18 @@ const useStyle = makeStyles({
     justifyContent: "center",
     padding: 0
   },
+  toolbarButton: {
+    maxWidth: "60px",
+    maxHeight: "60px",
+    "&>span": {
+      width: "60px",
+      height: "60px",
+      "&>svg": {
+        width: "30px",
+        height: "30px"
+      }
+    }
+  },
   tabList: {
     width: "100%",
     flex: 1,
@@ -71,6 +83,7 @@ function Sidebar() {
     <InlineDrawer open separator className={styles.root}>
       <Toolbar className={styles.toolbar}>
         <ToolbarButton
+          className={styles.toolbarButton}
           icon={<NavigationRegular />}
           onClick={() => setIsDarkTheme()}
         />
