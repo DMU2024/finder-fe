@@ -1,12 +1,9 @@
 import { Depths } from "@fluentui/react";
 import { Button, Card, makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
-import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
 import { Map } from "react-kakao-maps-sdk";
 
-import { getCoord2Region } from "../../apis/coord2region";
-import { getAddressRequest } from "../../apis/searchAddress";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -54,8 +51,6 @@ const useStyle = makeStyles({
   }
 });
 
-const DEFAULT_LATITUDE = 37.564214;
-const DEFAULT_LONGITUDE = 127.001699;
 const DEFAULT_LEVEL = 3;
 
 function KakaoMap() {
@@ -67,65 +62,20 @@ function KakaoMap() {
     address,
     setLatitude,
     setLongitude,
-    setAddress
+    getCoords,
+    getAddress
   } = usePositionStore();
+
   const mapRef = useRef<kakao.maps.Map>(null);
-
-  const getAddress = () => {
-    getAddressRequest(address)
-      .then((data) => {
-        const doc = data.documents[0];
-
-        setLatitude(Number(doc.y));
-        setLongitude(Number(doc.x));
-        setAddress(doc.address_name);
-      })
-      .catch((e: AxiosError) => console.error(e));
-  };
-
-  const getPosition = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position: GeolocationPosition) => {
-          setPosition(position.coords.latitude, position.coords.longitude);
-        },
-        (err: GeolocationPositionError) => {
-          switch (err.code) {
-            case GeolocationPositionError.PERMISSION_DENIED:
-              alert("위치 권한을 허용해주세요.");
-              break;
-            case GeolocationPositionError.POSITION_UNAVAILABLE:
-              alert("이용 불가능한 위치입니다.");
-              break;
-            case GeolocationPositionError.TIMEOUT:
-              console.error("연결시간 초과");
-              break;
-          }
-          setPosition(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
-        },
-        { enableHighAccuracy: true, timeout: 10000 }
-      );
-    } else {
-      alert("Geolocation을 사용할 수 없는 환경입니다.");
-    }
-  };
-
-  const setPosition = (latitude: number, longitude: number) => {
-    setLatitude(latitude);
-    setLongitude(longitude);
-    mapRef.current?.setLevel(DEFAULT_LEVEL);
-  };
 
   useEffect(() => {
     if (latitude == 0 || longitude == 0) {
-      getPosition();
+      getCoords();
     }
   }, []);
 
   useEffect(() => {
-    getCoord2Region(latitude, longitude)
-      .then((data) => setAddress(data.documents[0].address_name))
-      .catch((e: AxiosError) => setAddress("알 수 없는 위치"));
+    getAddress();
   }, [latitude, longitude]);
 
   return (
@@ -155,7 +105,7 @@ function KakaoMap() {
         <Button
           className={styles.control}
           shape="circular"
-          onClick={() => getPosition()}
+          onClick={() => getCoords()}
         >
           현재 위치로
         </Button>
