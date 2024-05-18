@@ -1,9 +1,10 @@
 import { Depths } from "@fluentui/react";
 import { Button, Card, makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
-import { useEffect, useRef } from "react";
-import { Map } from "react-kakao-maps-sdk";
+import { useEffect, useRef, useState } from "react";
+import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 
+import { Marker, getMarkers } from "../../apis/marker";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -51,27 +52,32 @@ const useStyle = makeStyles({
   }
 });
 
-const DEFAULT_LEVEL = 3;
-
 function KakaoMap() {
   const styles = useStyle();
 
   const {
     latitude,
     longitude,
+    zoomLevel,
     address,
     setLatitude,
     setLongitude,
+    setZoomLevel,
     getCoords,
     getAddress
   } = usePositionStore();
 
   const mapRef = useRef<kakao.maps.Map>(null);
 
+  const [markers, setMarkers] = useState<Marker[]>();
+
   useEffect(() => {
     if (latitude == 0 || longitude == 0) {
       getCoords();
     }
+    getMarkers().then((data) => {
+      setMarkers(data);
+    });
   }, []);
 
   useEffect(() => {
@@ -95,7 +101,7 @@ function KakaoMap() {
           ref={mapRef}
           center={{ lat: latitude, lng: longitude }}
           isPanto={true}
-          level={DEFAULT_LEVEL}
+          level={zoomLevel}
           style={{ width: "100%", height: "100%" }}
           onDragEnd={(map) => {
             const center = map.getCenter();
@@ -103,11 +109,34 @@ function KakaoMap() {
             setLatitude(center.getLat());
             setLongitude(center.getLng());
           }}
-        />
+          onZoomChanged={(map) => {
+            setZoomLevel(map.getLevel());
+          }}
+        >
+          <MarkerClusterer
+            averageCenter={true}
+            minLevel={7}
+            onClusterclick={() => {
+              const center = mapRef.current?.getCenter();
+
+              if (center) {
+                setLatitude(center.getLat());
+                setLongitude(center.getLng());
+              }
+            }}
+          >
+            {markers?.map(({ lat, lng }, index) => (
+              <MapMarker key={index} position={{ lat: lat, lng: lng }} />
+            ))}
+          </MarkerClusterer>
+        </Map>
         <Button
           className={styles.control}
           shape="circular"
-          onClick={() => getCoords()}
+          onClick={() => {
+            getCoords();
+            mapRef.current?.setLevel(3);
+          }}
         >
           현재 위치로
         </Button>

@@ -6,6 +6,8 @@ interface Position {
   longitude: number;
   setLongitude: (longitude: number) => void;
   getCoords: () => void;
+  zoomLevel: number;
+  setZoomLevel: (zoomLevel: number) => void;
   address: string;
   setAddress: (address: string) => void;
   getAddress: () => void;
@@ -48,6 +50,8 @@ const usePositionStore = create<Position>((set, get) => ({
       alert("Geolocation을 사용할 수 없는 환경입니다.");
     }
   },
+  zoomLevel: 3,
+  setZoomLevel: (level: number) => set({ zoomLevel: level }),
   address: "",
   setAddress: (addr: string) => set({ address: addr }),
   getAddress: () => {
