@@ -75,7 +75,9 @@ function KakaoMap() {
   }, []);
 
   useEffect(() => {
-    getAddress();
+    if (latitude != 0 && longitude != 0) {
+      getAddress();
+    }
   }, [latitude, longitude]);
 
   return (

@@ -1,7 +1,5 @@
 import { create } from "zustand";
 
-import { getCoord2Region } from "../apis/coord2region";
-
 interface Position {
   latitude: number;
   setLatitude: (latitude: number) => void;
@@ -54,9 +52,15 @@ const usePositionStore = create<Position>((set, get) => ({
   setAddress: (addr: string) => set({ address: addr }),
   getAddress: () => {
     const { latitude, longitude } = get();
-    getCoord2Region(latitude, longitude)
-      .then((res) => set({ address: res.documents[0].address_name }))
-      .catch(() => set({ address: "알 수 없는 위치" }));
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    geocoder.coord2RegionCode(longitude, latitude, (res, status) => {
+      if (status == "OK") {
+        set({ address: res[0].address_name });
+      } else {
+        set({ address: "알 수 없는 위치" });
+      }
+    });
   }
 }));
 
