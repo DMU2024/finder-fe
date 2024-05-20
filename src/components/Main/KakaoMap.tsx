@@ -1,10 +1,11 @@
 import { Depths } from "@fluentui/react";
 import { Button, Card, makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 
-import { Marker, getMarkers } from "../../apis/marker";
+import { getItemsByCoords } from "../../apis/items";
+import useItemStore from "../../stores/itemList";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -69,15 +70,12 @@ function KakaoMap() {
 
   const mapRef = useRef<kakao.maps.Map>(null);
 
-  const [markers, setMarkers] = useState<Marker[]>();
+  const { itemList, setItemList } = useItemStore();
 
   useEffect(() => {
     if (latitude == 0 || longitude == 0) {
       getCoords();
     }
-    getMarkers().then((data) => {
-      setMarkers(data);
-    });
   }, []);
 
   useEffect(() => {
@@ -85,6 +83,18 @@ function KakaoMap() {
       getAddress();
     }
   }, [latitude, longitude]);
+
+  useEffect(() => {
+    const bounds = mapRef.current?.getBounds();
+    if (bounds) {
+      const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
+      getItemsByCoords(sw.getLat(), sw.getLng(), ne.getLat(), ne.getLng()).then(
+        (data) => {
+          setItemList(data);
+        }
+      );
+    }
+  }, [latitude, longitude, zoomLevel]);
 
   return (
     <div className={styles.root}>
@@ -125,7 +135,7 @@ function KakaoMap() {
               }
             }}
           >
-            {markers?.map(({ lat, lng }, index) => (
+            {itemList?.map(({ lat, lng }, index) => (
               <MapMarker key={index} position={{ lat: lat, lng: lng }} />
             ))}
           </MarkerClusterer>
