@@ -128,18 +128,7 @@ function KakaoMap() {
             setZoomLevel(map.getLevel());
           }}
         >
-          <MarkerClusterer
-            averageCenter={true}
-            minLevel={7}
-            onClusterclick={() => {
-              const center = mapRef.current?.getCenter();
-
-              if (center) {
-                setLatitude(center.getLat());
-                setLongitude(center.getLng());
-              }
-            }}
-          >
+          <MarkerClusterer averageCenter={true} minLevel={7}>
             {itemList?.map(({ lat, lng }, index) => (
               <MapMarker key={index} position={{ lat: lat, lng: lng }} />
             ))}
