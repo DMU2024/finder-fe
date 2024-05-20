@@ -5,6 +5,7 @@ interface Position {
   setLatitude: (latitude: number) => void;
   longitude: number;
   setLongitude: (longitude: number) => void;
+  isLoading: boolean;
   getCoords: () => void;
   zoomLevel: number;
   setZoomLevel: (zoomLevel: number) => void;
@@ -21,13 +22,17 @@ const usePositionStore = create<Position>((set, get) => ({
   setLatitude: (lat: number) => set({ latitude: lat }),
   longitude: 0,
   setLongitude: (lng: number) => set({ longitude: lng }),
+  isLoading: false,
   getCoords: () => {
+    set({ isLoading: true });
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           set({
             latitude: position.coords.latitude,
-            longitude: position.coords.longitude
+            longitude: position.coords.longitude,
+            isLoading: false
           });
         },
         (err: GeolocationPositionError) => {
@@ -42,7 +47,11 @@ const usePositionStore = create<Position>((set, get) => ({
               console.error("연결시간 초과");
               break;
           }
-          set({ latitude: DEFAULT_LATITUDE, longitude: DEFAULT_LONGITUDE });
+          set({
+            latitude: DEFAULT_LATITUDE,
+            longitude: DEFAULT_LONGITUDE,
+            isLoading: false
+          });
         },
         { enableHighAccuracy: true, timeout: 10000 }
       );

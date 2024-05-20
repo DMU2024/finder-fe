@@ -59,6 +59,7 @@ function KakaoMap() {
   const {
     latitude,
     longitude,
+    isLoading,
     zoomLevel,
     address,
     setLatitude,
@@ -103,7 +104,7 @@ function KakaoMap() {
         <div className={styles.titleEng}>MAP</div>
         <div className={styles.position}>
           <LocationRegular />
-          {` ${address}`}
+          {` ${isLoading ? "위치 불러오는 중" : address}`}
         </div>
       </div>
       <Card className={styles.map}>
@@ -146,10 +147,10 @@ function KakaoMap() {
         </Map>
         <Button
           className={styles.control}
+          disabled={isLoading}
           shape="circular"
           onClick={() => {
             getCoords();
-            mapRef.current?.setLevel(3);
           }}
         >
           현재 위치로
