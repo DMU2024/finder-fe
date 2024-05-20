@@ -120,6 +120,10 @@ function KakaoMap() {
             setLongitude(center.getLng());
           }}
           onZoomChanged={(map) => {
+            const center = map.getCenter();
+
+            setLatitude(center.getLat());
+            setLongitude(center.getLng());
             setZoomLevel(map.getLevel());
           }}
         >
