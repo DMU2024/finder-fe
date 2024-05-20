@@ -97,6 +97,10 @@ function KakaoMap() {
     }
   }, [latitude, longitude, zoomLevel]);
 
+  useEffect(() => {
+    setZoomLevel(3);
+  }, [isLoading]);
+
   return (
     <div className={styles.root}>
       <div className={styles.title}>
