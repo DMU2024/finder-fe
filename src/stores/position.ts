@@ -32,6 +32,7 @@ const usePositionStore = create<Position>((set, get) => ({
           set({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
+            zoomLevel: 3,
             isLoading: false
           });
         },
@@ -50,6 +51,7 @@ const usePositionStore = create<Position>((set, get) => ({
           set({
             latitude: DEFAULT_LATITUDE,
             longitude: DEFAULT_LONGITUDE,
+            zoomLevel: 3,
             isLoading: false
           });
         },

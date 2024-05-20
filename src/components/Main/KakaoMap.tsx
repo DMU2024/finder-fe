@@ -97,10 +97,6 @@ function KakaoMap() {
     }
   }, [latitude, longitude, zoomLevel]);
 
-  useEffect(() => {
-    setZoomLevel(3);
-  }, [isLoading]);
-
   return (
     <div className={styles.root}>
       <div className={styles.title}>
@@ -115,7 +111,6 @@ function KakaoMap() {
         <Map
           ref={mapRef}
           center={{ lat: latitude, lng: longitude }}
-          isPanto={true}
           level={zoomLevel}
           style={{ width: "100%", height: "100%" }}
           onDragEnd={(map) => {
