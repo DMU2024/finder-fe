@@ -7,7 +7,7 @@ interface ItemList {
   setItemList: (items: Item[]) => void;
 }
 
-const useItemStore = create<ItemList>((set) => ({
+const useItemListStore = create<ItemList>((set) => ({
   itemList: [],
   setItemList: (items) => {
     set({ itemList: items });
@@ -15,4 +15,4 @@ const useItemStore = create<ItemList>((set) => ({
 }));
 
 export type { Item, ItemList };
-export default useItemStore;
+export default useItemListStore;

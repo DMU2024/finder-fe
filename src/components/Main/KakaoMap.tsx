@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 
 import { getItemsByCoords } from "../../apis/items";
-import useItemStore from "../../stores/itemList";
+import useItemListStore from "../../stores/itemList";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -70,7 +70,7 @@ function KakaoMap() {
 
   const mapRef = useRef<kakao.maps.Map>(null);
 
-  const { itemList, setItemList } = useItemStore();
+  const { itemList, setItemList } = useItemListStore();
 
   useEffect(() => {
     if (latitude == 0 || longitude == 0) {
