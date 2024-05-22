@@ -1,7 +1,9 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 
+import AddContent from "../components/Write/AddContent";
 import ImgSelect from "../components/Write/ImgSelect";
 import LostList from "../components/Write/LostList";
+import { contentMargin, headerHeight } from "../styles/margin";
 
 const useStyles = makeStyles({
   root: {
@@ -14,13 +16,14 @@ const useStyles = makeStyles({
   },
   content: {
     display: "flex",
-    gap: "32px"
+    gap: "32px",
+    marginBottom: "100px"
   },
   left: {
-    width: "55%"
+    width: "45%"
   },
   right: {
-    width: "45%"
+    width: "55%"
   }
 });
 
@@ -43,7 +46,7 @@ function WritePage() {
 
       {/* section-02 */}
       <div className={styles.content}>
-        <textarea />
+        <AddContent />
       </div>
     </div>
   );
