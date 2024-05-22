@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
   input: {
     height: "53px",
-    border: "1px solid",
+    border: "1px solid #D9D9D9",
     padding: "8px",
     width: "100%",
     boxSizing: "border-box",
@@ -43,7 +43,7 @@ const LostList = () => {
 
   return (
     <div>
-      <h2 className={styles.title}>카테고리</h2>
+      <h2 className={styles.title}>Category</h2>
       <div className={styles.listMargin}>
         <a className={styles.subTitle}>분실물 이름</a>
         <div className={styles.listContainer}>
