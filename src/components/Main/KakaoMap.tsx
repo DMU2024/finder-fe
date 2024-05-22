@@ -9,8 +9,8 @@ import {
   MarkerClusterer
 } from "react-kakao-maps-sdk";
 
-import { getCoord2Address } from "../../apis/coord2Address";
 import { getItemsByCoords } from "../../apis/items";
+import { getCoord2Address, getCoord2RegionCode } from "../../apis/kakaoMap";
 import useItemListStore from "../../stores/itemList";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
@@ -82,7 +82,7 @@ function KakaoMap() {
     setLongitude,
     setZoomLevel,
     getCoords,
-    getAddress
+    setAddress
   } = usePositionStore();
 
   const [clickedPos, setClickedPos] = useState<{ lat: number; lng: number }>();
@@ -103,7 +103,9 @@ function KakaoMap() {
 
   useEffect(() => {
     if (latitude != 0 && longitude != 0) {
-      getAddress();
+      getCoord2RegionCode(latitude, longitude)
+        .then((addr) => setAddress(addr))
+        .catch(() => setAddress("알 수 없는 위치"));
     }
   }, [latitude, longitude]);
 

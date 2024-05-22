@@ -11,13 +11,12 @@ interface Position {
   setZoomLevel: (zoomLevel: number) => void;
   address: string;
   setAddress: (address: string) => void;
-  getAddress: () => void;
 }
 
 const DEFAULT_LATITUDE = 37.564214;
 const DEFAULT_LONGITUDE = 127.001699;
 
-const usePositionStore = create<Position>((set, get) => ({
+const usePositionStore = create<Position>((set) => ({
   latitude: 0,
   setLatitude: (lat: number) => set({ latitude: lat }),
   longitude: 0,
@@ -64,19 +63,7 @@ const usePositionStore = create<Position>((set, get) => ({
   zoomLevel: 3,
   setZoomLevel: (level: number) => set({ zoomLevel: level }),
   address: "",
-  setAddress: (addr: string) => set({ address: addr }),
-  getAddress: () => {
-    const { latitude, longitude } = get();
-    const geocoder = new kakao.maps.services.Geocoder();
-
-    geocoder.coord2RegionCode(longitude, latitude, (res, status) => {
-      if (status == "OK") {
-        set({ address: res[0].address_name });
-      } else {
-        set({ address: "알 수 없는 위치" });
-      }
-    });
-  }
+  setAddress: (addr: string) => set({ address: addr })
 }));
 
 export default usePositionStore;

@@ -1,5 +1,17 @@
 const geocoder = new kakao.maps.services.Geocoder();
 
+const getCoord2RegionCode = async (latitude: number, longitude: number) => {
+  return new Promise<string>((resolve, reject) => {
+    geocoder.coord2RegionCode(longitude, latitude, (result, status) => {
+      if (status == "OK") {
+        resolve(result[0].address_name);
+      } else {
+        reject(status);
+      }
+    });
+  });
+};
+
 interface Coord2AddressResult {
   address_name: string;
   building_name: string | null;
@@ -10,7 +22,7 @@ const getCoord2Address = async (latitude: number, longitude: number) => {
     geocoder.coord2Address(longitude, latitude, (result, status) => {
       if (status === "OK") {
         const res = result[0];
-        console.log(result);
+
         if (res.road_address) {
           resolve({
             address_name: res.road_address.address_name,
@@ -30,4 +42,4 @@ const getCoord2Address = async (latitude: number, longitude: number) => {
 };
 
 export type { Coord2AddressResult };
-export { getCoord2Address };
+export { getCoord2RegionCode, getCoord2Address };
