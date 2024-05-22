@@ -12,10 +12,10 @@ const useStyles = makeStyles({
     width: "100%",
     height: headerHeight,
     backgroundColor: tokens.colorNeutralBackground1,
-    boxShadow: Depths.depth16,
-    position: "fixed",
-    top: 0,
-    zIndex: 1000
+    boxShadow: Depths.depth16
+    // position: "fixed",
+    // top: 0,
+    // zIndex: 1000
   },
   title: {
     marginLeft: contentMargin,
