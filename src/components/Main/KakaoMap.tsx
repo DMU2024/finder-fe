@@ -1,9 +1,15 @@
 import { Depths } from "@fluentui/react";
 import { Button, Card, makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
-import { useEffect, useRef } from "react";
-import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
+import { useEffect, useRef, useState } from "react";
+import {
+  CustomOverlayMap,
+  Map,
+  MapMarker,
+  MarkerClusterer
+} from "react-kakao-maps-sdk";
 
+import { getCoord2Address } from "../../apis/coord2Address";
 import { getItemsByCoords } from "../../apis/items";
 import useItemListStore from "../../stores/itemList";
 import usePositionStore from "../../stores/position";
@@ -50,6 +56,16 @@ const useStyle = makeStyles({
     top: "14px",
     right: "14px",
     zIndex: 1
+  },
+  popup: {
+    display: "flex",
+    gap: "8px"
+  },
+  popupCards: {
+    padding: "24px",
+    justifyContent: "center",
+    boxShadow: Depths.depth16,
+    borderRadius: "20px"
   }
 });
 
@@ -68,6 +84,12 @@ function KakaoMap() {
     getCoords,
     getAddress
   } = usePositionStore();
+
+  const [clickedPos, setClickedPos] = useState<{ lat: number; lng: number }>();
+  const [clickedAddress, setClickedAddress] = useState<{
+    address_name: string;
+    building_name: string | null;
+  }>();
 
   const mapRef = useRef<kakao.maps.Map>(null);
 
@@ -113,6 +135,21 @@ function KakaoMap() {
           center={{ lat: latitude, lng: longitude }}
           level={zoomLevel}
           style={{ width: "100%", height: "100%" }}
+          onClick={(_, event) => {
+            const latLng = event.latLng;
+            const [lat, lng] = [latLng.getLat(), latLng.getLng()];
+
+            setClickedPos({ lat: lat, lng: lng });
+            setClickedAddress(undefined);
+            getCoord2Address(lat, lng)
+              .then(({ address_name, building_name }) =>
+                setClickedAddress({
+                  address_name: address_name,
+                  building_name: building_name
+                })
+              )
+              .catch((err) => setClickedAddress(err));
+          }}
           onDragEnd={(map) => {
             const center = map.getCenter();
 
@@ -132,6 +169,57 @@ function KakaoMap() {
               <MapMarker key={index} position={{ lat: lat, lng: lng }} />
             ))}
           </MarkerClusterer>
+          {clickedPos && (
+            <>
+              <MapMarker
+                position={clickedPos}
+                onClick={() => setClickedPos(undefined)}
+              />
+              <CustomOverlayMap position={clickedPos} yAnchor={-0.2}>
+                <div
+                  className={styles.popup}
+                  onMouseDown={(event) => {
+                    event.preventDefault();
+                    kakao.maps.event.preventMap();
+                  }}
+                >
+                  <Card
+                    className={styles.popupCards}
+                    style={{
+                      backgroundColor: "white",
+                      color: "black"
+                    }}
+                  >
+                    {clickedAddress ? (
+                      <>
+                        <div style={{ fontSize: "20px" }}>
+                          {clickedAddress.building_name
+                            ? clickedAddress.building_name
+                            : clickedAddress.address_name}
+                        </div>
+                        {clickedAddress.building_name && (
+                          <div style={{ color: mainColor }}>
+                            {clickedAddress.address_name}
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      "불러오는 중"
+                    )}
+                  </Card>
+                  <Card
+                    className={styles.popupCards}
+                    style={{
+                      backgroundColor: mainColor,
+                      color: "white"
+                    }}
+                  >
+                    등록
+                  </Card>
+                </div>
+              </CustomOverlayMap>
+            </>
+          )}
         </Map>
         <Button
           className={styles.control}
