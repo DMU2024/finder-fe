@@ -24,5 +24,16 @@ const getItemsByCoords = async (
   return data;
 };
 
+const getItemsByPage = async (page: number) => {
+  const { data } = await Instance.get<Item[]>("/items", {
+    params: {
+      _page: page,
+      _limit: 5
+    }
+  });
+
+  return data;
+};
+
 export type { Item };
-export { getItemsByCoords };
+export { getItemsByCoords, getItemsByPage };

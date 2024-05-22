@@ -1,0 +1,54 @@
+import { SearchBox, makeStyles, tokens } from "@fluentui/react-components";
+import { SearchRegular } from "@fluentui/react-icons";
+
+import { mainColor } from "../../styles/color";
+
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px"
+  },
+  searchHeader: {
+    display: "flex"
+  },
+  searchBox: {
+    flex: 1,
+    maxWidth: "100%",
+    minHeight: "48px"
+  }
+});
+
+function SearchForm() {
+  const styles = useStyles();
+
+  return (
+    <div className={styles.root}>
+      <div className={styles.searchHeader}>
+        <div>
+          <SearchRegular style={{ color: mainColor, fontSize: "50px" }} />
+          <span style={{ fontSize: "64px" }}>검색</span>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginLeft: "auto",
+            justifyContent: "end",
+            fontSize: "13px",
+            fontWeight: "bold"
+          }}
+        >
+          <div style={{ display: "flex", gap: "8px" }}>
+            <span style={{ color: tokens.colorNeutralForeground4 }}>변경</span>
+            <span style={{ color: mainColor }}>현재 위치</span>
+          </div>
+          <div style={{ marginLeft: "auto" }}>알 수 없는 위치</div>
+        </div>
+      </div>
+      <SearchBox className={styles.searchBox} placeholder="Search for..." />
+    </div>
+  );
+}
+
+export default SearchForm;
