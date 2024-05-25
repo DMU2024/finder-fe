@@ -9,7 +9,7 @@ import {
   MarkerClusterer
 } from "react-kakao-maps-sdk";
 
-import { getCoord2Address, getCoord2RegionCode } from "../../apis/kakaoMap";
+import { getCoord2Address } from "../../apis/kakaoMap";
 import { getMockByCoords } from "../../apis/mock";
 import useMockListStore from "../../stores/mock";
 import usePositionStore from "../../stores/position";
@@ -81,8 +81,7 @@ function KakaoMap() {
     setLatitude,
     setLongitude,
     setZoomLevel,
-    getCoords,
-    setAddress
+    getCoords
   } = usePositionStore();
 
   const [clickedPos, setClickedPos] = useState<{ lat: number; lng: number }>();
@@ -94,20 +93,6 @@ function KakaoMap() {
   const mapRef = useRef<kakao.maps.Map>(null);
 
   const { mockList, setMockList } = useMockListStore();
-
-  useEffect(() => {
-    if (latitude == 0 || longitude == 0) {
-      getCoords();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (latitude != 0 && longitude != 0) {
-      getCoord2RegionCode(latitude, longitude)
-        .then((addr) => setAddress(addr))
-        .catch(() => setAddress("알 수 없는 위치"));
-    }
-  }, [latitude, longitude]);
 
   useEffect(() => {
     const bounds = mapRef.current?.getBounds();

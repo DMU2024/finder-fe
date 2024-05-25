@@ -2,6 +2,7 @@ import { SearchBox, makeStyles, tokens } from "@fluentui/react-components";
 import { SearchRegular } from "@fluentui/react-icons";
 import { useEffect } from "react";
 
+import usePositionStore from "../../stores/position";
 import useSearchStore from "../../stores/search";
 import { mainColor } from "../../styles/color";
 
@@ -23,6 +24,7 @@ const useStyles = makeStyles({
 
 function SearchForm() {
   const styles = useStyles();
+  const { address } = usePositionStore();
   const { query, setQuery, setItems, setPrevId } = useSearchStore();
 
   useEffect(() => {
@@ -50,11 +52,17 @@ function SearchForm() {
             fontWeight: "bold"
           }}
         >
-          <div style={{ display: "flex", gap: "8px" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              gap: "8px"
+            }}
+          >
             <span style={{ color: tokens.colorNeutralForeground4 }}>변경</span>
             <span style={{ color: mainColor }}>현재 위치</span>
           </div>
-          <div style={{ marginLeft: "auto" }}>알 수 없는 위치</div>
+          <div style={{ marginLeft: "auto" }}>{address}</div>
         </div>
       </div>
       <SearchBox
