@@ -1,6 +1,8 @@
 import { SearchBox, makeStyles, tokens } from "@fluentui/react-components";
 import { SearchRegular } from "@fluentui/react-icons";
+import { useEffect } from "react";
 
+import useSearchStore from "../../stores/search";
 import { mainColor } from "../../styles/color";
 
 const useStyles = makeStyles({
@@ -21,6 +23,15 @@ const useStyles = makeStyles({
 
 function SearchForm() {
   const styles = useStyles();
+  const { query, setQuery, setItems, setPrevId } = useSearchStore();
+
+  useEffect(() => {
+    const delayDebounceTimer = setTimeout(() => {
+      setItems([]);
+      setPrevId(undefined);
+    }, 500);
+    return () => clearTimeout(delayDebounceTimer);
+  }, [query]);
 
   return (
     <div className={styles.root}>
@@ -46,7 +57,12 @@ function SearchForm() {
           <div style={{ marginLeft: "auto" }}>알 수 없는 위치</div>
         </div>
       </div>
-      <SearchBox className={styles.searchBox} placeholder="Search for..." />
+      <SearchBox
+        className={styles.searchBox}
+        defaultValue={query}
+        placeholder="Search for..."
+        onChange={(_, data) => setQuery(data.value)}
+      />
     </div>
   );
 }

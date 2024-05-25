@@ -9,9 +9,9 @@ import {
   MarkerClusterer
 } from "react-kakao-maps-sdk";
 
-import { getItemsByCoords } from "../../apis/items";
 import { getCoord2Address, getCoord2RegionCode } from "../../apis/kakaoMap";
-import useItemListStore from "../../stores/itemList";
+import { getMockByCoords } from "../../apis/mock";
+import useMockListStore from "../../stores/mock";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -93,7 +93,7 @@ function KakaoMap() {
 
   const mapRef = useRef<kakao.maps.Map>(null);
 
-  const { itemList, setItemList } = useItemListStore();
+  const { mockList, setMockList } = useMockListStore();
 
   useEffect(() => {
     if (latitude == 0 || longitude == 0) {
@@ -113,9 +113,9 @@ function KakaoMap() {
     const bounds = mapRef.current?.getBounds();
     if (bounds) {
       const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
-      getItemsByCoords(sw.getLat(), sw.getLng(), ne.getLat(), ne.getLng()).then(
+      getMockByCoords(sw.getLat(), sw.getLng(), ne.getLat(), ne.getLng()).then(
         (data) => {
-          setItemList(data);
+          setMockList(data);
         }
       );
     }
@@ -167,7 +167,7 @@ function KakaoMap() {
           }}
         >
           <MarkerClusterer averageCenter={true} minLevel={7}>
-            {itemList?.map(({ lat, lng }, index) => (
+            {mockList?.map(({ lat, lng }, index) => (
               <MapMarker key={index} position={{ lat: lat, lng: lng }} />
             ))}
           </MarkerClusterer>

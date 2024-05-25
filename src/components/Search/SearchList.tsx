@@ -14,15 +14,13 @@ import {
 import { AxiosError } from "axios";
 import { useState } from "react";
 
-import { Item, getItemsByPage } from "../../apis/items";
+import { searchLostFound, getLostFound } from "../../apis/lostfound";
 import useIntersect from "../../hooks/useIntersect";
+import useSearchStore from "../../stores/search";
 
 const useStyles = makeStyles({
   root: {
-    overflow: "auto",
-    "::-webkit-scrollbar": {
-      display: "none"
-    }
+    overflow: "auto"
   },
   tableHeader: {
     backgroundColor: ""
@@ -38,23 +36,29 @@ const useStyles = makeStyles({
 function SearchList() {
   const styles = useStyles();
 
-  const [items, setItems] = useState<Item[]>([]);
-  const [page, setPage] = useState(1);
+  const { query, items, prevId, setItems, setPrevId } = useSearchStore();
   const [isEndOfPage, setIsEndOfPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const getItems = () => {
     setIsLoading(true);
-    getItemsByPage(page)
+    const task = query ? searchLostFound(query, prevId) : getLostFound(prevId);
+
+    task
       .then((data) => {
-        if (data.length > 0) {
+        const lastId = data.at(-1)?._id;
+
+        if (lastId && lastId !== prevId) {
           setItems([...items, ...data]);
-          setPage(page + 1);
+          setPrevId(lastId);
         } else {
           setIsEndOfPage(true);
         }
       })
-      .catch((e: AxiosError) => console.error(e))
+      .catch((e: AxiosError) => {
+        console.error(e);
+        setIsEndOfPage(true);
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -74,7 +78,7 @@ function SearchList() {
           <TableRow>
             <TableHeaderCell>사진</TableHeaderCell>
             <TableHeaderCell>이름</TableHeaderCell>
-            <TableHeaderCell>습득 장소</TableHeaderCell>
+            <TableHeaderCell>보관 장소</TableHeaderCell>
             <TableHeaderCell>습득 날짜</TableHeaderCell>
             <TableHeaderCell>분류</TableHeaderCell>
           </TableRow>
@@ -84,27 +88,37 @@ function SearchList() {
             <TableRow key={idx}>
               <TableCell>
                 <TableCellLayout
-                  media={<Image src="/logo192.png" width="128px" />}
+                  media={
+                    <Image
+                      fit="contain"
+                      src={item.fdFilePathImg}
+                      style={{ width: "128px", height: "128px" }}
+                    />
+                  }
                 />
               </TableCell>
               <TableCell>
-                <TableCellLayout media={item.category} />
+                <TableCellLayout media={item.fdPrdtNm} />
               </TableCell>
               <TableCell>
-                <TableCellLayout media={`${item.lat} ${item.lng}`} />
+                <TableCellLayout media={item.depPlace} />
               </TableCell>
               <TableCell>
-                <TableCellLayout media={"XXXX.XX.XX"} />
+                <TableCellLayout media={item.fdYmd} />
               </TableCell>
               <TableCell>
-                <TableCellLayout media={item.category} />
+                <TableCellLayout media={item.prdtClNm} />
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <div ref={scrollRef}>
-        {isLoading && <Spinner className={styles.spinner} />}
+        {isLoading ? (
+          <Spinner className={styles.spinner} />
+        ) : (
+          <div style={{ height: "1px" }} />
+        )}
       </div>
     </div>
   );
