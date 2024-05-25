@@ -1,4 +1,9 @@
-import { SearchBox, makeStyles, tokens } from "@fluentui/react-components";
+import {
+  SearchBox,
+  Switch,
+  makeStyles,
+  tokens
+} from "@fluentui/react-components";
 import { SearchRegular } from "@fluentui/react-icons";
 import { useEffect } from "react";
 
@@ -24,8 +29,9 @@ const useStyles = makeStyles({
 
 function SearchForm() {
   const styles = useStyles();
-  const { address } = usePositionStore();
-  const { query, setQuery, setItems, setPrevId } = useSearchStore();
+  const { address, getCoords } = usePositionStore();
+  const { query, isLostGoods, setQuery, setItems, setPrevId, setIsLostGoods } =
+    useSearchStore();
 
   useEffect(() => {
     const delayDebounceTimer = setTimeout(() => {
@@ -59,10 +65,26 @@ function SearchForm() {
               gap: "8px"
             }}
           >
-            <span style={{ color: tokens.colorNeutralForeground4 }}>변경</span>
+            <span
+              style={{
+                color: tokens.colorNeutralForeground4,
+                cursor: "pointer"
+              }}
+              onClick={() => getCoords()}
+            >
+              변경
+            </span>
             <span style={{ color: mainColor }}>현재 위치</span>
           </div>
           <div style={{ marginLeft: "auto" }}>{address}</div>
+          <Switch
+            checked={isLostGoods}
+            label="분실물 검색"
+            style={{ marginLeft: "auto" }}
+            onChange={(e) => {
+              setIsLostGoods(e.target.checked);
+            }}
+          />
         </div>
       </div>
       <SearchBox

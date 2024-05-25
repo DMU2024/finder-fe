@@ -1,14 +1,17 @@
 import { create } from "zustand";
 
 import { LostFound } from "../apis/lostfound";
+import { LostGoods } from "../apis/lostgoods";
 
 interface Search {
   query: string | undefined;
   setQuery: (q: string | undefined) => void;
-  items: LostFound[];
-  setItems: (items: LostFound[]) => void;
+  items: LostFound[] | LostGoods[];
+  setItems: (items: LostFound[] | LostGoods[]) => void;
   prevId: string | undefined;
   setPrevId: (id: string | undefined) => void;
+  isLostGoods: boolean;
+  setIsLostGoods: (value: boolean) => void;
 }
 
 const useSearchStore = create<Search>((set) => ({
@@ -23,6 +26,14 @@ const useSearchStore = create<Search>((set) => ({
   prevId: undefined,
   setPrevId: (id) => {
     set({ prevId: id });
+  },
+  isLostGoods: false,
+  setIsLostGoods: (value) => {
+    set({
+      items: [],
+      prevId: undefined,
+      isLostGoods: value
+    });
   }
 }));
 
