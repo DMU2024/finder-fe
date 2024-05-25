@@ -3,7 +3,7 @@ import { Card, makeStyles } from "@fluentui/react-components";
 import { BookExclamationMarkRegular } from "@fluentui/react-icons";
 
 import Item from "./Item";
-import useItemListStore from "../../stores/itemList";
+import useMockListStore from "../../stores/mock";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
 
@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 
 function ItemList() {
   const styles = useStyles();
-  const { itemList } = useItemListStore();
+  const { mockList: itemList } = useMockListStore();
 
   return (
     <div className={styles.root}>

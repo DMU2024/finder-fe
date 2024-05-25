@@ -9,9 +9,9 @@ import {
   MarkerClusterer
 } from "react-kakao-maps-sdk";
 
-import { getItemsByCoords } from "../../apis/items";
-import { getCoord2Address, getCoord2RegionCode } from "../../apis/kakaoMap";
-import useItemListStore from "../../stores/itemList";
+import { getCoord2Address } from "../../apis/kakaoMap";
+import { getMockByCoords } from "../../apis/mock";
+import useMockListStore from "../../stores/mock";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -81,8 +81,7 @@ function KakaoMap() {
     setLatitude,
     setLongitude,
     setZoomLevel,
-    getCoords,
-    setAddress
+    getCoords
   } = usePositionStore();
 
   const [clickedPos, setClickedPos] = useState<{ lat: number; lng: number }>();
@@ -93,29 +92,15 @@ function KakaoMap() {
 
   const mapRef = useRef<kakao.maps.Map>(null);
 
-  const { itemList, setItemList } = useItemListStore();
-
-  useEffect(() => {
-    if (latitude == 0 || longitude == 0) {
-      getCoords();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (latitude != 0 && longitude != 0) {
-      getCoord2RegionCode(latitude, longitude)
-        .then((addr) => setAddress(addr))
-        .catch(() => setAddress("알 수 없는 위치"));
-    }
-  }, [latitude, longitude]);
+  const { mockList, setMockList } = useMockListStore();
 
   useEffect(() => {
     const bounds = mapRef.current?.getBounds();
     if (bounds) {
       const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
-      getItemsByCoords(sw.getLat(), sw.getLng(), ne.getLat(), ne.getLng()).then(
+      getMockByCoords(sw.getLat(), sw.getLng(), ne.getLat(), ne.getLng()).then(
         (data) => {
-          setItemList(data);
+          setMockList(data);
         }
       );
     }
@@ -167,7 +152,7 @@ function KakaoMap() {
           }}
         >
           <MarkerClusterer averageCenter={true} minLevel={7}>
-            {itemList?.map(({ lat, lng }, index) => (
+            {mockList?.map(({ lat, lng }, index) => (
               <MapMarker key={index} position={{ lat: lat, lng: lng }} />
             ))}
           </MarkerClusterer>
