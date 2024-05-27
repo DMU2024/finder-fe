@@ -4,16 +4,14 @@ import {
   TableRow,
   TableHeaderCell,
   TableBody,
-  TableCell,
-  TableCellLayout,
   makeStyles,
-  Image,
   Spinner,
   tokens
 } from "@fluentui/react-components";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
+import SearchListItem from "./SearchListItem";
 import { searchLostFound, getLostFound, LostFound } from "../../apis/lostfound";
 import { searchLostGoods, getLostGoods, LostGoods } from "../../apis/lostgoods";
 import useIntersect from "../../hooks/useIntersect";
@@ -107,49 +105,7 @@ function SearchList() {
         </TableHeader>
         <TableBody>
           {items.map((item, idx) => (
-            <TableRow key={idx}>
-              <TableCell>
-                <TableCellLayout
-                  media={
-                    <Image
-                      fit="contain"
-                      src={isLostGoods ? "" : (item as LostFound).fdFilePathImg}
-                      style={{ width: "128px", height: "128px" }}
-                    />
-                  }
-                />
-              </TableCell>
-              <TableCell>
-                <TableCellLayout
-                  media={
-                    isLostGoods
-                      ? (item as LostGoods).lstPrdtNm
-                      : (item as LostFound).fdPrdtNm
-                  }
-                />
-              </TableCell>
-              <TableCell>
-                <TableCellLayout
-                  media={
-                    isLostGoods
-                      ? (item as LostGoods).lstPlace
-                      : (item as LostFound).depPlace
-                  }
-                />
-              </TableCell>
-              <TableCell>
-                <TableCellLayout
-                  media={
-                    isLostGoods
-                      ? (item as LostGoods).lstYmd
-                      : (item as LostFound).fdYmd
-                  }
-                />
-              </TableCell>
-              <TableCell>
-                <TableCellLayout media={item.prdtClNm} />
-              </TableCell>
-            </TableRow>
+            <SearchListItem key={idx} item={item} />
           ))}
         </TableBody>
       </Table>
