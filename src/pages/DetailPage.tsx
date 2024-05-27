@@ -1,8 +1,12 @@
 import { Depths } from "@fluentui/react";
 import { Card, Image, makeStyles, tokens } from "@fluentui/react-components";
 import { ArrowLeftRegular, ChatArrowBackRegular } from "@fluentui/react-icons";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
+import { LostFoundDetail, getLostFoundDetail } from "../apis/lostfound";
+import { LostGoodsDetail, getLostGoodsDetail } from "../apis/lostgoods";
+import useSearchStore from "../stores/search";
 import { mainColor } from "../styles/color";
 import { headerHeight } from "../styles/margin";
 import { sideBarWidth } from "../styles/size";
@@ -78,7 +82,7 @@ const useStyles = makeStyles({
     fontSize: "14px",
     fontWeight: "bold",
     color: mainColor,
-    cursor: "pointer"
+    textDecorationLine: "none"
   },
   contentBottom: {
     height: "40vh",
@@ -95,33 +99,77 @@ const useStyles = makeStyles({
 
 function DetailPage() {
   const styles = useStyles();
+  const { isLostGoods } = useSearchStore();
+
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const fdSn = queryParams.get("fdSn");
+
+  const [item, setItem] = useState<LostFoundDetail | LostGoodsDetail>();
+
+  useEffect(() => {
+    if (id) {
+      const task = isLostGoods
+        ? getLostGoodsDetail(id)
+        : getLostFoundDetail(id, fdSn);
+
+      task.then((data) => {
+        setItem(data);
+      });
+    }
+  }, []);
 
   return (
     <>
       <div className={styles.back} onClick={() => navigate(-1)}>
         <ArrowLeftRegular color={mainColor} />
-        <span>습득물 찾기</span>
+        <span>{isLostGoods ? "분실물" : "습득물"} 찾기</span>
       </div>
       <div className={styles.root}>
         <Card className={styles.content}>
           <div className={styles.contentTop}>
-            <Image className={styles.contentTopImage} src="/logo192.png" />
+            <Image
+              className={styles.contentTopImage}
+              src={
+                isLostGoods
+                  ? (item as LostGoodsDetail)?.lstFilePathImg
+                  : (item as LostFoundDetail)?.fdFilePathImg
+              }
+            />
             <div className={styles.contentTopTexts}>
-              <div className={styles.contentTopMain}>습득물 이름</div>
-              <div className={styles.contentTopSub}>습득 장소</div>
-              <div className={styles.contentTopSub}>XXXX.XX.XX</div>
-              <div className={styles.contentTopInfo}>관리 번호</div>
-              <div className={styles.contentTopInfo}>물품 분류</div>
-              <div className={styles.contentTopInfo}>접수 & 보관 장소</div>
-              <div className={styles.contentTopInfo}>유실물 상태</div>
+              <div className={styles.contentTopMain}>
+                {isLostGoods
+                  ? (item as LostGoodsDetail)?.lstPrdtNm
+                  : (item as LostFoundDetail)?.fdPrdtNm}
+              </div>
+              <div className={styles.contentTopSub}>
+                {isLostGoods
+                  ? (item as LostGoodsDetail)?.lstPlace
+                  : (item as LostFoundDetail)?.depPlace}
+              </div>
+              <div className={styles.contentTopSub}>
+                {isLostGoods
+                  ? (item as LostGoodsDetail)?.lstYmd
+                  : (item as LostFoundDetail)?.fdYmd}
+              </div>
+              <div className={styles.contentTopInfo}>{item?.atcId}</div>
+              <div className={styles.contentTopInfo}>{item?.prdtClNm}</div>
+              <div className={styles.contentTopInfo}>{item?.orgNm}</div>
+              <div className={styles.contentTopInfo}>
+                {isLostGoods
+                  ? (item as LostGoodsDetail)?.lstSteNm
+                  : (item as LostFoundDetail)?.csteSteNm}
+              </div>
             </div>
-            <div className={styles.contentTopChat}>
+            <a className={styles.contentTopChat} href={`tel:${item?.tel}`}>
               <span>연락하기</span>
               <ChatArrowBackRegular fontSize="24px" />
-            </div>
+            </a>
           </div>
-          <div className={styles.contentBottom}>물품에 관련된 설명</div>
+          <div className={styles.contentBottom}>{item?.uniq}</div>
         </Card>
       </div>
     </>

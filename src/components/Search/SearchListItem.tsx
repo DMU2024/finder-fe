@@ -4,6 +4,7 @@ import {
   TableCellLayout,
   TableRow
 } from "@fluentui/react-components";
+import { useNavigate } from "react-router-dom";
 
 import { LostFound } from "../../apis/lostfound";
 import { LostGoods } from "../../apis/lostgoods";
@@ -15,9 +16,14 @@ interface Props {
 
 function SearchListItem({ item }: Props) {
   const { isLostGoods } = useSearchStore();
+  const navigate = useNavigate();
 
   return (
-    <TableRow>
+    <TableRow
+      onClick={() => {
+        navigate(`/detail/${item.atcId}`);
+      }}
+    >
       <TableCell>
         <TableCellLayout
           media={
