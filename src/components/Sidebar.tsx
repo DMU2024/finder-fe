@@ -8,7 +8,7 @@ import {
   tokens
 } from "@fluentui/react-components";
 import {
-  DocumentBulletListRegular,
+  ChatRegular,
   HomeRegular,
   NavigationRegular,
   PersonInfoRegular,
@@ -106,18 +106,8 @@ function Sidebar() {
           value="tab2"
           onClick={() => navigate("/search")}
         />
-        <Tab
-          className={styles.tab}
-          icon={<DocumentBulletListRegular />}
-          value="tab3"
-          onClick={() => navigate("/")}
-        />
-        <Tab
-          className={styles.tab}
-          icon={<PersonInfoRegular />}
-          value="tab4"
-          onClick={() => navigate("/")}
-        />
+        <Tab className={styles.tab} icon={<ChatRegular />} value="tab3" />
+        <Tab className={styles.tab} icon={<PersonInfoRegular />} value="tab4" />
       </TabList>
     </InlineDrawer>
   );
