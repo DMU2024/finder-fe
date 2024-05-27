@@ -68,7 +68,6 @@ function Sidebar() {
   const styles = useStyle();
   const navigate = useNavigate();
   const location = useLocation();
-  const { setIsDarkTheme } = useOptionStore();
 
   const getTab = () => {
     switch (location.pathname) {
@@ -85,7 +84,6 @@ function Sidebar() {
         <ToolbarButton
           className={styles.toolbarButton}
           icon={<NavigationRegular />}
-          onClick={() => setIsDarkTheme()}
         />
       </Toolbar>
       <TabList
