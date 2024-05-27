@@ -21,7 +21,9 @@ function SearchListItem({ item }: Props) {
   return (
     <TableRow
       onClick={() => {
-        navigate(`/detail/${item.atcId}`);
+        navigate(
+          `/detail/${item.atcId}${!isLostGoods ? "?fdSn=" + (item as LostFound).fdSn : ""}`
+        );
       }}
     >
       <TableCell>
