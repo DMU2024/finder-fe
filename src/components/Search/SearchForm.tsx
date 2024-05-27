@@ -5,7 +5,7 @@ import {
   tokens
 } from "@fluentui/react-components";
 import { SearchRegular } from "@fluentui/react-icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import usePositionStore from "../../stores/position";
 import useSearchStore from "../../stores/search";
@@ -30,16 +30,15 @@ const useStyles = makeStyles({
 function SearchForm() {
   const styles = useStyles();
   const { address, getCoords } = usePositionStore();
-  const { query, isLostGoods, setQuery, setItems, setPrevId, setIsLostGoods } =
-    useSearchStore();
+  const { isLostGoods, setQuery, setIsLostGoods } = useSearchStore();
+  const [debouncedQuery, setDebouncedQuery] = useState<string | undefined>();
 
   useEffect(() => {
     const delayDebounceTimer = setTimeout(() => {
-      setItems([]);
-      setPrevId(undefined);
+      setQuery(debouncedQuery);
     }, 500);
     return () => clearTimeout(delayDebounceTimer);
-  }, [query]);
+  }, [debouncedQuery]);
 
   return (
     <div className={styles.root}>
@@ -78,7 +77,7 @@ function SearchForm() {
           </div>
           <div style={{ marginLeft: "auto" }}>{address}</div>
           <Switch
-            checked={isLostGoods}
+            defaultChecked={isLostGoods}
             label="분실물 검색"
             style={{ marginLeft: "auto" }}
             onChange={(e) => {
@@ -89,9 +88,15 @@ function SearchForm() {
       </div>
       <SearchBox
         className={styles.searchBox}
-        defaultValue={query}
+        defaultValue={debouncedQuery}
         placeholder="Search for..."
-        onChange={(_, data) => setQuery(data.value)}
+        onChange={(event, data) => {
+          if (event.nativeEvent instanceof MouseEvent) {
+            setQuery(undefined);
+          } else {
+            setDebouncedQuery(data.value);
+          }
+        }}
       />
     </div>
   );

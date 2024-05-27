@@ -12,7 +12,7 @@ import {
   tokens
 } from "@fluentui/react-components";
 import { AxiosError } from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { searchLostFound, getLostFound, LostFound } from "../../apis/lostfound";
 import { searchLostGoods, getLostGoods, LostGoods } from "../../apis/lostgoods";
@@ -82,6 +82,12 @@ function SearchList() {
       getItems();
     }
   });
+
+  useEffect(() => {
+    setItems([]);
+    setPrevId(undefined);
+    setIsEndOfPage(false);
+  }, [query, isLostGoods]);
 
   return (
     <div className={styles.root}>

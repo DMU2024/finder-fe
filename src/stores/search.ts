@@ -29,11 +29,7 @@ const useSearchStore = create<Search>((set) => ({
   },
   isLostGoods: false,
   setIsLostGoods: (value) => {
-    set({
-      items: [],
-      prevId: undefined,
-      isLostGoods: value
-    });
+    set({ isLostGoods: value });
   }
 }));
 
