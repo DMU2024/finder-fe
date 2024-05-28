@@ -1,8 +1,21 @@
-import { makeStyles } from "@fluentui/react-components";
-import React from "react";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-import { mainColor, secondaryColor, skeletonColor } from "../../styles/color";
+import { makeStyles } from "@fluentui/react-components";
+
+import { mainColor, skeletonColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
+import Category from "../Category/CategoryList";
+
+
+interface DatePickerProps {
+  selected: Date | null;
+  onChange: (date: Date | null) => void;
+  dateFormat?: string;
+  className?: string;
+  placeholderText?: string;
+}
 
 const useStyles = makeStyles({
   root: {
@@ -12,8 +25,11 @@ const useStyles = makeStyles({
   },
   title: {
     color: mainColor,
-    fontSize: "40px",
-    marginBottom: "80px"
+    display: "flex",
+    justifyContent: "space-between",
+    fontSize: "16px",
+    fontWeight: "bold",
+    marginBottom: "40px"
   },
   subTitle: {
     color: skeletonColor,
@@ -31,19 +47,47 @@ const useStyles = makeStyles({
     height: "53px",
     border: "1px solid #D9D9D9",
     padding: "8px",
-    width: "100%",
+    width: "45vw",
     boxSizing: "border-box",
     fontSize: "14px",
     outline: "none"
   }
 });
 
-const LostList = () => {
+const LostList: React.FC = () => {
   const styles = useStyles();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
+    null
+  );
+  const [startDate, setStartDate] = useState<Date | null>(null);
+
+  const handleCategorySelect = (category: string, subcategory: string) => {
+    setSelectedCategory(category);
+    setSelectedSubcategory(subcategory);
+  };
+
+  const renderTitle = () => {
+    if (selectedCategory && selectedSubcategory) {
+      return (
+        <h1>
+          {selectedCategory} {">"} {selectedSubcategory}
+        </h1>
+      );
+    } else {
+      return <h1>카테고리 01 {">"} 카테고리 02</h1>;
+    }
+  };
 
   return (
-    <div>
-      <h2 className={styles.title}>Category</h2>
+    <div className={styles.root}>
+      <div className={styles.title}>
+        {renderTitle()}
+        <div>
+          <Category onSelect={handleCategorySelect} />
+        </div>
+      </div>
+
       <div className={styles.listMargin}>
         <a className={styles.subTitle}>분실물 이름</a>
         <div className={styles.listContainer}>
@@ -53,7 +97,13 @@ const LostList = () => {
       <div className={styles.listMargin}>
         <a className={styles.subTitle}>분실 날짜</a>
         <div className={styles.listContainer}>
-          <input className={styles.input} type="text" />
+          <DatePicker
+            className={styles.input}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="날짜 선택"
+            selected={startDate}
+            onChange={(date: Date | null) => setStartDate(date)}
+          />
         </div>
       </div>
       <div className={styles.listMargin}>
