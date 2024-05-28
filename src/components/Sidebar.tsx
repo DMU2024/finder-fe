@@ -25,10 +25,10 @@ const useStyle = makeStyles({
     width: sideBarWidth,
     minWidth: sideBarWidth,
     height: "100%",
-    backgroundColor: tokens.colorNeutralBackground1
-    // position: "fixed",
-    // left: 0,
-    // top: 0
+    backgroundColor: tokens.colorNeutralBackground1,
+    position: "fixed",
+    left: 0,
+    top: 0
   },
   toolbar: {
     width: "100%",
