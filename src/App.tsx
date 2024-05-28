@@ -5,8 +5,10 @@ import {
   createLightTheme,
   createDarkTheme
 } from "@fluentui/react-components";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { getCoord2RegionCode } from "./apis/kakaoMap";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import WriteButton from "./components/WriteButton";
@@ -15,6 +17,7 @@ import MainPage from "./pages/MainPage";
 import SearchPage from "./pages/SearchPage";
 import WritePage from "./pages/WritePage";
 import useOptionStore from "./stores/option";
+import usePositionStore from "./stores/position";
 import { mainColor } from "./styles/color";
 import { contentMargin, headerHeight } from "./styles/margin";
 import { sideBarWidth } from "./styles/size";
@@ -62,6 +65,21 @@ const darkTheme = createDarkTheme(brandColor);
 function App() {
   const styles = useStyles();
   const { isDarkTheme } = useOptionStore();
+  const { latitude, longitude, getCoords, setAddress } = usePositionStore();
+
+  useEffect(() => {
+    if (latitude == 0 || longitude == 0) {
+      getCoords();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (latitude != 0 && longitude != 0) {
+      getCoord2RegionCode(latitude, longitude)
+        .then((addr) => setAddress(addr))
+        .catch(() => setAddress("알 수 없는 위치"));
+    }
+  }, [latitude, longitude]);
 
   return (
     <FluentProvider theme={isDarkTheme ? darkTheme : lightTheme}>

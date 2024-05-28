@@ -6,9 +6,4 @@ const Instance = axios.create({
   baseURL: BASE_URL
 });
 
-const KakaoInstance = axios.create({
-  baseURL: "https://dapi.kakao.com/v2/local",
-  headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST}` }
-});
-
-export { Instance, KakaoInstance };
+export { Instance };
