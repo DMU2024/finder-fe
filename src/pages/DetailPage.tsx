@@ -45,7 +45,8 @@ const useStyles = makeStyles({
   contentTopImage: {
     width: "400px",
     height: "400px",
-    marginLeft: "64px"
+    marginLeft: "64px",
+    backgroundColor: tokens.colorNeutralBackground3
   },
   contentTopTexts: {
     flex: 1,
@@ -93,7 +94,8 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForeground2,
     backgroundColor: tokens.colorNeutralBackground3,
     fontSize: "20px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    whiteSpace: "pre-line"
   }
 });
 
@@ -133,6 +135,7 @@ function DetailPage() {
           <div className={styles.contentTop}>
             <Image
               className={styles.contentTopImage}
+              fit="contain"
               src={
                 isLostGoods
                   ? (item as LostGoodsDetail)?.lstFilePathImg
@@ -147,21 +150,29 @@ function DetailPage() {
               </div>
               <div className={styles.contentTopSub}>
                 {isLostGoods
-                  ? (item as LostGoodsDetail)?.lstPlace
-                  : (item as LostFoundDetail)?.depPlace}
+                  ? `분실장소: ${(item as LostGoodsDetail)?.lstPlace}`
+                  : `보관장소: ${(item as LostFoundDetail)?.depPlace}`}
               </div>
               <div className={styles.contentTopSub}>
                 {isLostGoods
-                  ? (item as LostGoodsDetail)?.lstYmd
-                  : (item as LostFoundDetail)?.fdYmd}
+                  ? `분실일자: ${(item as LostGoodsDetail)?.lstYmd}`
+                  : `습득일자: ${(item as LostFoundDetail)?.fdYmd}`}
               </div>
-              <div className={styles.contentTopInfo}>{item?.atcId}</div>
-              <div className={styles.contentTopInfo}>{item?.prdtClNm}</div>
-              <div className={styles.contentTopInfo}>{item?.orgNm}</div>
+              <div
+                className={styles.contentTopInfo}
+              >{`관리번호: ${item?.atcId}`}</div>
+              <div
+                className={styles.contentTopInfo}
+              >{`물품분류: ${item?.prdtClNm}`}</div>
+              <div
+                className={styles.contentTopInfo}
+              >{`접수장소: ${item?.orgNm}`}</div>
               <div className={styles.contentTopInfo}>
-                {isLostGoods
-                  ? (item as LostGoodsDetail)?.lstSteNm
-                  : (item as LostFoundDetail)?.csteSteNm}
+                {`상태: ${
+                  isLostGoods
+                    ? (item as LostGoodsDetail)?.lstSteNm
+                    : (item as LostFoundDetail)?.csteSteNm
+                }`}
               </div>
             </div>
             <a className={styles.contentTopChat} href={`tel:${item?.tel}`}>
@@ -169,7 +180,9 @@ function DetailPage() {
               <ChatArrowBackRegular fontSize="24px" />
             </a>
           </div>
-          <div className={styles.contentBottom}>{item?.uniq}</div>
+          <div className={styles.contentBottom}>
+            {item?.uniq.split("내용\r\n\r\n")}
+          </div>
         </Card>
       </div>
     </>
