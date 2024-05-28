@@ -20,15 +20,17 @@ import useOptionStore from "./stores/option";
 import usePositionStore from "./stores/position";
 import { mainColor } from "./styles/color";
 import { contentMargin, headerHeight } from "./styles/margin";
+import { sideBarWidth } from "./styles/size";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    height: "100vh",
+    minHeight: "100vh",
     backgroundColor: tokens.colorNeutralBackground2
   },
   wrapper: {
-    width: "100vw"
+    width: "100vw",
+    marginLeft: sideBarWidth
   },
   content: {
     display: "flex",
