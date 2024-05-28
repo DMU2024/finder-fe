@@ -37,7 +37,13 @@ const useStyle = makeStyles({
   }
 });
 
-function Item() {
+interface ItemProps {
+  name: string;
+  address: string;
+  category: string;
+}
+
+function Item({ name, address, category }: ItemProps) {
   const styles = useStyle();
   return (
     <div>
@@ -45,9 +51,9 @@ function Item() {
         <div className={styles.itemTop}>
           <Image src="/logo192.png" width="192px" />
           <div className={styles.itemBox}>
-            <div className={styles.itemName}>품명</div>
-            <div className={styles.itemDescription}>주소</div>
-            <div className={styles.itemDescription}>분류</div>
+            <div className={styles.itemName}>{name}</div>
+            <div className={styles.itemDescription}>{address}</div>
+            <div className={styles.itemDescription}>{category}</div>
           </div>
         </div>
         <div className={styles.itemDetail}>상세보기 {">"}</div>
