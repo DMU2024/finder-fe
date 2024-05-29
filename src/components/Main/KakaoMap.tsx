@@ -8,6 +8,7 @@ import {
   MapMarker,
   MarkerClusterer
 } from "react-kakao-maps-sdk";
+import { useNavigate } from "react-router-dom";
 
 import { getCoord2Address } from "../../apis/kakaoMap";
 import { getMockByCoords } from "../../apis/mock";
@@ -71,6 +72,7 @@ const useStyle = makeStyles({
 
 function KakaoMap() {
   const styles = useStyle();
+  const navigate = useNavigate();
 
   const {
     latitude,
@@ -95,14 +97,19 @@ function KakaoMap() {
   const { mockList, setMockList } = useMockListStore();
 
   useEffect(() => {
-    const bounds = mapRef.current?.getBounds();
-    if (bounds) {
-      const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
-      getMockByCoords(sw.getLat(), sw.getLng(), ne.getLat(), ne.getLng()).then(
-        (data) => {
+    if (latitude != 0 && longitude != 0) {
+      const bounds = mapRef.current?.getBounds();
+      if (bounds) {
+        const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
+        getMockByCoords(
+          sw.getLat(),
+          sw.getLng(),
+          ne.getLat(),
+          ne.getLng()
+        ).then((data) => {
           setMockList(data);
-        }
-      );
+        });
+      }
     }
   }, [latitude, longitude, zoomLevel]);
 
@@ -199,6 +206,11 @@ function KakaoMap() {
                     style={{
                       backgroundColor: mainColor,
                       color: "white"
+                    }}
+                    onClick={() => {
+                      navigate(
+                        `/write?detailAddr=${clickedAddress?.address_name}&lat=${clickedPos.lat}&lng=${clickedPos.lng}`
+                      );
                     }}
                   >
                     등록

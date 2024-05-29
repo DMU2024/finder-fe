@@ -57,25 +57,6 @@ function SearchForm() {
             fontWeight: "bold"
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              gap: "8px"
-            }}
-          >
-            <span
-              style={{
-                color: tokens.colorNeutralForeground4,
-                cursor: "pointer"
-              }}
-              onClick={() => getCoords()}
-            >
-              변경
-            </span>
-            <span style={{ color: mainColor }}>현재 위치</span>
-          </div>
-          <div style={{ marginLeft: "auto" }}>{address}</div>
           <Switch
             defaultChecked={isLostGoods}
             label="분실물 검색"

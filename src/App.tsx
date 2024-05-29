@@ -25,7 +25,7 @@ import { sideBarWidth } from "./styles/size";
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    minHeight: "100vh",
+    height: "100vh",
     backgroundColor: tokens.colorNeutralBackground2
   },
   wrapper: {

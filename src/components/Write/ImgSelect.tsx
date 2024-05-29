@@ -1,15 +1,16 @@
-import { ImageFit, Depths } from "@fluentui/react";
+import { Depths, Image } from "@fluentui/react";
 import { makeStyles } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
   imgContainer: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    height: "100%"
   },
   img: {
-    width: "90%",
-    height: "900px",
+    width: "450px",
+    height: "450px",
     backgroundColor: "white",
     display: "flex",
     justifyContent: "center",
@@ -25,7 +26,7 @@ function ImgSelect() {
 
   return (
     <div className={styles.imgContainer}>
-      <div className={styles.img}>imsi IMG</div>
+      <Image className={styles.img} />
     </div>
   );
 }

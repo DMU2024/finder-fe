@@ -1,5 +1,6 @@
 import { Divider, Image, makeStyles, tokens } from "@fluentui/react-components";
 
+import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
 
 const useStyle = makeStyles({
@@ -41,12 +42,21 @@ interface ItemProps {
   name: string;
   address: string;
   category: string;
+  lat: number;
+  lng: number;
 }
 
-function Item({ name, address, category }: ItemProps) {
+function Item({ name, address, category, lat, lng }: ItemProps) {
   const styles = useStyle();
+  const { setLatitude, setLongitude } = usePositionStore();
   return (
-    <div>
+    <div
+      style={{ cursor: "pointer" }}
+      onClick={() => {
+        setLatitude(lat);
+        setLongitude(lng);
+      }}
+    >
       <div className={styles.root}>
         <div className={styles.itemTop}>
           <Image src="/logo192.png" width="192px" />

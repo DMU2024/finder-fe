@@ -102,6 +102,8 @@ interface CategoryProps {
   onSelect: (category: string, subcategory: string) => void;
 }
 
+Modal.setAppElement("#root");
+
 function Category({ onSelect }: CategoryProps) {
   const styles = useStyles();
   const [isOpen, setIsOpen] = useState(true);
@@ -134,8 +136,7 @@ function Category({ onSelect }: CategoryProps) {
     <div>
       {(!selectedCategory || selectedCategory.subcategories.length === 0) && (
         <button className={styles.button} onClick={() => setIsOpen(true)}>
-          {" "}
-          카테고리 선택{" "}
+          카테고리 선택
         </button>
       )}
 

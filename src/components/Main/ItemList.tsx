@@ -51,21 +51,23 @@ function ItemList() {
   return (
     <div className={styles.root}>
       <div className={styles.subtitle}>현재 지역</div>
-      <div className={styles.title}>최근 습득물 목록</div>
+      <div className={styles.title}>최근 분실물 목록</div>
       <Card className={styles.list}>
         {itemList.length > 0 ? (
-          itemList.map(({ lat, lng, category }, index) => (
+          itemList.map(({ name, address, category, lat, lng }, index) => (
             <Item
               key={index}
-              address={`${lat} ${lng}`}
+              address={address}
               category={category}
-              name={category}
+              lat={lat}
+              lng={lng}
+              name={name}
             />
           ))
         ) : (
           <div className={styles.empty}>
             <BookExclamationMarkRegular fontSize="128px" />
-            <div>습득물이 없습니다.</div>
+            <div>분실물이 없습니다.</div>
           </div>
         )}
       </Card>
