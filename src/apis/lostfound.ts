@@ -13,9 +13,37 @@ interface LostFound {
   rnum: string;
 }
 
+interface LostFoundDetail {
+  atcId: string;
+  csteSteNm: string;
+  depPlace: string;
+  fdFilePathImg: string;
+  fdHor: string;
+  fdPlace: string;
+  fdPrdtNm: string;
+  fdSn: string;
+  fdYmd: string;
+  fndKeepOrgnSeNm: string;
+  orgId: string;
+  orgNm: string;
+  prdtClNm: string;
+  tel: string;
+  uniq: string;
+}
+
 const getLostFound = async (prevId?: string) => {
   const { data } = await Instance.get<LostFound[]>("/lostfound", {
     params: { prevId: prevId }
+  });
+
+  return data;
+};
+
+const getLostFoundDetail = async (actId: string, fdSn: string | null) => {
+  const { data } = await Instance.get<LostFoundDetail>(`/lostfound/${actId}`, {
+    params: {
+      fdSn: fdSn
+    }
   });
 
   return data;
@@ -32,5 +60,5 @@ const searchLostFound = async (query: string, prevId?: string) => {
   return data;
 };
 
-export type { LostFound };
-export { getLostFound, searchLostFound };
+export type { LostFound, LostFoundDetail };
+export { getLostFound, getLostFoundDetail, searchLostFound };
