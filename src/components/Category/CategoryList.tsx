@@ -1,8 +1,7 @@
 import { initializeIcons, Icon } from "@fluentui/react";
 import { makeStyles } from "@fluentui/react-components";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
-
 
 import { categories, CategoryData, Subcategory } from "./CategoryData";
 import { mainColor, skeletonColor } from "../../styles/color";

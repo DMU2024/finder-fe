@@ -1,4 +1,7 @@
+import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import { IIconProps } from "@fluentui/react";
+
+initializeIcons();
 
 export interface Subcategory {
   name: string;
@@ -18,7 +21,7 @@ export const categories: CategoryData[] = [
       { name: "남성용가방" },
       { name: "기타가방" }
     ],
-    icon: { iconName: "Backpack" }
+    icon: { iconName: "Toolbox" }
   },
   {
     name: "귀금속",
@@ -50,12 +53,12 @@ export const categories: CategoryData[] = [
   {
     name: "산업용품",
     subcategories: [{ name: "기타물품" }],
-    icon: { iconName: "Industry" }
+    icon: { iconName: "ProductRelease" }
   },
   {
     name: "쇼핑백",
     subcategories: [{ name: "쇼핑백" }],
-    icon: { iconName: "ShoppingBag" }
+    icon: { iconName: "OfficeStoreLogo" }
   },
   {
     name: "스포츠용품",
@@ -93,7 +96,7 @@ export const categories: CategoryData[] = [
       { name: "신발" },
       { name: "기타의류" }
     ],
-    icon: { iconName: "Clothes" }
+    icon: { iconName: "StatusCircleQuestionMark" }
   },
   {
     name: "자동차",
@@ -115,7 +118,7 @@ export const categories: CategoryData[] = [
       { name: "카메라" },
       { name: "기타용품" }
     ],
-    icon: { iconName: "DeviceMeetingRoom" }
+    icon: { iconName: "Repair" }
   },
   {
     name: "지갑",
@@ -124,7 +127,7 @@ export const categories: CategoryData[] = [
       { name: "남성용 지갑" },
       { name: "기타 지갑" }
     ],
-    icon: { iconName: "Wallet" }
+    icon: { iconName: "StatusCircleQuestionMark" }
   },
   {
     name: "증명서",
@@ -189,6 +192,6 @@ export const categories: CategoryData[] = [
   {
     name: "유류품",
     subcategories: [{ name: "유류품" }],
-    icon: { iconName: "OilChange" }
+    icon: { iconName: "StatusCircleQuestionMark" }
   }
 ];
