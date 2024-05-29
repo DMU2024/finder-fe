@@ -1,7 +1,8 @@
 import { Depths } from "@fluentui/react";
-import { makeStyles, tokens } from "@fluentui/react-components";
+import { Switch, makeStyles, tokens } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
 
+import useOptionStore from "../stores/option";
 import { backgroundColor, mainColor } from "../styles/color";
 import { contentMargin, headerHeight } from "../styles/margin";
 
@@ -34,6 +35,7 @@ const useStyles = makeStyles({
   },
   menu: {
     display: "flex",
+    alignItems: "center",
     marginLeft: "auto",
     marginRight: contentMargin,
     gap: "32px"
@@ -48,6 +50,7 @@ const useStyles = makeStyles({
 
 function Header() {
   const styles = useStyles();
+  const { isDarkTheme, setIsDarkTheme } = useOptionStore();
 
   return (
     <div className={styles.root}>
@@ -58,6 +61,12 @@ function Header() {
       <div className={styles.menu}>
         <h2 className={styles.signup}>SignUp</h2>
         <h2 className={styles.login}>Login</h2>
+        <Switch
+          defaultChecked={isDarkTheme}
+          onChange={(_, data) => {
+            setIsDarkTheme(data.checked);
+          }}
+        />
       </div>
     </div>
   );
