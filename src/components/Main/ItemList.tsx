@@ -3,7 +3,7 @@ import { Card, makeStyles } from "@fluentui/react-components";
 import { BookExclamationMarkRegular } from "@fluentui/react-icons";
 
 import Item from "./Item";
-import useMockListStore from "../../stores/mock";
+import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
 
@@ -46,29 +46,54 @@ const useStyles = makeStyles({
 
 function ItemList() {
   const styles = useStyles();
-  const { mockList: itemList } = useMockListStore();
+  const { mockList, placeItemList, selectedPlace, showLostGoods } =
+    useMainStore();
+
+  const renderEmpty = () => {
+    return (
+      <div className={styles.empty}>
+        <BookExclamationMarkRegular fontSize="128px" />
+        <div>{`${showLostGoods ? "분실물" : "습득물"}이 없습니다.`}</div>
+      </div>
+    );
+  };
+
+  const renderList = () => {
+    if (selectedPlace) {
+      return placeItemList.length > 0
+        ? placeItemList.map(
+            ({ fdPrdtNm, fdYmd, prdtClNm, fdFilePathImg }, index) => (
+              <Item
+                key={index}
+                address={fdYmd}
+                category={prdtClNm}
+                img={fdFilePathImg}
+                name={fdPrdtNm}
+              />
+            )
+          )
+        : renderEmpty();
+    } else {
+      return mockList.length > 0
+        ? mockList.map(({ name, address, category }, index) => (
+            <Item
+              key={index}
+              address={address}
+              category={category}
+              name={name}
+            />
+          ))
+        : renderEmpty();
+    }
+  };
 
   return (
     <div className={styles.root}>
       <div className={styles.subtitle}>현재 지역</div>
-      <div className={styles.title}>최근 습득물 목록</div>
-      <Card className={styles.list}>
-        {itemList.length > 0 ? (
-          itemList.map(({ lat, lng, category }, index) => (
-            <Item
-              key={index}
-              address={`${lat} ${lng}`}
-              category={category}
-              name={category}
-            />
-          ))
-        ) : (
-          <div className={styles.empty}>
-            <BookExclamationMarkRegular fontSize="128px" />
-            <div>습득물이 없습니다.</div>
-          </div>
-        )}
-      </Card>
+      <div
+        className={styles.title}
+      >{`${showLostGoods ? "분실물 목록" : "습득물 보관장소"}`}</div>
+      <Card className={styles.list}>{renderList()}</Card>
     </div>
   );
 }

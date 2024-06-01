@@ -12,7 +12,7 @@ import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
 import SearchListItem from "./SearchListItem";
-import { searchLostFound, getLostFound, LostFound } from "../../apis/lostfound";
+import { searchLostFound, getLostFound } from "../../apis/lostfound";
 import useIntersect from "../../hooks/useIntersect";
 import useSearchStore from "../../stores/search";
 

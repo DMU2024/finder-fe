@@ -41,15 +41,20 @@ interface ItemProps {
   name: string;
   address: string;
   category: string;
+  img?: string;
 }
 
-function Item({ name, address, category }: ItemProps) {
+function Item({ name, address, category, img }: ItemProps) {
   const styles = useStyle();
   return (
     <div>
       <div className={styles.root}>
         <div className={styles.itemTop}>
-          <Image src="/logo192.png" width="192px" />
+          <Image
+            fit="contain"
+            src={img ? img : "/logo192.png"}
+            style={{ width: "192px", height: "192px" }}
+          />
           <div className={styles.itemBox}>
             <div className={styles.itemName}>{name}</div>
             <div className={styles.itemDescription}>{address}</div>

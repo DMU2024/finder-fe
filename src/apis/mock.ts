@@ -1,18 +1,25 @@
 import { Instance } from "../utils/axios";
 
 interface Mock {
+  name: string;
+  date: string;
+  address: string;
+  category: string;
+  info: string;
   lat: number;
   lng: number;
-  category: string;
 }
 
 const getMockByCoords = async (
   lat1: number,
   lng1: number,
   lat2: number,
-  lng2: number
+  lng2: number,
+  isLostGoods: boolean
 ) => {
-  const { data } = await Instance.get<Mock[]>("/mock", {
+  const endpoint = isLostGoods ? "/mock" : "/place";
+
+  const { data } = await Instance.get<Mock[]>(endpoint, {
     params: {
       lat_gte: lat1,
       lng_gte: lng1,
@@ -24,5 +31,13 @@ const getMockByCoords = async (
   return data;
 };
 
+const postMock = async (mock: Mock) => {
+  const { data } = await Instance.post<Mock>("/mock", {
+    ...mock
+  });
+
+  return data;
+};
+
 export type { Mock };
-export { getMockByCoords };
+export { getMockByCoords, postMock };
