@@ -7,23 +7,18 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { LostFound } from "../../apis/lostfound";
-import { LostGoods } from "../../apis/lostgoods";
-import useSearchStore from "../../stores/search";
 
 interface Props {
-  item: LostFound | LostGoods;
+  item: LostFound;
 }
 
 function SearchListItem({ item }: Props) {
-  const { isLostGoods } = useSearchStore();
   const navigate = useNavigate();
 
   return (
     <TableRow
       onClick={() => {
-        navigate(
-          `/detail/${item.atcId}${!isLostGoods ? "?fdSn=" + (item as LostFound).fdSn : ""}`
-        );
+        navigate(`/detail/${item.atcId}?fdSn=${item.fdSn}`);
       }}
     >
       <TableCell>
@@ -31,36 +26,20 @@ function SearchListItem({ item }: Props) {
           media={
             <Image
               fit="contain"
-              src={isLostGoods ? "" : (item as LostFound).fdFilePathImg}
+              src={item.fdFilePathImg}
               style={{ width: "128px", height: "128px" }}
             />
           }
         />
       </TableCell>
       <TableCell>
-        <TableCellLayout
-          media={
-            isLostGoods
-              ? (item as LostGoods).lstPrdtNm
-              : (item as LostFound).fdPrdtNm
-          }
-        />
+        <TableCellLayout media={item.fdPrdtNm} />
       </TableCell>
       <TableCell>
-        <TableCellLayout
-          media={
-            isLostGoods
-              ? (item as LostGoods).lstPlace
-              : (item as LostFound).depPlace
-          }
-        />
+        <TableCellLayout media={item.depPlace} />
       </TableCell>
       <TableCell>
-        <TableCellLayout
-          media={
-            isLostGoods ? (item as LostGoods).lstYmd : (item as LostFound).fdYmd
-          }
-        />
+        <TableCellLayout media={item.fdYmd} />
       </TableCell>
       <TableCell>
         <TableCellLayout media={item.prdtClNm} />

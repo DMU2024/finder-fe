@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { LostFoundDetail, getLostFoundDetail } from "../apis/lostfound";
-import { LostGoodsDetail, getLostGoodsDetail } from "../apis/lostgoods";
-import useSearchStore from "../stores/search";
 import { mainColor } from "../styles/color";
 import { headerHeight } from "../styles/margin";
 import { sideBarWidth } from "../styles/size";
@@ -101,7 +99,6 @@ const useStyles = makeStyles({
 
 function DetailPage() {
   const styles = useStyles();
-  const { isLostGoods } = useSearchStore();
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -110,15 +107,11 @@ function DetailPage() {
   const queryParams = new URLSearchParams(location.search);
   const fdSn = queryParams.get("fdSn");
 
-  const [item, setItem] = useState<LostFoundDetail | LostGoodsDetail>();
+  const [item, setItem] = useState<LostFoundDetail>();
 
   useEffect(() => {
     if (id) {
-      const task = isLostGoods
-        ? getLostGoodsDetail(id)
-        : getLostFoundDetail(id, fdSn);
-
-      task.then((data) => {
+      getLostFoundDetail(id, fdSn).then((data) => {
         setItem(data);
       });
     }
@@ -128,7 +121,7 @@ function DetailPage() {
     <>
       <div className={styles.back} onClick={() => navigate(-1)}>
         <ArrowLeftRegular color={mainColor} />
-        <span>{isLostGoods ? "분실물" : "습득물"} 찾기</span>
+        <span>습득물 찾기</span>
       </div>
       <div className={styles.root}>
         <Card className={styles.content}>
@@ -136,27 +129,15 @@ function DetailPage() {
             <Image
               className={styles.contentTopImage}
               fit="contain"
-              src={
-                isLostGoods
-                  ? (item as LostGoodsDetail)?.lstFilePathImg
-                  : (item as LostFoundDetail)?.fdFilePathImg
-              }
+              src={item?.fdFilePathImg}
             />
             <div className={styles.contentTopTexts}>
-              <div className={styles.contentTopMain}>
-                {isLostGoods
-                  ? (item as LostGoodsDetail)?.lstPrdtNm
-                  : (item as LostFoundDetail)?.fdPrdtNm}
+              <div className={styles.contentTopMain}>{item?.fdPrdtNm}</div>
+              <div className={styles.contentTopSub}>
+                {`보관장소: ${item?.depPlace}`}
               </div>
               <div className={styles.contentTopSub}>
-                {isLostGoods
-                  ? `분실장소: ${(item as LostGoodsDetail)?.lstPlace}`
-                  : `보관장소: ${(item as LostFoundDetail)?.depPlace}`}
-              </div>
-              <div className={styles.contentTopSub}>
-                {isLostGoods
-                  ? `분실일자: ${(item as LostGoodsDetail)?.lstYmd}`
-                  : `습득일자: ${(item as LostFoundDetail)?.fdYmd}`}
+                {`습득일자: ${item?.fdYmd}`}
               </div>
               <div
                 className={styles.contentTopInfo}
@@ -168,11 +149,7 @@ function DetailPage() {
                 className={styles.contentTopInfo}
               >{`접수장소: ${item?.orgNm}`}</div>
               <div className={styles.contentTopInfo}>
-                {`상태: ${
-                  isLostGoods
-                    ? (item as LostGoodsDetail)?.lstSteNm
-                    : (item as LostFoundDetail)?.csteSteNm
-                }`}
+                {`상태: ${item?.csteSteNm}`}
               </div>
             </div>
             <a className={styles.contentTopChat} href={`tel:${item?.tel}`}>
@@ -181,7 +158,7 @@ function DetailPage() {
             </a>
           </div>
           <div className={styles.contentBottom}>
-            {item?.uniq.split("내용\r\n\r\n")}
+            {item?.uniq?.split("내용\r\n\r\n")}
           </div>
         </Card>
       </div>
