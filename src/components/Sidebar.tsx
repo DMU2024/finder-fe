@@ -16,7 +16,6 @@ import {
 } from "@fluentui/react-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import useOptionStore from "../stores/option";
 import { sideBarWidth } from "../styles/size";
 
 const useStyle = makeStyles({
@@ -78,6 +77,8 @@ function Sidebar() {
         return "tab1";
       case "/search":
         return "tab2";
+      default:
+        return "tab1";
     }
   };
 
@@ -107,8 +108,18 @@ function Sidebar() {
           value="tab2"
           onClick={() => navigate("/search")}
         />
-        <Tab className={styles.tab} icon={<ChatRegular />} value="tab3" />
-        <Tab className={styles.tab} icon={<PersonInfoRegular />} value="tab4" />
+        <Tab
+          disabled
+          className={styles.tab}
+          icon={<ChatRegular />}
+          value="tab3"
+        />
+        <Tab
+          disabled
+          className={styles.tab}
+          icon={<PersonInfoRegular />}
+          value="tab4"
+        />
       </TabList>
     </InlineDrawer>
   );
