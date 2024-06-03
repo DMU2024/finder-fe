@@ -147,7 +147,7 @@ function DetailPage() {
               >{`물품분류: ${item?.prdtClNm}`}</div>
               <div
                 className={styles.contentTopInfo}
-              >{`접수장소: ${item?.orgNm}`}</div>
+              >{`습득장소: ${item?.fdPlace}`}</div>
               <div className={styles.contentTopInfo}>
                 {`상태: ${item?.csteSteNm}`}
               </div>
