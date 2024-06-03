@@ -1,5 +1,7 @@
 import { Divider, Image, makeStyles, tokens } from "@fluentui/react-components";
+import { useNavigate } from "react-router-dom";
 
+import { LostFound } from "../../apis/lostfound";
 import { mainColor } from "../../styles/color";
 
 const useStyle = makeStyles({
@@ -33,7 +35,8 @@ const useStyle = makeStyles({
     marginBottom: "8px",
     fontSize: "14px",
     fontWeight: "bold",
-    color: mainColor
+    color: mainColor,
+    cursor: "pointer"
   }
 });
 
@@ -42,10 +45,13 @@ interface ItemProps {
   address: string;
   category: string;
   img?: string;
+  item?: LostFound;
 }
 
-function Item({ name, address, category, img }: ItemProps) {
+function Item({ name, address, category, img, item }: ItemProps) {
   const styles = useStyle();
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className={styles.root}>
@@ -61,7 +67,16 @@ function Item({ name, address, category, img }: ItemProps) {
             <div className={styles.itemDescription}>{category}</div>
           </div>
         </div>
-        <div className={styles.itemDetail}>상세보기 {">"}</div>
+        <div
+          className={styles.itemDetail}
+          onClick={() => {
+            if (item) {
+              navigate(`/detail/${item.atcId}?fdSn=${item.fdSn}`);
+            }
+          }}
+        >
+          {"상세보기 >"}
+        </div>
       </div>
       <Divider />
     </div>

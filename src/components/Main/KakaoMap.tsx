@@ -268,7 +268,7 @@ function KakaoMap() {
                 clickable={true}
                 position={{ lat: mock.lat, lng: mock.lng }}
                 onClick={() => {
-                  if (mock !== selectedPlace) {
+                  if (mock.name !== selectedPlace?.name) {
                     setClickedPos({ lat: mock.lat, lng: mock.lng });
                     setSelectedPlace(mock);
                     placeLostFound(mock.name).then((data) => {

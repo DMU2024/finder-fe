@@ -61,23 +61,22 @@ function ItemList() {
   const renderList = () => {
     if (selectedPlace) {
       return placeItemList.length > 0
-        ? placeItemList.map(
-            ({ fdPrdtNm, fdYmd, prdtClNm, fdFilePathImg }, index) => (
-              <Item
-                key={index}
-                address={fdYmd}
-                category={prdtClNm}
-                img={fdFilePathImg}
-                name={fdPrdtNm}
-              />
-            )
-          )
+        ? placeItemList.map((item) => (
+            <Item
+              key={item._id}
+              address={item.fdYmd}
+              category={item.prdtClNm}
+              img={item.fdFilePathImg}
+              item={item}
+              name={item.fdPrdtNm}
+            />
+          ))
         : renderEmpty();
     } else {
       return mockList.length > 0
-        ? mockList.map(({ name, address, category }, index) => (
+        ? mockList.map(({ name, address, category }) => (
             <Item
-              key={index}
+              key={name}
               address={address}
               category={category}
               name={name}
