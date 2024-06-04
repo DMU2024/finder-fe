@@ -1,9 +1,10 @@
 import { makeStyles } from "@fluentui/react-components";
-import { useRef } from "react";
 
 import ItemList from "../components/Main/ItemList";
 import KakaoMap from "../components/Main/KakaoMap";
+import MarkerList from "../components/Main/MarkerList";
 import Notificiation from "../components/Main/Notification";
+import useMainStore from "../stores/main";
 
 const useStyles = makeStyles({
   root: {
@@ -23,15 +24,14 @@ const useStyles = makeStyles({
 
 function MainPage() {
   const styles = useStyles();
-
-  const rootRef = useRef<HTMLDivElement>(null);
+  const { selectedMarker } = useMainStore();
 
   return (
-    <div ref={rootRef} className={styles.root}>
+    <div className={styles.root}>
       <Notificiation />
       <div className={styles.content}>
         <div className={styles.left}>
-          <ItemList />
+          {selectedMarker ? <ItemList /> : <MarkerList />}
         </div>
         <div className={styles.right}>
           <KakaoMap />

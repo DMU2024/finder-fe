@@ -1,13 +1,13 @@
 import { create } from "zustand";
 
 import { LostFound } from "../apis/lostfound";
-import { Mock } from "../apis/mock";
+import { Marker } from "../apis/marker";
 
 interface Main {
-  mockList: Mock[];
-  setMockList: (items: Mock[]) => void;
-  selectedPlace: Mock | undefined;
-  setSelectedPlace: (mock: Mock | undefined) => void;
+  markerList: Marker[];
+  setMarkerList: (items: Marker[]) => void;
+  selectedMarker: Marker | undefined;
+  setSelectedMarker: (marker: Marker | undefined) => void;
   placeItemList: LostFound[];
   setPlaceItemList: (items: LostFound[]) => void;
   showLostGoods: boolean;
@@ -15,13 +15,13 @@ interface Main {
 }
 
 const useMainStore = create<Main>((set) => ({
-  mockList: [],
-  setMockList: (items) => {
-    set({ mockList: items });
+  markerList: [],
+  setMarkerList: (items) => {
+    set({ markerList: items });
   },
-  selectedPlace: undefined,
-  setSelectedPlace: (mock) => {
-    set({ selectedPlace: mock });
+  selectedMarker: undefined,
+  setSelectedMarker: (marker) => {
+    set({ selectedMarker: marker });
   },
   placeItemList: [],
   setPlaceItemList: (items) => {

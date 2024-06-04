@@ -2,6 +2,8 @@ import { Divider, Image, makeStyles, tokens } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
 
 import { LostFound } from "../../apis/lostfound";
+import { Marker } from "../../apis/marker";
+import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 
 const useStyle = makeStyles({
@@ -45,12 +47,15 @@ interface ItemProps {
   address: string;
   category: string;
   img?: string;
+  marker?: Marker;
   item?: LostFound;
 }
 
-function Item({ name, address, category, img, item }: ItemProps) {
+function Item({ name, address, category, img, marker, item }: ItemProps) {
   const styles = useStyle();
   const navigate = useNavigate();
+
+  const { setSelectedMarker } = useMainStore();
 
   return (
     <div>
@@ -70,6 +75,9 @@ function Item({ name, address, category, img, item }: ItemProps) {
         <div
           className={styles.itemDetail}
           onClick={() => {
+            if (marker) {
+              setSelectedMarker(marker);
+            }
             if (item) {
               navigate(`/detail/${item.atcId}?fdSn=${item.fdSn}`);
             }

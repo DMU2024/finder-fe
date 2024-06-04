@@ -1,7 +1,7 @@
 import { Depths } from "@fluentui/react";
 import { Button, Card, Switch, makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
   CustomOverlayMap,
   Map,
@@ -9,9 +9,7 @@ import {
   MarkerClusterer
 } from "react-kakao-maps-sdk";
 
-import { getCoord2Address } from "../../apis/kakaoMap";
-import { placeLostFound } from "../../apis/lostfound";
-import { getMockByCoords } from "../../apis/mock";
+import { getMarkerByCoords } from "../../apis/marker";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
@@ -94,19 +92,13 @@ function KakaoMap() {
     getCoords
   } = usePositionStore();
 
-  const [clickedPos, setClickedPos] = useState<{ lat: number; lng: number }>();
-  const [clickedAddress, setClickedAddress] = useState<{
-    address_name: string;
-    building_name: string | null;
-  }>();
-
   const mapRef = useRef<kakao.maps.Map>(null);
 
   const {
-    mockList,
-    setMockList,
-    selectedPlace,
-    setSelectedPlace,
+    markerList,
+    setMarkerList,
+    selectedMarker,
+    setSelectedMarker,
     setPlaceItemList,
     showLostGoods,
     setShowLostGoods
@@ -118,49 +110,26 @@ function KakaoMap() {
     if (bounds) {
       const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
 
-      getMockByCoords(
+      getMarkerByCoords(
         sw.getLat(),
         sw.getLng(),
         ne.getLat(),
         ne.getLng(),
         showLostGoods
       ).then((data) => {
-        setMockList(data);
+        setMarkerList(data);
       });
     }
   }, [latitude, longitude, zoomLevel, showLostGoods]);
 
-  useEffect(() => {
-    if (clickedPos) {
-      if (selectedPlace) {
-        setClickedAddress({
-          address_name: selectedPlace.address,
-          building_name: selectedPlace.name
-        });
-      } else {
-        getCoord2Address(clickedPos.lat, clickedPos.lng)
-          .then(({ address_name, building_name }) =>
-            setClickedAddress({
-              address_name: address_name,
-              building_name: building_name
-            })
-          )
-          .catch((err) => setClickedAddress(err));
-      }
-    }
-  }, [clickedPos]);
-
   const renderPopup = () => {
-    if (clickedPos) {
+    if (selectedMarker) {
       return (
         <>
-          {!selectedPlace && (
-            <MapMarker
-              position={clickedPos}
-              onClick={() => setClickedPos(undefined)}
-            />
-          )}
-          <CustomOverlayMap position={clickedPos} yAnchor={-0.2}>
+          <CustomOverlayMap
+            position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
+            yAnchor={-0.2}
+          >
             <div
               className={styles.popup}
               onMouseDown={(event) => {
@@ -175,24 +144,8 @@ function KakaoMap() {
                   color: "black"
                 }}
               >
-                {clickedAddress ? (
-                  <>
-                    <div style={{ fontSize: "20px" }}>
-                      {clickedAddress.building_name
-                        ? clickedAddress.building_name
-                        : clickedAddress.address_name
-                          ? clickedAddress.address_name
-                          : "지원하지 않는 위치"}
-                    </div>
-                    {clickedAddress.building_name && (
-                      <div style={{ color: mainColor }}>
-                        {clickedAddress.address_name}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  "불러오는 중"
-                )}
+                <div style={{ fontSize: "20px" }}>{selectedMarker.name}</div>
+                <div style={{ color: mainColor }}>{selectedMarker.address}</div>
               </Card>
               <Card
                 className={styles.popupCards}
@@ -220,9 +173,8 @@ function KakaoMap() {
             label={"분실물 보기"}
             style={{ fontWeight: "bold" }}
             onChange={(_, { checked }) => {
-              setMockList([]);
-              setClickedPos(undefined);
-              setSelectedPlace(undefined);
+              setMarkerList([]);
+              setSelectedMarker(undefined);
               setPlaceItemList([]);
               setShowLostGoods(checked);
             }}
@@ -239,14 +191,6 @@ function KakaoMap() {
           center={{ lat: latitude, lng: longitude }}
           level={zoomLevel}
           style={{ width: "100%", height: "100%" }}
-          onClick={(_, event) => {
-            const latLng = event.latLng;
-            const [lat, lng] = [latLng.getLat(), latLng.getLng()];
-
-            setClickedPos({ lat: lat, lng: lng });
-            setSelectedPlace(undefined);
-            setPlaceItemList([]);
-          }}
           onDragEnd={(map) => {
             const center = map.getCenter();
 
@@ -262,22 +206,17 @@ function KakaoMap() {
           }}
         >
           <MarkerClusterer averageCenter={true} minLevel={7}>
-            {mockList?.map((mock, index) => (
+            {markerList?.map((marker, index) => (
               <MapMarker
                 key={index}
                 clickable={true}
-                position={{ lat: mock.lat, lng: mock.lng }}
+                position={{ lat: marker.lat, lng: marker.lng }}
                 onClick={() => {
-                  if (mock.name !== selectedPlace?.name) {
-                    setClickedPos({ lat: mock.lat, lng: mock.lng });
-                    setSelectedPlace(mock);
-                    placeLostFound(mock.name).then((data) => {
-                      setPlaceItemList(data);
-                    });
+                  // TODO: id로 비교해야함.
+                  if (marker !== selectedMarker) {
+                    setSelectedMarker(marker);
                   } else {
-                    setClickedPos(undefined);
-                    setSelectedPlace(undefined);
-                    setPlaceItemList([]);
+                    setSelectedMarker(undefined);
                   }
                 }}
               />

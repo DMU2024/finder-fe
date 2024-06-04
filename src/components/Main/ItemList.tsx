@@ -1,8 +1,10 @@
 import { Depths } from "@fluentui/react";
-import { Card, makeStyles } from "@fluentui/react-components";
+import { Card, Image, makeStyles, tokens } from "@fluentui/react-components";
 import { BookExclamationMarkRegular } from "@fluentui/react-icons";
+import { useEffect } from "react";
 
 import Item from "./Item";
+import { placeLostFound } from "../../apis/lostfound";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -41,57 +43,109 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     gap: "16px"
+  },
+  contentImage: {
+    width: "200px",
+    height: "200px",
+    backgroundColor: tokens.colorNeutralBackground3
+  },
+  contentTexts: {
+    marginTop: "32px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "24px",
+    fontWeight: "bold",
+    alignItems: "center"
+  },
+  contentMain: {
+    fontSize: "48px",
+    lineHeight: "48px",
+    color: tokens.colorNeutralForeground2
+  },
+  contentSub: {
+    fontSize: "24px",
+    lineHeight: "24px",
+    color: mainColor
+  },
+  contentInfo: {
+    fontSize: "20px",
+    color: tokens.colorNeutralStroke1
   }
 });
 
 function ItemList() {
   const styles = useStyles();
-  const { mockList, placeItemList, selectedPlace, showLostGoods } =
+  const { selectedMarker, placeItemList, showLostGoods, setPlaceItemList } =
     useMainStore();
 
-  const renderEmpty = () => {
-    return (
-      <div className={styles.empty}>
-        <BookExclamationMarkRegular fontSize="128px" />
-        <div>{`${showLostGoods ? "분실물" : "습득물"}이 없습니다.`}</div>
-      </div>
-    );
-  };
-
   const renderList = () => {
-    if (selectedPlace) {
-      return placeItemList.length > 0
-        ? placeItemList.map((item) => (
-            <Item
-              key={item._id}
-              address={item.fdYmd}
-              category={item.prdtClNm}
-              img={item.fdFilePathImg}
-              item={item}
-              name={item.fdPrdtNm}
-            />
-          ))
-        : renderEmpty();
+    if (showLostGoods) {
+      return (
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+        >
+          <Image
+            className={styles.contentImage}
+            fit="contain"
+            src="./logo192.png"
+          />
+          <div className={styles.contentTexts}>
+            <div className={styles.contentMain}>{selectedMarker?.name}</div>
+            <div className={styles.contentSub}>
+              {`분실일자: ${selectedMarker?.date}`}
+            </div>
+            <div
+              className={styles.contentInfo}
+            >{`물품분류: ${selectedMarker?.category}`}</div>
+            <div
+              className={styles.contentInfo}
+            >{`분실장소: ${selectedMarker?.address}`}</div>
+            <div
+              className={styles.contentInfo}
+            >{`내용: ${selectedMarker?.info}`}</div>
+          </div>
+        </div>
+      );
+    } else if (placeItemList.length > 0) {
+      return placeItemList.map((item) => (
+        <Item
+          key={item._id}
+          address={item.fdYmd}
+          category={item.prdtClNm}
+          img={item.fdFilePathImg}
+          item={item}
+          name={item.fdPrdtNm}
+        />
+      ));
     } else {
-      return mockList.length > 0
-        ? mockList.map(({ name, address, category }) => (
-            <Item
-              key={name}
-              address={address}
-              category={category}
-              name={name}
-            />
-          ))
-        : renderEmpty();
+      return (
+        <div className={styles.empty}>
+          <BookExclamationMarkRegular fontSize="128px" />
+          <div>{`${showLostGoods ? "분실물" : "습득물"}이 없습니다.`}</div>
+        </div>
+      );
     }
   };
 
+  useEffect(() => {
+    if (!showLostGoods && selectedMarker) {
+      placeLostFound(selectedMarker.name).then((data) => {
+        setPlaceItemList(data);
+      });
+    }
+  }, [selectedMarker]);
+
   return (
     <div className={styles.root}>
-      <div className={styles.subtitle}>현재 지역</div>
-      <div
-        className={styles.title}
-      >{`${showLostGoods ? "분실물 목록" : "습득물 보관장소"}`}</div>
+      <div className={styles.subtitle}>
+        {showLostGoods ? "선택한 분실물" : "선택한 장소"}
+      </div>
+      <div className={styles.title}>{selectedMarker?.name}</div>
       <Card className={styles.list}>{renderList()}</Card>
     </div>
   );
