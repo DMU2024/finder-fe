@@ -16,9 +16,18 @@ const useStyles = makeStyles({
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`
   },
   title: {
+    display: "flex"
+  },
+  titleText: {
     marginLeft: "8px",
     fontSize: "20px",
     fontWeight: "bold"
+  },
+  titleBack: {
+    marginLeft: "auto",
+    fontSize: "14px",
+    fontWeight: "bold",
+    cursor: "pointer"
   },
   subtitle: {
     marginLeft: "8px",
@@ -75,8 +84,13 @@ const useStyles = makeStyles({
 
 function ItemList() {
   const styles = useStyles();
-  const { selectedMarker, placeItemList, showLostGoods, setPlaceItemList } =
-    useMainStore();
+  const {
+    selectedMarker,
+    placeItemList,
+    showLostGoods,
+    setSelectedMarker,
+    setPlaceItemList
+  } = useMainStore();
 
   const renderList = () => {
     if (showLostGoods) {
@@ -145,7 +159,17 @@ function ItemList() {
       <div className={styles.subtitle}>
         {showLostGoods ? "선택한 분실물" : "선택한 장소"}
       </div>
-      <div className={styles.title}>{selectedMarker?.name}</div>
+      <div className={styles.title}>
+        <div className={styles.titleText}>{selectedMarker?.name}</div>
+        <div
+          className={styles.titleBack}
+          onClick={() => {
+            setSelectedMarker(undefined);
+          }}
+        >
+          뒤로가기
+        </div>
+      </div>
       <Card className={styles.list}>{renderList()}</Card>
     </div>
   );
