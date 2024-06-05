@@ -157,7 +157,7 @@ function ItemList() {
   return (
     <div className={styles.root}>
       <div className={styles.subtitle}>
-        {showLostGoods ? "선택한 분실물" : "선택한 장소"}
+        {`선택한 ${showLostGoods ? "분실물" : "장소"}`}
       </div>
       <div className={styles.title}>
         <div className={styles.titleText}>{selectedMarker?.name}</div>
@@ -167,7 +167,7 @@ function ItemList() {
             setSelectedMarker(undefined);
           }}
         >
-          뒤로가기
+          {`다른 ${showLostGoods ? "분실물" : "장소"}보기`}
         </div>
       </div>
       <Card className={styles.list}>{renderList()}</Card>
