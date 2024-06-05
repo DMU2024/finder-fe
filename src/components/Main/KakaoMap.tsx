@@ -109,16 +109,25 @@ function KakaoMap() {
 
     if (bounds) {
       const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
-
-      getMarkerByCoords(
+      const [swLat, swLng, neLat, neLng] = [
         sw.getLat(),
         sw.getLng(),
         ne.getLat(),
-        ne.getLng(),
-        showLostGoods
-      ).then((data) => {
-        setMarkerList(data);
-      });
+        ne.getLng()
+      ];
+
+      if (selectedMarker) {
+        const { lat, lng } = selectedMarker;
+        if (!bounds.contain(new kakao.maps.LatLng(lat, lng))) {
+          setSelectedMarker(undefined);
+        }
+      }
+
+      getMarkerByCoords(swLat, swLng, neLat, neLng, showLostGoods).then(
+        (data) => {
+          setMarkerList(data);
+        }
+      );
     }
   }, [latitude, longitude, zoomLevel, showLostGoods]);
 
