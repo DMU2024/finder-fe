@@ -1,5 +1,12 @@
 import { Depths } from "@fluentui/react";
-import { Card, Image, makeStyles, tokens } from "@fluentui/react-components";
+import {
+  Card,
+  Image,
+  Skeleton,
+  SkeletonItem,
+  makeStyles,
+  tokens
+} from "@fluentui/react-components";
 import { ArrowLeftRegular, ChatArrowBackRegular } from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -53,7 +60,8 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     marginTop: "36px",
     marginLeft: "44px",
-    marginBottom: "42px"
+    marginBottom: "42px",
+    marginRight: "44px"
   },
   contentTopMain: {
     fontSize: "48px",
@@ -107,14 +115,60 @@ function DetailPage() {
   const fdSn = queryParams.get("fdSn");
 
   const [item, setItem] = useState<LostFoundDetail>();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
-      getLostFoundDetail(id, fdSn).then((data) => {
-        setItem(data);
-      });
+      setIsLoading(true);
+      getLostFoundDetail(id, fdSn)
+        .then((data) => {
+          setItem(data);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   }, []);
+
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <div className={styles.contentTopTexts}>
+          <SkeletonItem style={{ height: "48px" }} />
+          <SkeletonItem style={{ height: "24px" }} />
+          <SkeletonItem style={{ height: "24px" }} />
+          <SkeletonItem style={{ height: "20px" }} />
+          <SkeletonItem style={{ height: "20px" }} />
+          <SkeletonItem style={{ height: "20px" }} />
+          <SkeletonItem style={{ height: "20px" }} />
+        </div>
+      );
+    } else {
+      return (
+        <div className={styles.contentTopTexts}>
+          <div className={styles.contentTopMain}>{item?.fdPrdtNm}</div>
+          <div className={styles.contentTopSub}>
+            {`보관장소: ${item?.depPlace}`}
+          </div>
+          <div className={styles.contentTopSub}>
+            {`습득일자: ${item?.fdYmd}`}
+          </div>
+          <div
+            className={styles.contentTopInfo}
+          >{`관리번호: ${item?.atcId}`}</div>
+          <div
+            className={styles.contentTopInfo}
+          >{`물품분류: ${item?.prdtClNm}`}</div>
+          <div
+            className={styles.contentTopInfo}
+          >{`습득장소: ${item?.fdPlace}`}</div>
+          <div className={styles.contentTopInfo}>
+            {`상태: ${item?.csteSteNm}`}
+          </div>
+        </div>
+      );
+    }
+  };
 
   return (
     <>
@@ -130,27 +184,7 @@ function DetailPage() {
               fit="contain"
               src={item?.fdFilePathImg}
             />
-            <div className={styles.contentTopTexts}>
-              <div className={styles.contentTopMain}>{item?.fdPrdtNm}</div>
-              <div className={styles.contentTopSub}>
-                {`보관장소: ${item?.depPlace}`}
-              </div>
-              <div className={styles.contentTopSub}>
-                {`습득일자: ${item?.fdYmd}`}
-              </div>
-              <div
-                className={styles.contentTopInfo}
-              >{`관리번호: ${item?.atcId}`}</div>
-              <div
-                className={styles.contentTopInfo}
-              >{`물품분류: ${item?.prdtClNm}`}</div>
-              <div
-                className={styles.contentTopInfo}
-              >{`습득장소: ${item?.fdPlace}`}</div>
-              <div className={styles.contentTopInfo}>
-                {`상태: ${item?.csteSteNm}`}
-              </div>
-            </div>
+            {renderContent()}
             <a className={styles.contentTopChat} href={`tel:${item?.tel}`}>
               <span>연락하기</span>
               <ChatArrowBackRegular fontSize="24px" />
