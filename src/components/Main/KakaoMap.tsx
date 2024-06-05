@@ -206,14 +206,13 @@ function KakaoMap() {
           }}
         >
           <MarkerClusterer averageCenter={true} minLevel={7}>
-            {markerList?.map((marker, index) => (
+            {markerList?.map((marker) => (
               <MapMarker
-                key={index}
+                key={marker._id}
                 clickable={true}
                 position={{ lat: marker.lat, lng: marker.lng }}
                 onClick={() => {
-                  // TODO: id로 비교해야함.
-                  if (marker !== selectedMarker) {
+                  if (marker._id !== selectedMarker?._id) {
                     setSelectedMarker(marker);
                   } else {
                     setSelectedMarker(undefined);

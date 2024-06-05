@@ -1,6 +1,7 @@
 import { Instance } from "../utils/axios";
 
 interface Marker {
+  _id: string;
   name: string;
   date: string;
   address: string;
