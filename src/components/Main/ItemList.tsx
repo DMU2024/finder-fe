@@ -1,10 +1,18 @@
 import { Depths } from "@fluentui/react";
-import { Card, Image, makeStyles, tokens } from "@fluentui/react-components";
+import {
+  Card,
+  Image,
+  Spinner,
+  makeStyles,
+  tokens
+} from "@fluentui/react-components";
 import { BookExclamationMarkRegular } from "@fluentui/react-icons";
-import { useEffect } from "react";
+import { AxiosError } from "axios";
+import { useEffect, useState } from "react";
 
 import Item from "./Item";
 import { placeLostFound } from "../../apis/lostfound";
+import useIntersect from "../../hooks/useIntersect";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -79,6 +87,12 @@ const useStyles = makeStyles({
   contentInfo: {
     fontSize: "20px",
     color: tokens.colorNeutralStroke1
+  },
+  spinner: {
+    margin: "16px",
+    "&>span": {
+      backgroundColor: tokens.colorPaletteLightGreenBackground2
+    }
   }
 });
 
@@ -91,6 +105,10 @@ function ItemList() {
     setSelectedMarker,
     setPlaceItemList
   } = useMainStore();
+
+  const [prevId, setPrevId] = useState<string | undefined>(undefined);
+  const [isEndOfPage, setIsEndOfPage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const renderList = () => {
     if (showLostGoods) {
@@ -125,33 +143,73 @@ function ItemList() {
           </div>
         </div>
       );
-    } else if (placeItemList.length > 0) {
-      return placeItemList.map((item) => (
-        <Item
-          key={item._id}
-          address={item.fdYmd}
-          category={item.prdtClNm}
-          img={item.fdFilePathImg}
-          item={item}
-          name={item.fdPrdtNm}
-        />
-      ));
-    } else {
+    } else if (placeItemList.length == 0 && isEndOfPage) {
       return (
         <div className={styles.empty}>
           <BookExclamationMarkRegular fontSize="128px" />
-          <div>{`${showLostGoods ? "분실물" : "습득물"}이 없습니다.`}</div>
+          <div>습득물이 없습니다.</div>
         </div>
+      );
+    } else {
+      return (
+        <>
+          {placeItemList.map((item) => (
+            <Item
+              key={item._id}
+              address={item.fdYmd}
+              category={item.prdtClNm}
+              img={item.fdFilePathImg}
+              item={item}
+              name={item.fdPrdtNm}
+            />
+          ))}
+          <div ref={scrollRef}>
+            {isLoading ? (
+              <Spinner className={styles.spinner} />
+            ) : (
+              <div style={{ height: "1px" }} />
+            )}
+          </div>
+        </>
       );
     }
   };
 
-  useEffect(() => {
-    if (!showLostGoods && selectedMarker) {
-      placeLostFound(selectedMarker.name).then((data) => {
-        setPlaceItemList(data);
-      });
+  const getItems = () => {
+    setIsLoading(true);
+    if (selectedMarker) {
+      placeLostFound(selectedMarker.name, prevId)
+        .then((data) => {
+          const lastId = data.at(-1)?._id;
+
+          if (lastId && lastId !== prevId) {
+            setPlaceItemList([...placeItemList, ...data]);
+            setPrevId(lastId);
+          } else {
+            setIsEndOfPage(true);
+          }
+        })
+        .catch((e: AxiosError) => {
+          console.error(e);
+          setIsEndOfPage(true);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
+  };
+
+  const scrollRef = useIntersect((entry, observer) => {
+    observer.unobserve(entry.target);
+    if (!isEndOfPage && !isLoading) {
+      getItems();
+    }
+  });
+
+  useEffect(() => {
+    setPlaceItemList([]);
+    setPrevId(undefined);
+    setIsEndOfPage(false);
   }, [selectedMarker]);
 
   return (

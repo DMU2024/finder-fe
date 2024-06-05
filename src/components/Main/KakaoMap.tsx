@@ -99,7 +99,6 @@ function KakaoMap() {
     setMarkerList,
     selectedMarker,
     setSelectedMarker,
-    setPlaceItemList,
     showLostGoods,
     setShowLostGoods
   } = useMainStore();
@@ -197,7 +196,6 @@ function KakaoMap() {
             onChange={(_, { checked }) => {
               setMarkerList([]);
               setSelectedMarker(undefined);
-              setPlaceItemList([]);
               setShowLostGoods(checked);
             }}
           />
