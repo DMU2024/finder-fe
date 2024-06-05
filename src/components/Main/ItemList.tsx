@@ -48,10 +48,10 @@ const useStyles = makeStyles({
     marginTop: "18px",
     borderRadius: "20px",
     boxShadow: Depths.depth16,
-    overflow: "auto",
-    "::-webkit-scrollbar": {
-      display: "none"
-    }
+    overflow: "auto"
+    // "::-webkit-scrollbar": {
+    //   display: "none"
+    // }
   },
   empty: {
     flex: 1,

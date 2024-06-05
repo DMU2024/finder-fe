@@ -5,18 +5,18 @@ import { LocationRegular } from "@fluentui/react-icons";
 import useOptionStore from "../stores/option";
 import { backgroundColor, mainColor } from "../styles/color";
 import { contentMargin, headerHeight } from "../styles/margin";
+import { sideBarWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
     alignItems: "center",
     display: "flex",
-    width: "100%",
+    width: `calc(100vw - ${sideBarWidth})`,
     height: headerHeight,
     backgroundColor: tokens.colorNeutralBackground1,
-    boxShadow: Depths.depth16
-    // position: "fixed",
-    // top: 0,
-    // zIndex: 1000
+    boxShadow: Depths.depth16,
+    position: "fixed",
+    zIndex: 1
   },
   title: {
     marginLeft: contentMargin,

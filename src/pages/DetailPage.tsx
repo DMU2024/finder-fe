@@ -36,7 +36,6 @@ const useStyles = makeStyles({
     boxShadow: Depths.depth16
   },
   contentTop: {
-    height: "60vh",
     display: "flex",
     justifyContent: "center"
   },
@@ -84,7 +83,7 @@ const useStyles = makeStyles({
     textDecorationLine: "none"
   },
   contentBottom: {
-    height: "40vh",
+    height: "100%",
     borderRadius: "20px",
     marginLeft: "44px",
     marginRight: "44px",

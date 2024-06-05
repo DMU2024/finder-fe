@@ -25,17 +25,21 @@ import { sideBarWidth } from "./styles/size";
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    height: "100vh",
-    backgroundColor: tokens.colorNeutralBackground2
+    minHeight: "100vh",
+    backgroundColor: tokens.colorNeutralBackground2,
+    overflowX: "hidden"
   },
   wrapper: {
-    width: "100vw",
+    display: "flex",
+    width: `calc(100% - ${sideBarWidth})`,
     marginLeft: sideBarWidth
   },
   content: {
+    flex: 1,
     display: "flex",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
-    margin: contentMargin
+    marginTop: `calc(${contentMargin} + ${headerHeight})`,
+    marginLeft: contentMargin,
+    marginRight: contentMargin
   }
 });
 

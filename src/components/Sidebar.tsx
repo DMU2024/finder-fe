@@ -26,6 +26,7 @@ const useStyle = makeStyles({
     height: "100%",
     backgroundColor: tokens.colorNeutralBackground1,
     position: "fixed",
+    zIndex: 1,
     left: 0,
     top: 0
   },

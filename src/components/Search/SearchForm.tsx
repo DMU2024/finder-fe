@@ -38,7 +38,7 @@ function SearchForm() {
       <div className={styles.searchHeader}>
         <div>
           <SearchRegular style={{ color: mainColor, fontSize: "50px" }} />
-          <span style={{ fontSize: "64px" }}>습득물 검색</span>
+          <span style={{ fontSize: "64px" }}>검색</span>
         </div>
       </div>
       <SearchBox

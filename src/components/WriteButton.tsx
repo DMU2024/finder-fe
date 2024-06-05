@@ -9,7 +9,7 @@ const useStyle = makeStyles({
   writeButton: {
     width: "100px",
     height: "100px",
-    position: "absolute",
+    position: "fixed",
     zIndex: 1,
     left: `calc(${sideBarWidth} - 50px)`,
     bottom: "64px",
