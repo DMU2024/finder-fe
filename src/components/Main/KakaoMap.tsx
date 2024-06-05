@@ -122,6 +122,19 @@ function KakaoMap() {
     }
   }, [latitude, longitude, zoomLevel, showLostGoods]);
 
+  useEffect(() => {
+    const map = mapRef.current;
+
+    if (selectedMarker) {
+      if (map) {
+        map.setLevel(3);
+        setZoomLevel(map.getLevel());
+      }
+      setLatitude(selectedMarker.lat);
+      setLongitude(selectedMarker.lng);
+    }
+  }, [selectedMarker]);
+
   const renderPopup = () => {
     if (selectedMarker) {
       return (
@@ -228,6 +241,7 @@ function KakaoMap() {
           disabled={isLoading}
           shape="circular"
           onClick={() => {
+            setSelectedMarker(undefined);
             getCoords();
           }}
         >
