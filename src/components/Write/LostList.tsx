@@ -1,27 +1,22 @@
-import React, { useState } from "react";
+import { DefaultButton } from "@fluentui/react";
+import { makeStyles, tokens } from "@fluentui/react-components";
+import { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { makeStyles } from "@fluentui/react-components";
-
+import { postMarker } from "../../apis/marker";
+import useMainStore from "../../stores/main";
+import usePositionStore from "../../stores/position";
+import useWriteStore from "../../stores/write";
 import { mainColor, skeletonColor } from "../../styles/color";
-import { contentMargin, headerHeight } from "../../styles/margin";
 import Category from "../Category/CategoryList";
-
-
-interface DatePickerProps {
-  selected: Date | null;
-  onChange: (date: Date | null) => void;
-  dateFormat?: string;
-  className?: string;
-  placeholderText?: string;
-}
 
 const useStyles = makeStyles({
   root: {
+    flex: 1,
     display: "flex",
-    flexDirection: "column",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`
+    flexDirection: "column"
   },
   title: {
     color: mainColor,
@@ -44,28 +39,68 @@ const useStyles = makeStyles({
     marginBottom: "40px"
   },
   input: {
+    width: "100%",
     height: "53px",
     border: "1px solid #D9D9D9",
     padding: "8px",
-    width: "45vw",
     boxSizing: "border-box",
     fontSize: "14px",
     outline: "none"
+  },
+  datePicker: {
+    display: "unset!important"
+  },
+  submitButtonContainer: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  submitButton: {
+    marginBottom: "12px",
+    padding: "20px 30px",
+    backgroundColor: tokens.colorBrandBackground,
+    color: "white",
+    borderRadius: "4px",
+    fontSize: "16px",
+    boxShadow: tokens.shadow4,
+    transition: "background-color 0.3s",
+    "&:hover": {
+      backgroundColor: tokens.colorBrandBackgroundHover
+    },
+    "&:active": {
+      backgroundColor: tokens.colorBrandBackgroundPressed
+    }
   }
 });
 
-const LostList: React.FC = () => {
+function LostList() {
   const styles = useStyles();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
-    null
-  );
-  const [startDate, setStartDate] = useState<Date | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleCategorySelect = (category: string, subcategory: string) => {
-    setSelectedCategory(category);
-    setSelectedSubcategory(subcategory);
-  };
+  const {
+    selectedCategory,
+    selectedSubcategory,
+    setSelectedCategory,
+    setSelectedSubcategory
+  } = useWriteStore();
+
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const addrRef = useRef<HTMLInputElement | null>(null);
+  const infoRef = useRef<HTMLInputElement | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+
+  const {
+    address,
+    latitude,
+    longitude,
+    clickedInfo,
+    setLatitude,
+    setLongitude,
+    setZoomLevel,
+    setClickedInfo
+  } = usePositionStore();
+
+  const { setShowLostGoods } = useMainStore();
 
   const renderTitle = () => {
     if (selectedCategory && selectedSubcategory) {
@@ -75,7 +110,7 @@ const LostList: React.FC = () => {
         </h1>
       );
     } else {
-      return <h1>카테고리 01 {">"} 카테고리 02</h1>;
+      return <h1>대분류 {">"} 소분류</h1>;
     }
   };
 
@@ -84,14 +119,18 @@ const LostList: React.FC = () => {
       <div className={styles.title}>
         {renderTitle()}
         <div>
-          <Category onSelect={handleCategorySelect} />
+          <Category />
         </div>
       </div>
-
       <div className={styles.listMargin}>
         <a className={styles.subTitle}>분실물 이름</a>
         <div className={styles.listContainer}>
-          <input className={styles.input} type="text" />
+          <input
+            ref={nameRef}
+            className={styles.input}
+            defaultValue={selectedSubcategory ? selectedSubcategory : ""}
+            type="text"
+          />
         </div>
       </div>
       <div className={styles.listMargin}>
@@ -102,6 +141,7 @@ const LostList: React.FC = () => {
             dateFormat="yyyy-MM-dd"
             placeholderText="날짜 선택"
             selected={startDate}
+            wrapperClassName={styles.datePicker}
             onChange={(date: Date | null) => setStartDate(date)}
           />
         </div>
@@ -109,17 +149,58 @@ const LostList: React.FC = () => {
       <div className={styles.listMargin}>
         <a className={styles.subTitle}>분실 장소</a>
         <div className={styles.listContainer}>
-          <input className={styles.input} type="text" />
+          <input
+            ref={addrRef}
+            className={styles.input}
+            defaultValue={clickedInfo?.address ? clickedInfo.address : address}
+            type="text"
+            onClick={() => {
+              navigate("/");
+            }}
+          />
         </div>
       </div>
       <div className={styles.listMargin}>
-        <a className={styles.subTitle}>물품 상태</a>
+        <a className={styles.subTitle}>추가 설명</a>
         <div className={styles.listContainer}>
-          <input className={styles.input} type="text" />
+          <input ref={infoRef} className={styles.input} type="text" />
         </div>
+      </div>
+      <div className={styles.submitButtonContainer}>
+        <DefaultButton
+          className={styles.submitButton}
+          text="등록"
+          onClick={() => {
+            postMarker({
+              _id: "",
+              name: `${nameRef.current?.value}`,
+              date: `${startDate?.toISOString().split("T")[0]}`,
+              address: `${addrRef.current?.value}`,
+              category: `${selectedCategory} > ${selectedSubcategory}`,
+              info: `${infoRef.current?.value}`,
+              lat: clickedInfo?.lat ? clickedInfo.lat : latitude,
+              lng: clickedInfo?.lng ? clickedInfo.lng : longitude
+            }).then((data) => {
+              // write
+              setSelectedCategory(undefined);
+              setSelectedSubcategory(undefined);
+
+              // position
+              setLatitude(data.lat);
+              setLongitude(data.lng);
+              setZoomLevel(3);
+              setClickedInfo(undefined);
+
+              // main
+              setShowLostGoods(true);
+
+              navigate("/", { state: location.pathname });
+            });
+          }}
+        />
       </div>
     </div>
   );
-};
+}
 
 export default LostList;

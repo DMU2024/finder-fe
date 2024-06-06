@@ -1,9 +1,10 @@
-import { initializeIcons, Icon } from "@fluentui/react";
+import { Icon } from "@fluentui/react";
 import { makeStyles } from "@fluentui/react-components";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 
 import { categories, CategoryData, Subcategory } from "./CategoryData";
+import useWriteStore from "../../stores/write";
 import { mainColor, skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({
@@ -33,7 +34,8 @@ const useStyles = makeStyles({
     top: 0,
     right: 0,
     bottom: 0,
-    left: 0
+    left: 0,
+    zIndex: 1000
   },
   gridContainer: {
     display: "grid",
@@ -96,60 +98,64 @@ const useStyles = makeStyles({
   }
 });
 
-initializeIcons();
+Modal.setAppElement("#root");
 
-interface CategoryProps {
-  onSelect: (category: string, subcategory: string) => void;
-}
-
-function Category({ onSelect }: CategoryProps) {
+function Category() {
   const styles = useStyles();
-  const [isOpen, setIsOpen] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryData | null>(
-    null
-  );
-  const [isSmallModal, setIsSmallModal] = useState(false); // State to track modal size
 
-  useEffect(function () {
-    setIsOpen(true);
-  }, []);
+  const {
+    selectedCategory,
+    selectedSubcategory,
+    setSelectedCategory,
+    setSelectedSubcategory
+  } = useWriteStore();
 
-  function closeModal() {
+  const [category, setCategory] = useState<CategoryData | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSmallModal, setIsSmallModal] = useState(false);
+
+  const closeModal = () => {
     setIsOpen(false);
-    setSelectedCategory(null);
-    setIsSmallModal(false); // Reset modal size when closing
-  }
+    setCategory(null);
+    setIsSmallModal(false);
+  };
 
-  function handleCategorySelect(category: CategoryData) {
-    setSelectedCategory(category);
-    setIsSmallModal(true); // Set modal size to small when category is selected
-  }
+  const handleCategorySelect = (category: CategoryData) => {
+    setCategory(category);
+    setIsSmallModal(true);
+  };
 
-  function handleSubcategorySelect(subcategory: Subcategory) {
-    onSelect(selectedCategory!.name, subcategory.name);
+  const handleSubcategorySelect = (subcategory: Subcategory) => {
+    setSelectedCategory(category?.name);
+    setSelectedSubcategory(subcategory.name);
     closeModal();
-  }
+  };
+
+  useEffect(() => {
+    if (!selectedCategory || !selectedSubcategory) {
+      setIsOpen(true);
+    }
+  }, []);
 
   return (
     <div>
-      {(!selectedCategory || selectedCategory.subcategories.length === 0) && (
+      {(!category || category.subcategories.length === 0) && (
         <button className={styles.button} onClick={() => setIsOpen(true)}>
-          {" "}
-          카테고리 선택{" "}
+          카테고리 선택
         </button>
       )}
 
       <Modal
-        className={`${styles.modalContent} ${isSmallModal ? styles.modalContentSmall : ""}`} // Apply small modal style conditionally
+        className={`${styles.modalContent} ${isSmallModal ? styles.modalContentSmall : ""}`}
         contentLabel="Category Select"
         isOpen={isOpen}
         overlayClassName={styles.modalOverlay}
         onRequestClose={closeModal}
       >
         <h1 className={styles.title}>
-          {selectedCategory ? `${selectedCategory.name}의` : ""} 카테고리 선택
+          {category ? `${category.name}의` : ""} 카테고리 선택
         </h1>
-        {!selectedCategory ? (
+        {!category ? (
           <div className={styles.gridContainer}>
             {categories.map(function (category, index) {
               return (
@@ -171,24 +177,25 @@ function Category({ onSelect }: CategoryProps) {
           <div>
             <h2 className={styles.title}>소분류 선택</h2>
             <ul className={styles.subcategoryList}>
-              {selectedCategory.subcategories.map(
-                function (subcategory, subIndex) {
-                  return (
-                    <li
-                      key={subIndex}
-                      className={`${styles.subcategoryItem} ${styles.subcategoryItemHover}`}
-                      onClick={() => handleSubcategorySelect(subcategory)}
-                    >
-                      {subcategory.name}
-                    </li>
-                  );
-                }
-              )}
+              {category.subcategories.map((subcategory, subIndex) => {
+                return (
+                  <li
+                    key={subIndex}
+                    className={`${styles.subcategoryItem} ${styles.subcategoryItemHover}`}
+                    onClick={() => handleSubcategorySelect(subcategory)}
+                  >
+                    {subcategory.name}
+                  </li>
+                );
+              })}
             </ul>
             <div className={styles.buttonContainer}>
               <button
                 className={styles.button}
-                onClick={() => setSelectedCategory(null)}
+                onClick={() => {
+                  setCategory(null);
+                  setIsSmallModal(false);
+                }}
               >
                 다시 선택
               </button>

@@ -1,6 +1,7 @@
 import { Depths } from "@fluentui/react";
 import { Card, makeStyles } from "@fluentui/react-components";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
+import { useNavigate } from "react-router-dom";
 
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
@@ -23,6 +24,8 @@ const useStyles = makeStyles({
 
 function KakaoMapPopup() {
   const styles = useStyles();
+  const navigate = useNavigate();
+
   const { clickedInfo } = usePositionStore();
   const { selectedMarker } = useMainStore();
   const info = selectedMarker || clickedInfo;
@@ -55,15 +58,21 @@ function KakaoMapPopup() {
                 <div style={{ color: mainColor }}>{info.address}</div>
               )}
             </Card>
-            <Card
-              className={styles.popupCards}
-              style={{
-                backgroundColor: mainColor,
-                color: "white"
-              }}
-            >
-              등록
-            </Card>
+            {!("_id" in info) && (
+              <Card
+                className={styles.popupCards}
+                style={{
+                  backgroundColor: mainColor,
+                  color: "white",
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  navigate("/write");
+                }}
+              >
+                등록
+              </Card>
+            )}
           </div>
         </CustomOverlayMap>
       )}

@@ -91,38 +91,40 @@ function KakaoMap() {
   } = useMainStore();
 
   useEffect(() => {
-    const bounds = mapRef.current?.getBounds();
+    if (latitude !== 0 && longitude !== 0) {
+      const bounds = mapRef.current?.getBounds();
 
-    if (bounds) {
-      const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
-      const [swLat, swLng, neLat, neLng] = [
-        sw.getLat(),
-        sw.getLng(),
-        ne.getLat(),
-        ne.getLng()
-      ];
+      if (bounds) {
+        const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
+        const [swLat, swLng, neLat, neLng] = [
+          sw.getLat(),
+          sw.getLng(),
+          ne.getLat(),
+          ne.getLng()
+        ];
 
-      if (selectedMarker) {
-        const { lat, lng } = selectedMarker;
-        if (!bounds.contain(new kakao.maps.LatLng(lat, lng))) {
-          setSelectedMarker(undefined);
+        if (selectedMarker) {
+          const { lat, lng } = selectedMarker;
+          if (!bounds.contain(new kakao.maps.LatLng(lat, lng))) {
+            setSelectedMarker(undefined);
+          }
         }
+
+        if (clickedInfo) {
+          const { lat, lng } = clickedInfo;
+          if (!bounds.contain(new kakao.maps.LatLng(lat, lng))) {
+            setClickedInfo(undefined);
+          }
+        }
+
+        getMarkerByCoords(swLat, swLng, neLat, neLng, showLostGoods).then(
+          (data) => {
+            setMarkerList(data);
+          }
+        );
       }
-
-      if (clickedInfo) {
-        const { lat, lng } = clickedInfo;
-        if (!bounds.contain(new kakao.maps.LatLng(lat, lng))) {
-          setClickedInfo(undefined);
-        }
-      }
-
-      getMarkerByCoords(swLat, swLng, neLat, neLng, showLostGoods).then(
-        (data) => {
-          setMarkerList(data);
-        }
-      );
     }
-  }, [latitude, longitude, zoomLevel, showLostGoods]);
+  }, [latitude, longitude, zoomLevel, showLostGoods, mapRef.current]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -145,6 +147,7 @@ function KakaoMap() {
         <div className={styles.titleEng}>MAP</div>
         <div className={styles.titleInfo}>
           <Switch
+            checked={showLostGoods}
             label={"분실물 보기"}
             style={{ fontWeight: "bold" }}
             onChange={(_, { checked }) => {
