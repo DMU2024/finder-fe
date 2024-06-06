@@ -11,6 +11,15 @@ interface Position {
   setZoomLevel: (zoomLevel: number) => void;
   address: string;
   setAddress: (address: string) => void;
+  clickedInfo: ClickedInfo | undefined;
+  setClickedInfo: (info: ClickedInfo | undefined) => void;
+}
+
+interface ClickedInfo {
+  address: string;
+  name: string | null;
+  lat: number;
+  lng: number;
 }
 
 const DEFAULT_LATITUDE = 37.564214;
@@ -63,7 +72,9 @@ const usePositionStore = create<Position>((set) => ({
   zoomLevel: 3,
   setZoomLevel: (level: number) => set({ zoomLevel: level }),
   address: "",
-  setAddress: (addr: string) => set({ address: addr })
+  setAddress: (addr: string) => set({ address: addr }),
+  clickedInfo: undefined,
+  setClickedInfo: (info: ClickedInfo | undefined) => set({ clickedInfo: info })
 }));
 
 export default usePositionStore;

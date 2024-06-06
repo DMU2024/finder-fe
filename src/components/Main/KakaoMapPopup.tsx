@@ -3,6 +3,7 @@ import { Card, makeStyles } from "@fluentui/react-components";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 
 import useMainStore from "../../stores/main";
+import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
 
 const useStyles = makeStyles({
@@ -22,13 +23,15 @@ const useStyles = makeStyles({
 
 function KakaoMapPopup() {
   const styles = useStyles();
+  const { clickedInfo } = usePositionStore();
   const { selectedMarker } = useMainStore();
+  const info = selectedMarker || clickedInfo;
 
   return (
     <>
-      {selectedMarker && (
+      {info && (
         <CustomOverlayMap
-          position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
+          position={{ lat: info.lat, lng: info.lng }}
           yAnchor={-0.2}
         >
           <div
@@ -45,8 +48,12 @@ function KakaoMapPopup() {
                 color: "black"
               }}
             >
-              <div style={{ fontSize: "20px" }}>{selectedMarker.name}</div>
-              <div style={{ color: mainColor }}>{selectedMarker.address}</div>
+              <div style={{ fontSize: "20px" }}>
+                {info.name ? info.name : info.address}
+              </div>
+              {info.name && (
+                <div style={{ color: mainColor }}>{info.address}</div>
+              )}
             </Card>
             <Card
               className={styles.popupCards}

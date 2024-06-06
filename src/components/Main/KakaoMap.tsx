@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 
 import KakaoMapPopup from "./KakaoMapPopup";
+import { getCoord2Address } from "../../apis/kakaoMap";
 import { getMarkerByCoords } from "../../apis/marker";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
@@ -70,10 +71,12 @@ function KakaoMap() {
     isLoading,
     zoomLevel,
     address,
+    clickedInfo,
     setLatitude,
     setLongitude,
     setZoomLevel,
-    getCoords
+    getCoords,
+    setClickedInfo
   } = usePositionStore();
 
   const mapRef = useRef<kakao.maps.Map>(null);
@@ -106,6 +109,13 @@ function KakaoMap() {
         }
       }
 
+      if (clickedInfo) {
+        const { lat, lng } = clickedInfo;
+        if (!bounds.contain(new kakao.maps.LatLng(lat, lng))) {
+          setClickedInfo(undefined);
+        }
+      }
+
       getMarkerByCoords(swLat, swLng, neLat, neLng, showLostGoods).then(
         (data) => {
           setMarkerList(data);
@@ -124,6 +134,7 @@ function KakaoMap() {
       }
       setLatitude(selectedMarker.lat);
       setLongitude(selectedMarker.lng);
+      setClickedInfo(undefined);
     }
   }, [selectedMarker]);
 
@@ -154,6 +165,20 @@ function KakaoMap() {
           center={{ lat: latitude, lng: longitude }}
           level={zoomLevel}
           style={{ width: "100%", height: "100%" }}
+          onClick={(_, event) => {
+            const latLng = event.latLng;
+            const [lat, lng] = [latLng.getLat(), latLng.getLng()];
+
+            setSelectedMarker(undefined);
+            getCoord2Address(lat, lng).then(({ address_name, building_name }) =>
+              setClickedInfo({
+                address: address_name,
+                name: building_name,
+                lat: lat,
+                lng: lng
+              })
+            );
+          }}
           onDragEnd={(map) => {
             const center = map.getCenter();
 
@@ -184,6 +209,12 @@ function KakaoMap() {
               />
             ))}
           </MarkerClusterer>
+          {clickedInfo && (
+            <MapMarker
+              position={{ lat: clickedInfo.lat, lng: clickedInfo.lng }}
+              onClick={() => setClickedInfo(undefined)}
+            />
+          )}
           <KakaoMapPopup />
         </Map>
         <Button
