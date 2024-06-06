@@ -2,13 +2,9 @@ import { Depths } from "@fluentui/react";
 import { Button, Card, Switch, makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
 import { useEffect, useRef } from "react";
-import {
-  CustomOverlayMap,
-  Map,
-  MapMarker,
-  MarkerClusterer
-} from "react-kakao-maps-sdk";
+import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 
+import KakaoMapPopup from "./KakaoMapPopup";
 import { getMarkerByCoords } from "../../apis/marker";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
@@ -62,18 +58,6 @@ const useStyle = makeStyles({
     top: "14px",
     right: "14px",
     zIndex: 1
-  },
-  popup: {
-    display: "flex",
-    gap: "8px"
-  },
-  popupCards: {
-    backgroundColor: mainColor,
-    color: "white",
-    padding: "24px",
-    justifyContent: "center",
-    boxShadow: Depths.depth16,
-    borderRadius: "20px"
   }
 });
 
@@ -143,47 +127,6 @@ function KakaoMap() {
     }
   }, [selectedMarker]);
 
-  const renderPopup = () => {
-    if (selectedMarker) {
-      return (
-        <>
-          <CustomOverlayMap
-            position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
-            yAnchor={-0.2}
-          >
-            <div
-              className={styles.popup}
-              onMouseDown={(event) => {
-                event.preventDefault();
-                kakao.maps.event.preventMap();
-              }}
-            >
-              <Card
-                className={styles.popupCards}
-                style={{
-                  backgroundColor: "white",
-                  color: "black"
-                }}
-              >
-                <div style={{ fontSize: "20px" }}>{selectedMarker.name}</div>
-                <div style={{ color: mainColor }}>{selectedMarker.address}</div>
-              </Card>
-              <Card
-                className={styles.popupCards}
-                style={{
-                  backgroundColor: mainColor,
-                  color: "white"
-                }}
-              >
-                등록
-              </Card>
-            </div>
-          </CustomOverlayMap>
-        </>
-      );
-    }
-  };
-
   return (
     <div className={styles.root}>
       <div className={styles.title}>
@@ -241,7 +184,7 @@ function KakaoMap() {
               />
             ))}
           </MarkerClusterer>
-          {renderPopup()}
+          <KakaoMapPopup />
         </Map>
         <Button
           className={styles.control}
