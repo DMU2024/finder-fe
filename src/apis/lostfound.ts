@@ -60,5 +60,16 @@ const searchLostFound = async (query: string, prevId?: string) => {
   return data;
 };
 
+const placeLostFound = async (query: string, prevId?: string) => {
+  const { data } = await Instance.get<LostFound[]>("/place/lostfound", {
+    params: {
+      query: query,
+      prevId: prevId
+    }
+  });
+
+  return data;
+};
+
 export type { LostFound, LostFoundDetail };
-export { getLostFound, getLostFoundDetail, searchLostFound };
+export { getLostFound, getLostFoundDetail, searchLostFound, placeLostFound };

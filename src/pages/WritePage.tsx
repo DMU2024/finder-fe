@@ -1,35 +1,17 @@
-import { DefaultButton } from "@fluentui/react";
 import { makeStyles, tokens } from "@fluentui/react-components";
 
-import AddContent from "../components/Write/AddContent";
-import ImgSelect from "../components/Write/ImgSelect";
 import LostList from "../components/Write/LostList";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    backgroundColor: tokens.colorNeutralBackground2,
-    minHeight: "100vh",
-    width: "100%",
-    overflowY: "auto",
-    padding: "0 16px",
-    scrollbarWidth: "none",
-    "-ms-overflow-style": "none",
-    "&::-webkit-scrollbar": {
-      width: 0,
-      display: "none"
-    }
+    alignItems: "center",
+    width: "100%"
   },
   content: {
     display: "flex",
-    marginBottom: "30px"
-  },
-  left: {
-    width: "45%"
-  },
-  right: {
-    width: "55%"
+    width: "50vw"
   },
   submitButtonContainer: {
     marginTop: "20px",
@@ -61,20 +43,7 @@ function WritePage() {
   return (
     <div className={styles.root}>
       <div className={styles.content}>
-        <div className={styles.left}>
-          <ImgSelect />
-        </div>
-        <div className={styles.right}>
-          <LostList />
-        </div>
-      </div>
-      <AddContent />
-      <div className={styles.submitButtonContainer}>
-        <DefaultButton
-          className={styles.submitButton}
-          text="Submit"
-          onClick={() => console.log("Form submitted!")}
-        />
+        <LostList />
       </div>
     </div>
   );

@@ -1,17 +1,13 @@
 import { Depths } from "@fluentui/react";
-import { Button, Card, makeStyles } from "@fluentui/react-components";
+import { Button, Card, Switch, makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
-import { useEffect, useRef, useState } from "react";
-import {
-  CustomOverlayMap,
-  Map,
-  MapMarker,
-  MarkerClusterer
-} from "react-kakao-maps-sdk";
+import { useEffect, useRef } from "react";
+import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 
+import KakaoMapPopup from "./KakaoMapPopup";
 import { getCoord2Address } from "../../apis/kakaoMap";
-import { getMockByCoords } from "../../apis/mock";
-import useMockListStore from "../../stores/mock";
+import { getMarkerByCoords } from "../../apis/marker";
+import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -25,21 +21,28 @@ const useStyle = makeStyles({
   },
   title: {
     display: "flex",
-    alignItems: "baseline",
+    alignItems: "flex-end",
     marginTop: "68px",
     marginLeft: "8px"
   },
   titleKor: {
     fontSize: "48px",
+    lineHeight: "48px",
     fontWeight: "bold"
   },
   titleEng: {
     fontSize: "20px",
+    lineHeight: "20px",
     fontWeight: "bold",
     color: mainColor
   },
+  titleInfo: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    marginLeft: "auto"
+  },
   position: {
-    marginLeft: "auto",
     color: mainColor,
     fontSize: "14px",
     fontWeight: "bold"
@@ -56,16 +59,6 @@ const useStyle = makeStyles({
     top: "14px",
     right: "14px",
     zIndex: 1
-  },
-  popup: {
-    display: "flex",
-    gap: "8px"
-  },
-  popupCards: {
-    padding: "24px",
-    justifyContent: "center",
-    boxShadow: Depths.depth16,
-    borderRadius: "20px"
   }
 });
 
@@ -78,42 +71,95 @@ function KakaoMap() {
     isLoading,
     zoomLevel,
     address,
+    clickedInfo,
     setLatitude,
     setLongitude,
     setZoomLevel,
-    getCoords
+    getCoords,
+    setClickedInfo
   } = usePositionStore();
-
-  const [clickedPos, setClickedPos] = useState<{ lat: number; lng: number }>();
-  const [clickedAddress, setClickedAddress] = useState<{
-    address_name: string;
-    building_name: string | null;
-  }>();
 
   const mapRef = useRef<kakao.maps.Map>(null);
 
-  const { mockList, setMockList } = useMockListStore();
+  const {
+    markerList,
+    setMarkerList,
+    selectedMarker,
+    setSelectedMarker,
+    showLostGoods,
+    setShowLostGoods
+  } = useMainStore();
 
   useEffect(() => {
-    const bounds = mapRef.current?.getBounds();
-    if (bounds) {
-      const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
-      getMockByCoords(sw.getLat(), sw.getLng(), ne.getLat(), ne.getLng()).then(
-        (data) => {
-          setMockList(data);
+    if (latitude !== 0 && longitude !== 0) {
+      const bounds = mapRef.current?.getBounds();
+
+      if (bounds) {
+        const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
+        const [swLat, swLng, neLat, neLng] = [
+          sw.getLat(),
+          sw.getLng(),
+          ne.getLat(),
+          ne.getLng()
+        ];
+
+        if (selectedMarker) {
+          const { lat, lng } = selectedMarker;
+          if (!bounds.contain(new kakao.maps.LatLng(lat, lng))) {
+            setSelectedMarker(undefined);
+          }
         }
-      );
+
+        if (clickedInfo) {
+          const { lat, lng } = clickedInfo;
+          if (!bounds.contain(new kakao.maps.LatLng(lat, lng))) {
+            setClickedInfo(undefined);
+          }
+        }
+
+        getMarkerByCoords(swLat, swLng, neLat, neLng, showLostGoods).then(
+          (data) => {
+            setMarkerList(data);
+          }
+        );
+      }
     }
-  }, [latitude, longitude, zoomLevel]);
+  }, [latitude, longitude, zoomLevel, showLostGoods, mapRef.current]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+
+    if (selectedMarker) {
+      if (map) {
+        map.setLevel(3);
+        setZoomLevel(map.getLevel());
+      }
+      setLatitude(selectedMarker.lat);
+      setLongitude(selectedMarker.lng);
+      setClickedInfo(undefined);
+    }
+  }, [selectedMarker]);
 
   return (
     <div className={styles.root}>
       <div className={styles.title}>
         <div className={styles.titleKor}>지도</div>
         <div className={styles.titleEng}>MAP</div>
-        <div className={styles.position}>
-          <LocationRegular />
-          {` ${isLoading ? "위치 불러오는 중" : address}`}
+        <div className={styles.titleInfo}>
+          <Switch
+            checked={showLostGoods}
+            label={"분실물 보기"}
+            style={{ fontWeight: "bold" }}
+            onChange={(_, { checked }) => {
+              setMarkerList([]);
+              setSelectedMarker(undefined);
+              setShowLostGoods(checked);
+            }}
+          />
+          <div className={styles.position}>
+            <LocationRegular />
+            {` ${isLoading ? "위치 불러오는 중" : address}`}
+          </div>
         </div>
       </div>
       <Card className={styles.map}>
@@ -126,16 +172,15 @@ function KakaoMap() {
             const latLng = event.latLng;
             const [lat, lng] = [latLng.getLat(), latLng.getLng()];
 
-            setClickedPos({ lat: lat, lng: lng });
-            setClickedAddress(undefined);
-            getCoord2Address(lat, lng)
-              .then(({ address_name, building_name }) =>
-                setClickedAddress({
-                  address_name: address_name,
-                  building_name: building_name
-                })
-              )
-              .catch((err) => setClickedAddress(err));
+            setSelectedMarker(undefined);
+            getCoord2Address(lat, lng).then(({ address_name, building_name }) =>
+              setClickedInfo({
+                address: address_name,
+                name: building_name,
+                lat: lat,
+                lng: lng
+              })
+            );
           }}
           onDragEnd={(map) => {
             const center = map.getCenter();
@@ -152,67 +197,35 @@ function KakaoMap() {
           }}
         >
           <MarkerClusterer averageCenter={true} minLevel={7}>
-            {mockList?.map(({ lat, lng }, index) => (
-              <MapMarker key={index} position={{ lat: lat, lng: lng }} />
+            {markerList?.map((marker) => (
+              <MapMarker
+                key={marker._id}
+                clickable={true}
+                position={{ lat: marker.lat, lng: marker.lng }}
+                onClick={() => {
+                  if (marker._id !== selectedMarker?._id) {
+                    setSelectedMarker(marker);
+                  } else {
+                    setSelectedMarker(undefined);
+                  }
+                }}
+              />
             ))}
           </MarkerClusterer>
-          {clickedPos && (
-            <>
-              <MapMarker
-                position={clickedPos}
-                onClick={() => setClickedPos(undefined)}
-              />
-              <CustomOverlayMap position={clickedPos} yAnchor={-0.2}>
-                <div
-                  className={styles.popup}
-                  onMouseDown={(event) => {
-                    event.preventDefault();
-                    kakao.maps.event.preventMap();
-                  }}
-                >
-                  <Card
-                    className={styles.popupCards}
-                    style={{
-                      backgroundColor: "white",
-                      color: "black"
-                    }}
-                  >
-                    {clickedAddress ? (
-                      <>
-                        <div style={{ fontSize: "20px" }}>
-                          {clickedAddress.building_name
-                            ? clickedAddress.building_name
-                            : clickedAddress.address_name}
-                        </div>
-                        {clickedAddress.building_name && (
-                          <div style={{ color: mainColor }}>
-                            {clickedAddress.address_name}
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      "불러오는 중"
-                    )}
-                  </Card>
-                  <Card
-                    className={styles.popupCards}
-                    style={{
-                      backgroundColor: mainColor,
-                      color: "white"
-                    }}
-                  >
-                    등록
-                  </Card>
-                </div>
-              </CustomOverlayMap>
-            </>
+          {clickedInfo && (
+            <MapMarker
+              position={{ lat: clickedInfo.lat, lng: clickedInfo.lng }}
+              onClick={() => setClickedInfo(undefined)}
+            />
           )}
+          <KakaoMapPopup />
         </Map>
         <Button
           className={styles.control}
           disabled={isLoading}
           shape="circular"
           onClick={() => {
+            setSelectedMarker(undefined);
             getCoords();
           }}
         >

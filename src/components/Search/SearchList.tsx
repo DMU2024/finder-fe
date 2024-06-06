@@ -12,8 +12,7 @@ import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
 import SearchListItem from "./SearchListItem";
-import { searchLostFound, getLostFound, LostFound } from "../../apis/lostfound";
-import { searchLostGoods, getLostGoods, LostGoods } from "../../apis/lostgoods";
+import { searchLostFound, getLostFound } from "../../apis/lostfound";
 import useIntersect from "../../hooks/useIntersect";
 import useSearchStore from "../../stores/search";
 
@@ -35,31 +34,20 @@ const useStyles = makeStyles({
 function SearchList() {
   const styles = useStyles();
 
-  const { query, items, prevId, isLostGoods, setItems, setPrevId } =
-    useSearchStore();
+  const { query, items, prevId, setItems, setPrevId } = useSearchStore();
   const [isEndOfPage, setIsEndOfPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const getItems = () => {
     setIsLoading(true);
-    const task = query
-      ? isLostGoods
-        ? searchLostGoods(query, prevId)
-        : searchLostFound(query, prevId)
-      : isLostGoods
-        ? getLostGoods(prevId)
-        : getLostFound(prevId);
+    const task = query ? searchLostFound(query, prevId) : getLostFound(prevId);
 
     task
       .then((data) => {
         const lastId = data.at(-1)?._id;
 
         if (lastId && lastId !== prevId) {
-          setItems(
-            isLostGoods
-              ? [...(items as LostGoods[]), ...(data as LostGoods[])]
-              : [...(items as LostFound[]), ...(data as LostFound[])]
-          );
+          setItems([...items, ...data]);
           setPrevId(lastId);
         } else {
           setIsEndOfPage(true);
@@ -85,7 +73,7 @@ function SearchList() {
     setItems([]);
     setPrevId(undefined);
     setIsEndOfPage(false);
-  }, [query, isLostGoods]);
+  }, [query]);
 
   return (
     <div className={styles.root}>
@@ -94,12 +82,8 @@ function SearchList() {
           <TableRow>
             <TableHeaderCell>사진</TableHeaderCell>
             <TableHeaderCell>이름</TableHeaderCell>
-            <TableHeaderCell>
-              {isLostGoods ? "분실 장소" : "보관 장소"}
-            </TableHeaderCell>
-            <TableHeaderCell>
-              {isLostGoods ? "분실 날짜" : "보관 날짜"}
-            </TableHeaderCell>
+            <TableHeaderCell>보관 장소</TableHeaderCell>
+            <TableHeaderCell>보관 날짜</TableHeaderCell>
             <TableHeaderCell>분류</TableHeaderCell>
           </TableRow>
         </TableHeader>

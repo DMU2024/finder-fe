@@ -1,5 +1,9 @@
 import { Divider, Image, makeStyles, tokens } from "@fluentui/react-components";
+import { useNavigate } from "react-router-dom";
 
+import { LostFound } from "../../apis/lostfound";
+import { Marker } from "../../apis/marker";
+import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 
 const useStyle = makeStyles({
@@ -33,7 +37,8 @@ const useStyle = makeStyles({
     marginBottom: "8px",
     fontSize: "14px",
     fontWeight: "bold",
-    color: mainColor
+    color: mainColor,
+    cursor: "pointer"
   }
 });
 
@@ -41,22 +46,45 @@ interface ItemProps {
   name: string;
   address: string;
   category: string;
+  img?: string;
+  marker?: Marker;
+  item?: LostFound;
 }
 
-function Item({ name, address, category }: ItemProps) {
+function Item({ name, address, category, img, marker, item }: ItemProps) {
   const styles = useStyle();
+  const navigate = useNavigate();
+
+  const { setSelectedMarker } = useMainStore();
+
   return (
     <div>
       <div className={styles.root}>
         <div className={styles.itemTop}>
-          <Image src="/logo192.png" width="192px" />
+          <Image
+            fit="contain"
+            src={img ? img : "/logo192.png"}
+            style={{ width: "192px", height: "192px" }}
+          />
           <div className={styles.itemBox}>
             <div className={styles.itemName}>{name}</div>
             <div className={styles.itemDescription}>{address}</div>
             <div className={styles.itemDescription}>{category}</div>
           </div>
         </div>
-        <div className={styles.itemDetail}>상세보기 {">"}</div>
+        <div
+          className={styles.itemDetail}
+          onClick={() => {
+            if (marker) {
+              setSelectedMarker(marker);
+            }
+            if (item) {
+              navigate(`/detail/${item.atcId}?fdSn=${item.fdSn}`);
+            }
+          }}
+        >
+          {"상세보기 >"}
+        </div>
       </div>
       <Divider />
     </div>

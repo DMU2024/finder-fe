@@ -1,12 +1,17 @@
 import { Depths } from "@fluentui/react";
-import { Card, Image, makeStyles, tokens } from "@fluentui/react-components";
+import {
+  Card,
+  Image,
+  Skeleton,
+  SkeletonItem,
+  makeStyles,
+  tokens
+} from "@fluentui/react-components";
 import { ArrowLeftRegular, ChatArrowBackRegular } from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { LostFoundDetail, getLostFoundDetail } from "../apis/lostfound";
-import { LostGoodsDetail, getLostGoodsDetail } from "../apis/lostgoods";
-import useSearchStore from "../stores/search";
 import { mainColor } from "../styles/color";
 import { headerHeight } from "../styles/margin";
 import { sideBarWidth } from "../styles/size";
@@ -38,7 +43,6 @@ const useStyles = makeStyles({
     boxShadow: Depths.depth16
   },
   contentTop: {
-    height: "60vh",
     display: "flex",
     justifyContent: "center"
   },
@@ -56,7 +60,8 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     marginTop: "36px",
     marginLeft: "44px",
-    marginBottom: "42px"
+    marginBottom: "42px",
+    marginRight: "44px"
   },
   contentTopMain: {
     fontSize: "48px",
@@ -86,7 +91,7 @@ const useStyles = makeStyles({
     textDecorationLine: "none"
   },
   contentBottom: {
-    height: "40vh",
+    height: "100%",
     borderRadius: "20px",
     marginLeft: "44px",
     marginRight: "44px",
@@ -101,7 +106,6 @@ const useStyles = makeStyles({
 
 function DetailPage() {
   const styles = useStyles();
-  const { isLostGoods } = useSearchStore();
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -110,25 +114,67 @@ function DetailPage() {
   const queryParams = new URLSearchParams(location.search);
   const fdSn = queryParams.get("fdSn");
 
-  const [item, setItem] = useState<LostFoundDetail | LostGoodsDetail>();
+  const [item, setItem] = useState<LostFoundDetail>();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
-      const task = isLostGoods
-        ? getLostGoodsDetail(id)
-        : getLostFoundDetail(id, fdSn);
-
-      task.then((data) => {
-        setItem(data);
-      });
+      setIsLoading(true);
+      getLostFoundDetail(id, fdSn)
+        .then((data) => {
+          setItem(data);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   }, []);
+
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <div className={styles.contentTopTexts}>
+          <SkeletonItem style={{ height: "48px" }} />
+          <SkeletonItem style={{ height: "24px" }} />
+          <SkeletonItem style={{ height: "24px" }} />
+          <SkeletonItem style={{ height: "20px" }} />
+          <SkeletonItem style={{ height: "20px" }} />
+          <SkeletonItem style={{ height: "20px" }} />
+          <SkeletonItem style={{ height: "20px" }} />
+        </div>
+      );
+    } else {
+      return (
+        <div className={styles.contentTopTexts}>
+          <div className={styles.contentTopMain}>{item?.fdPrdtNm}</div>
+          <div className={styles.contentTopSub}>
+            {`보관장소: ${item?.depPlace}`}
+          </div>
+          <div className={styles.contentTopSub}>
+            {`습득일자: ${item?.fdYmd}`}
+          </div>
+          <div
+            className={styles.contentTopInfo}
+          >{`관리번호: ${item?.atcId}`}</div>
+          <div
+            className={styles.contentTopInfo}
+          >{`물품분류: ${item?.prdtClNm}`}</div>
+          <div
+            className={styles.contentTopInfo}
+          >{`습득장소: ${item?.fdPlace}`}</div>
+          <div className={styles.contentTopInfo}>
+            {`상태: ${item?.csteSteNm}`}
+          </div>
+        </div>
+      );
+    }
+  };
 
   return (
     <>
       <div className={styles.back} onClick={() => navigate(-1)}>
         <ArrowLeftRegular color={mainColor} />
-        <span>{isLostGoods ? "분실물" : "습득물"} 찾기</span>
+        <span>습득물 찾기</span>
       </div>
       <div className={styles.root}>
         <Card className={styles.content}>
@@ -136,52 +182,16 @@ function DetailPage() {
             <Image
               className={styles.contentTopImage}
               fit="contain"
-              src={
-                isLostGoods
-                  ? (item as LostGoodsDetail)?.lstFilePathImg
-                  : (item as LostFoundDetail)?.fdFilePathImg
-              }
+              src={item?.fdFilePathImg}
             />
-            <div className={styles.contentTopTexts}>
-              <div className={styles.contentTopMain}>
-                {isLostGoods
-                  ? (item as LostGoodsDetail)?.lstPrdtNm
-                  : (item as LostFoundDetail)?.fdPrdtNm}
-              </div>
-              <div className={styles.contentTopSub}>
-                {isLostGoods
-                  ? `분실장소: ${(item as LostGoodsDetail)?.lstPlace}`
-                  : `보관장소: ${(item as LostFoundDetail)?.depPlace}`}
-              </div>
-              <div className={styles.contentTopSub}>
-                {isLostGoods
-                  ? `분실일자: ${(item as LostGoodsDetail)?.lstYmd}`
-                  : `습득일자: ${(item as LostFoundDetail)?.fdYmd}`}
-              </div>
-              <div
-                className={styles.contentTopInfo}
-              >{`관리번호: ${item?.atcId}`}</div>
-              <div
-                className={styles.contentTopInfo}
-              >{`물품분류: ${item?.prdtClNm}`}</div>
-              <div
-                className={styles.contentTopInfo}
-              >{`접수장소: ${item?.orgNm}`}</div>
-              <div className={styles.contentTopInfo}>
-                {`상태: ${
-                  isLostGoods
-                    ? (item as LostGoodsDetail)?.lstSteNm
-                    : (item as LostFoundDetail)?.csteSteNm
-                }`}
-              </div>
-            </div>
+            {renderContent()}
             <a className={styles.contentTopChat} href={`tel:${item?.tel}`}>
               <span>연락하기</span>
               <ChatArrowBackRegular fontSize="24px" />
             </a>
           </div>
           <div className={styles.contentBottom}>
-            {item?.uniq.split("내용\r\n\r\n")}
+            {item?.uniq?.split("내용\r\n\r\n")}
           </div>
         </Card>
       </div>
