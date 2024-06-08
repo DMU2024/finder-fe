@@ -96,7 +96,7 @@ export const categories: CategoryData[] = [
       { name: "신발" },
       { name: "기타의류" }
     ],
-    icon: { iconName: "StatusCircleQuestionMark" }
+    icon: { iconName: "AddFriend" }
   },
   {
     name: "자동차",
@@ -127,7 +127,7 @@ export const categories: CategoryData[] = [
       { name: "남성용 지갑" },
       { name: "기타 지갑" }
     ],
-    icon: { iconName: "StatusCircleQuestionMark" }
+    icon: { iconName: "DocumentSet" }
   },
   {
     name: "증명서",
@@ -192,6 +192,6 @@ export const categories: CategoryData[] = [
   {
     name: "유류품",
     subcategories: [{ name: "유류품" }],
-    icon: { iconName: "StatusCircleQuestionMark" }
+    icon: { iconName: "TagUnknown" }
   }
 ];

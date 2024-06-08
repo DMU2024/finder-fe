@@ -1,6 +1,7 @@
 import { Depths } from "@fluentui/react";
 import { Switch, makeStyles, tokens } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
+import { useNavigate } from "react-router-dom";
 
 import useOptionStore from "../stores/option";
 import { backgroundColor, mainColor } from "../styles/color";
@@ -22,7 +23,8 @@ const useStyles = makeStyles({
     marginLeft: contentMargin,
     display: "flex",
     alignItems: "center",
-    gap: "15px"
+    gap: "15px",
+    cursor: "pointer"
   },
   titleIcon: {
     color: backgroundColor,
@@ -41,20 +43,28 @@ const useStyles = makeStyles({
     gap: "32px"
   },
   signup: {
-    color: backgroundColor
+    color: backgroundColor,
+    cursor: "not-allowed"
   },
   login: {
-    color: mainColor
+    color: mainColor,
+    cursor: "not-allowed"
   }
 });
 
 function Header() {
   const styles = useStyles();
+  const navigate = useNavigate();
   const { isDarkTheme, setIsDarkTheme } = useOptionStore();
 
   return (
     <div className={styles.root}>
-      <div className={styles.title}>
+      <div
+        className={styles.title}
+        onClick={() => {
+          navigate("/");
+        }}
+      >
         <LocationRegular className={styles.titleIcon} />
         <span className={styles.titleText}>Finder</span>
       </div>

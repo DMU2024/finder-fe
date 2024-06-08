@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Finder",
+  "name": "Finder: 내 물건 찾아줘",
   "icons": [
     {
       "src": "favicon.ico",

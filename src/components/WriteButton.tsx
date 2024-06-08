@@ -1,6 +1,7 @@
 import { Depths } from "@fluentui/react";
 import { Button, makeStyles } from "@fluentui/react-components";
 import { EditRegular } from "@fluentui/react-icons";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { mainColor } from "../styles/color";
 import { sideBarWidth } from "../styles/size";
@@ -27,11 +28,23 @@ const useStyle = makeStyles({
 
 function WriteButton() {
   const styles = useStyle();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
-    <Button className={styles.writeButton} shape="circular">
-      <EditRegular className={styles.writeIcon} />
-    </Button>
+    <>
+      {location.pathname !== "/write" && (
+        <Button
+          className={styles.writeButton}
+          shape="circular"
+          onClick={() => {
+            navigate("/write");
+          }}
+        >
+          <EditRegular className={styles.writeIcon} />
+        </Button>
+      )}
+    </>
   );
 }
 
