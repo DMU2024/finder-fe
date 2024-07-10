@@ -14,6 +14,7 @@ import {
   PersonInfoRegular,
   SearchRegular
 } from "@fluentui/react-icons";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { sideBarWidth } from "../styles/size";
@@ -71,17 +72,21 @@ function Sidebar() {
   const styles = useStyle();
   const navigate = useNavigate();
   const location = useLocation();
+  const [selectedTab, setSelectedTab] = useState("");
 
-  const getTab = () => {
+  useEffect(() => {
     switch (location.pathname) {
       case "/":
-        return "tab1";
+        setSelectedTab("tab1");
+        break;
       case "/search":
-        return "tab2";
-      default:
-        return "tab1";
+        setSelectedTab("tab2");
+        break;
+      case "/chat":
+        setSelectedTab("tab3");
+        break;
     }
-  };
+  }, [location]);
 
   return (
     <InlineDrawer open separator className={styles.root}>
@@ -94,7 +99,7 @@ function Sidebar() {
       <TabList
         vertical
         className={styles.tabList}
-        defaultSelectedValue={getTab()}
+        selectedValue={selectedTab}
         size="large"
       >
         <Tab
@@ -110,10 +115,10 @@ function Sidebar() {
           onClick={() => navigate("/search")}
         />
         <Tab
-          disabled
           className={styles.tab}
           icon={<ChatRegular />}
           value="tab3"
+          onClick={() => navigate("/chat")}
         />
         <Tab
           disabled
