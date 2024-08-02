@@ -3,6 +3,7 @@ import { Switch, makeStyles, tokens } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
 
+import { useAuthStore } from "../stores/auth";
 import useOptionStore from "../stores/option";
 import { backgroundColor, mainColor } from "../styles/color";
 import { contentMargin, headerHeight } from "../styles/margin";
@@ -44,11 +45,11 @@ const useStyles = makeStyles({
   },
   signup: {
     color: backgroundColor,
-    cursor: "not-allowed"
+    cursor: "pointer"
   },
   login: {
     color: mainColor,
-    cursor: "not-allowed"
+    cursor: "pointer"
   }
 });
 
@@ -56,6 +57,7 @@ function Header() {
   const styles = useStyles();
   const navigate = useNavigate();
   const { isDarkTheme, setIsDarkTheme } = useOptionStore();
+  const { isLoggedIn, setIsLoggedIn, setUserId } = useAuthStore();
 
   return (
     <div className={styles.root}>
@@ -69,8 +71,37 @@ function Header() {
         <span className={styles.titleText}>Finder</span>
       </div>
       <div className={styles.menu}>
-        <h2 className={styles.signup}>SignUp</h2>
-        <h2 className={styles.login}>Login</h2>
+        {isLoggedIn ? (
+          <h2
+            className={styles.login}
+            onClick={() => {
+              setIsLoggedIn(false);
+              setUserId(undefined);
+            }}
+          >
+            Logout
+          </h2>
+        ) : (
+          <>
+            <h2
+              className={styles.signup}
+              onClick={() => {
+                navigate("/signup");
+              }}
+            >
+              SignUp
+            </h2>
+            <h2
+              className={styles.login}
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </h2>
+          </>
+        )}
+
         <Switch
           defaultChecked={isDarkTheme}
           onChange={(_, data) => {

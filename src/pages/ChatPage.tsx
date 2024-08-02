@@ -1,7 +1,10 @@
 import { makeStyles } from "@fluentui/react-components";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import ChatHistory from "../components/Chat/ChatHistory";
 import ChatMain from "../components/Chat/ChatMain";
+import { useAuthStore } from "../stores/auth";
 
 const useStyles = makeStyles({
   root: {
@@ -21,6 +24,15 @@ const useStyles = makeStyles({
 
 function ChatPage() {
   const styles = useStyles();
+  const navigate = useNavigate();
+  const { isLoggedIn } = useAuthStore();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn]);
+
   return (
     <div className={styles.root}>
       <div className={styles.content}>
