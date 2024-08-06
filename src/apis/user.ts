@@ -7,6 +7,18 @@ interface User {
   username: string;
 }
 
+const getUser = async (userId: number) => {
+  const { data } = await Instance.get<User>(`api/users/${userId}`);
+
+  return data;
+};
+
+const getUsers = async () => {
+  const { data } = await Instance.get<User[]>("api/users");
+
+  return data;
+};
+
 const postSignUpUser = async (
   email: string,
   password: string,
@@ -31,4 +43,4 @@ const postLoginUser = async (email: string, password: string) => {
 };
 
 export type { User };
-export { postSignUpUser, postLoginUser };
+export { getUser, getUsers, postSignUpUser, postLoginUser };

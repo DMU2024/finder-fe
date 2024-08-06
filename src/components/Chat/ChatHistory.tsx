@@ -1,7 +1,10 @@
 import { Depths } from "@fluentui/react";
 import { makeStyles, tokens } from "@fluentui/react-components";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import ChatHistoryItem from "./ChatHistoryItem";
+import { getUsers, User } from "../../apis/user";
+import { useAuthStore } from "../../stores/auth";
 import { mainColor } from "../../styles/color";
 import { headerHeight, contentMargin } from "../../styles/margin";
 
@@ -33,30 +36,30 @@ const useStyles = makeStyles({
 
 function ChatHistory() {
   const styles = useStyles();
-  const histories = [
-    {
-      name: "홍길동",
-      messages: [
-        {
-          message: "안녕하세요",
-          timestamp: new Date()
-        }
-      ]
-    }
-  ];
+  const { userId } = useAuthStore();
+  const [histories, setHistories] = useState<User[]>();
+
+  useEffect(() => {
+    getUsers().then((res) => {
+      setHistories(res);
+    });
+  }, []);
 
   return (
     <div className={styles.root}>
       <div className={styles.title}>대화 목록</div>
       <div className={styles.content}>
-        {histories.map(({ name, messages }, idx) => (
-          <ChatHistoryItem
-            key={idx}
-            message={messages.at(-1)?.message ?? ""}
-            name={name}
-            timestamp={messages.at(-1)?.timestamp}
-          />
-        ))}
+        {histories
+          ?.filter((data) => data.userId !== userId)
+          .map(({ userId, username }, idx) => (
+            <ChatHistoryItem
+              key={idx}
+              message={"TEST"}
+              timestamp={undefined}
+              userId={userId}
+              username={username}
+            />
+          ))}
       </div>
     </div>
   );

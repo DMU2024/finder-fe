@@ -39,7 +39,7 @@ interface Props {
   isMine?: boolean;
 }
 
-function ChatMainItem({ timestamp, isMine }: Props) {
+function ChatMainItem({ message, timestamp, isMine }: Props) {
   const styles = useStyles();
 
   return (
@@ -51,13 +51,7 @@ function ChatMainItem({ timestamp, isMine }: Props) {
     >
       {isMine && <div className={styles.myChatTime}>{timestamp}</div>}
       <div className={isMine ? styles.myChat : styles.othersChat}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        {message}
       </div>
       {!isMine && <div className={styles.othersChatTime}>{timestamp}</div>}
     </div>

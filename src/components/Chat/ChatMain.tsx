@@ -1,10 +1,16 @@
 import { Depths } from "@fluentui/react";
 import { Image, makeStyles, tokens } from "@fluentui/react-components";
 import { AddRegular, SendRegular } from "@fluentui/react-icons";
+import { useEffect, useRef, useState } from "react";
 
 import ChatMainItem from "./ChatMainItem";
+import { Chat, getMessages } from "../../apis/chat";
+import { getUser } from "../../apis/user";
+import { useAuthStore } from "../../stores/auth";
+import useChatStore from "../../stores/chat";
 import { backgroundColor, mainColor } from "../../styles/color";
 import { headerHeight, contentMargin } from "../../styles/margin";
+import { BASE_URL } from "../../utils/axios";
 
 const useStyles = makeStyles({
   root: {
@@ -86,6 +92,69 @@ const useStyles = makeStyles({
 
 function ChatMain() {
   const styles = useStyles();
+  const { userId } = useAuthStore();
+  const { recipientId } = useChatStore();
+  const [recipientName, setRecipientName] = useState("");
+  const [messages, setMessages] = useState<Chat[]>([]);
+  const messageBox = useRef<HTMLDivElement | null>(null);
+  const messageInput = useRef<HTMLInputElement | null>(null);
+  const ws = useRef<WebSocket | null>(null);
+
+  const sendMessage = () => {
+    if (messageInput.current) {
+      const message = messageInput.current.value;
+
+      ws.current?.send(
+        JSON.stringify({
+          sender: userId,
+          recipient: recipientId,
+          message: message
+        })
+      );
+
+      messageInput.current.value = "";
+    }
+  };
+
+  useEffect(() => {
+    if (!userId) return;
+
+    ws.current = new WebSocket(
+      `wss://${BASE_URL.split("://")[1]}/api/ws/chat?userId=${userId}`
+    );
+
+    return () => {
+      if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+        ws.current.close();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ws.current) return;
+
+    ws.current.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      setMessages([...messages, data]);
+    };
+  });
+
+  useEffect(() => {
+    if (userId && recipientId) {
+      getUser(recipientId).then((user) => {
+        setRecipientName(user.username);
+      });
+      getMessages(userId, recipientId).then((messages) => {
+        setMessages(messages);
+      });
+    }
+  }, [recipientId]);
+
+  useEffect(() => {
+    if (messageBox.current) {
+      messageBox.current.scrollTop = messageBox.current.scrollHeight;
+    }
+  }, [messages]);
 
   return (
     <div className={styles.root}>
@@ -104,23 +173,38 @@ function ChatMain() {
             shape="circular"
             src="/logo192.png"
           />
-          <div className={styles.profileText}>상대방</div>
+          <div className={styles.profileText}>{recipientName}</div>
         </div>
-        <div className={styles.chatBoxMiddle}>
-          <ChatMainItem timestamp="12:00" />
-          <ChatMainItem isMine={true} timestamp="12:12" />
-          <ChatMainItem timestamp="12:32" />
-          <ChatMainItem isMine={true} timestamp="13:02" />
-          <ChatMainItem timestamp="13:04" />
+        <div ref={messageBox} className={styles.chatBoxMiddle}>
+          {messages?.map((message, idx) => (
+            <ChatMainItem
+              key={idx}
+              isMine={message.sender === userId}
+              message={message.message}
+              timestamp={message.messageTime}
+            />
+          ))}
         </div>
-        <div className={styles.chatBoxBottom}>
+        <form
+          className={styles.chatBoxBottom}
+          onSubmit={(e) => {
+            e.preventDefault();
+            sendMessage();
+          }}
+        >
           <AddRegular fontSize={"32px"} />
           <input
+            ref={messageInput}
             className={styles.chatBoxInput}
-            placeholder="Type a message..."
+            disabled={!recipientId}
+            placeholder={recipientId ? "Type a message..." : "Select user..."}
           />
-          <SendRegular color={mainColor} fontSize={"32px"} />
-        </div>
+          <SendRegular
+            color={mainColor}
+            fontSize={"32px"}
+            onClick={() => sendMessage()}
+          />
+        </form>
       </div>
     </div>
   );
