@@ -2,6 +2,7 @@ import { Depths } from "@fluentui/react";
 import { Image, makeStyles, tokens } from "@fluentui/react-components";
 import { AddRegular, SendRegular } from "@fluentui/react-icons";
 import { useEffect, useRef, useState } from "react";
+import ReactTextareaAutosize from "react-textarea-autosize";
 
 import ChatMainItem from "./ChatMainItem";
 import { Chat, getMessages } from "../../apis/chat";
@@ -71,22 +72,27 @@ const useStyles = makeStyles({
   chatBoxBottom: {
     display: "flex",
     alignItems: "center",
-    height: "72px",
+    height: "auto",
+    minHeight: "72px",
+    maxHeight: "300px",
+    overflow: "hidden",
     borderRadius: "20px 20px 0 0",
     backgroundColor: tokens.colorNeutralBackground1,
     paddingLeft: "32px",
     paddingRight: "32px",
     gap: "16px"
   },
-  chatBoxInput: {
+  chatBoxTextArea: {
     flex: 1,
     color: tokens.colorNeutralForeground1,
     fontSize: "24px",
+    fontFamily: "inherit",
+    lineHeight: "24px",
+    maxHeight: "300px",
     backgroundColor: "transparent",
     border: "none",
-    ":focus": {
-      outline: "none"
-    }
+    outline: "none",
+    resize: "none"
   }
 });
 
@@ -97,12 +103,14 @@ function ChatMain() {
   const [recipientName, setRecipientName] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
   const messageBox = useRef<HTMLDivElement | null>(null);
-  const messageInput = useRef<HTMLInputElement | null>(null);
+  const messageArea = useRef<HTMLTextAreaElement | null>(null);
   const ws = useRef<WebSocket | null>(null);
 
   const sendMessage = () => {
-    if (messageInput.current) {
-      const message = messageInput.current.value;
+    if (messageArea.current) {
+      const message = messageArea.current.value;
+
+      if (!message) return;
 
       ws.current?.send(
         JSON.stringify({
@@ -112,7 +120,7 @@ function ChatMain() {
         })
       );
 
-      messageInput.current.value = "";
+      messageArea.current.value = "";
     }
   };
 
@@ -192,16 +200,17 @@ function ChatMain() {
             sendMessage();
           }}
         >
-          <AddRegular fontSize={"32px"} />
-          <input
-            ref={messageInput}
-            className={styles.chatBoxInput}
+          <AddRegular fontSize={"32px"} style={{ cursor: "not-allowed" }} />
+          <ReactTextareaAutosize
+            ref={messageArea}
+            className={styles.chatBoxTextArea}
             disabled={!recipientId}
             placeholder={recipientId ? "Type a message..." : "Select user..."}
           />
           <SendRegular
             color={mainColor}
             fontSize={"32px"}
+            style={{ cursor: `${recipientId ? "pointer" : "not-allowed"}` }}
             onClick={() => sendMessage()}
           />
         </form>
