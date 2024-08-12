@@ -36,10 +36,13 @@ const useStyles = makeStyles({
   },
   contentDetail: {
     width: "100%",
-    marginTop: "180px",
+    marginTop: "240px",
     display: "flex",
-    flexDirection: "row",
+    // flexDirection: "row",
     justifyContent: "center"
+  },
+  flex: {
+    display: "flex"
   },
   btnContainer: {
     display: "flex",
@@ -80,14 +83,14 @@ function ProfilePage() {
         <div className={styles.contentDetail}>
 
           {currentPage === 1 && (
-            <>
+            <div className={styles.flex}>
               <div>
                 <ProfileKey />
               </div>
               <div>
                 <ProfilePlace />
               </div>
-            </>
+            </div>
           )}
           {currentPage === 2 && (
             <div>

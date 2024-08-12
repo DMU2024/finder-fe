@@ -1,6 +1,7 @@
 import * as React from "react";
 import { DefaultButton } from "@fluentui/react";
 import { makeStyles, Image, tokens, Field, ProgressBar, ProgressBarProps } from "@fluentui/react-components";
+import { useNavigate } from "react-router-dom";
 import { mainColor, skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({
@@ -77,6 +78,7 @@ interface ProfileProps extends Partial<ProgressBarProps> {
 
 const ProfileInfo: React.FC<ProfileProps> = ({ img, ...progressBarProps }) => {
   const styles = useStyles();
+  const navigate = useNavigate();
 
   return (
     <div className={styles.root}>
@@ -91,10 +93,17 @@ const ProfileInfo: React.FC<ProfileProps> = ({ img, ...progressBarProps }) => {
             <div className={styles.nickname}> 닉네임Nickname </div>
             <div className={styles.id}> @ id0123456789 </div>
           </div>
-          
+
           <div>
-            <DefaultButton text="업적 확인" className={styles.achieveButton} />
-            <DefaultButton text="프로필 수정" className={styles.profileChangeButton} />
+            <DefaultButton 
+              text="업적 확인"
+              className={styles.achieveButton}
+              onClick={() => navigate('/achieve')} />
+            <DefaultButton
+              text="프로필 수정"
+              className={styles.profileChangeButton}
+              onClick={() => navigate('/profileedit')}
+            />
           </div>
         </div>
 

@@ -56,7 +56,7 @@ const PlaceList: React.FC<PlaceListProps> = ({ img }) => {
           shape="circular"
         />
       </div>
-      <div className={styles.textContainer}>
+      <div className={styles.textContainer}> {/* 프로필 수정을 타고 들어와서 해당id 값 받았을 시, 클릭했을 때 미니맵. 현재 목업이므로 추후 수정 */}
         <div className={styles.placeTitle}>장소명</div>
         <div className={styles.placeDetail}>장소 상세 주소</div>
       </div>
