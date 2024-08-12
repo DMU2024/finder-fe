@@ -16,6 +16,9 @@ import DetailPage from "./pages/DetailPage";
 import MainPage from "./pages/MainPage";
 import SearchPage from "./pages/SearchPage";
 import WritePage from "./pages/WritePage";
+import ProfilePage from "./pages/ProfilePage";
+import ProfileEditPage from "./pages/ProfileEditPage";
+import AchievePage from "./pages/AchievePage";
 import useOptionStore from "./stores/option";
 import usePositionStore from "./stores/position";
 import { mainColor } from "./styles/color";
@@ -99,6 +102,9 @@ function App() {
                 <Route element={<SearchPage />} path="/search" />
                 <Route element={<WritePage />} path="/write" />
                 <Route element={<DetailPage />} path="/detail/:id" />
+                <Route element={<ProfilePage />} path="/profile" />
+                <Route element={<ProfileEditPage />} path="/profileedit" />
+                <Route element={<AchievePage />} path="/achieve" />
               </Routes>
             </div>
           </div>
