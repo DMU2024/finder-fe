@@ -12,9 +12,12 @@ import { getCoord2RegionCode } from "./apis/kakaoMap";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import WriteButton from "./components/WriteButton";
+import ChatPage from "./pages/ChatPage";
 import DetailPage from "./pages/DetailPage";
+import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 import SearchPage from "./pages/SearchPage";
+import SignUpPage from "./pages/SignUpPage";
 import WritePage from "./pages/WritePage";
 import ProfilePage from "./pages/ProfilePage";
 import ProfileEditPage from "./pages/ProfileEditPage";
@@ -105,6 +108,9 @@ function App() {
                 <Route element={<ProfilePage />} path="/profile" />
                 <Route element={<ProfileEditPage />} path="/profileedit" />
                 <Route element={<AchievePage />} path="/achieve" />
+                <Route element={<ChatPage />} path="/chat" />
+                <Route element={<LoginPage />} path="/login" />
+                <Route element={<SignUpPage />} path="/signup" />
               </Routes>
             </div>
           </div>
