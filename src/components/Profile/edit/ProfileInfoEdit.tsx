@@ -1,7 +1,16 @@
-import * as React from "react";
 import { DefaultButton } from "@fluentui/react";
-import { makeStyles, Image, tokens, Field, ProgressBar, ProgressBarProps, Input } from "@fluentui/react-components";
+import {
+  makeStyles,
+  Image,
+  tokens,
+  Field,
+  ProgressBar,
+  ProgressBarProps,
+  Input
+} from "@fluentui/react-components";
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
+
 import { mainColor, skeletonColor } from "../../../styles/color";
 
 const useStyles = makeStyles({
@@ -26,7 +35,7 @@ const useStyles = makeStyles({
     color: skeletonColor,
     fontWeight: "bold",
     fontSize: "32px",
-    marginBottom: "12px",
+    marginBottom: "12px"
   },
   id: {
     color: mainColor,
@@ -50,9 +59,7 @@ const useStyles = makeStyles({
       backgroundColor: tokens.colorBrandBackgroundPressed
     }
   },
-  profile_02: {
-
-  },
+  profile_02: {},
   hiddenInput: {
     display: "none"
   }
@@ -62,7 +69,10 @@ interface ProfileProps extends Partial<ProgressBarProps> {
   img?: string;
 }
 
-const ProfileInfoEdit: React.FC<ProfileProps> = ({ img, ...progressBarProps }) => {
+const ProfileInfoEdit: React.FC<ProfileProps> = ({
+  img,
+  ...progressBarProps
+}) => {
   const styles = useStyles();
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = React.useState(img || "/profileIMGimsi.png");
@@ -81,39 +91,44 @@ const ProfileInfoEdit: React.FC<ProfileProps> = ({ img, ...progressBarProps }) =
   return (
     <div className={styles.root}>
       <input
-        type="file"
         accept="image/*"
         className={styles.hiddenInput}
         id="profile-image-upload"
+        type="file"
         onChange={handleImageChange}
       />
       <label htmlFor="profile-image-upload">
         <Image
+          shape="circular"
           src={imageSrc}
           style={{ width: "220px", height: "220px", cursor: "pointer" }}
-          shape="circular"
         />
-      </label> {/* 이미지 value 불러와야함. */}
-
+      </label>{" "}
+      {/* 이미지 value 불러와야함. */}
       <div className={styles.profile}>
         <div className={styles.profile_01}>
           <div>
-            <Input className={styles.nickname} placeholder="닉네임NickName" value="닉네임NickName" /> {/* 닉네임 value 불러와야함. */}
+            <Input
+              className={styles.nickname}
+              placeholder="닉네임NickName"
+              value="닉네임NickName"
+            />{" "}
+            {/* 닉네임 value 불러와야함. */}
             <div className={styles.id}> @ id0123456789 </div>
           </div>
 
           <div>
             <DefaultButton
-              text="프로필 수정"
               className={styles.profileChangeButton}
-              onClick={() => navigate('/profile')}
+              text="프로필 수정"
+              onClick={() => navigate("/profile")}
             />
           </div>
         </div>
 
         <div className={styles.profile_02}>
           <Field validationState="none">
-            <ProgressBar {...progressBarProps} value={0.3} thickness="large" />
+            <ProgressBar {...progressBarProps} thickness="large" value={0.3} />
           </Field>
         </div>
       </div>

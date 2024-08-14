@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { makeStyles, tokens } from "@fluentui/react-components";
+import { useState } from "react";
 
 import ProfileInfo from "../components/Profile/ProfileInfo";
 import ProfileKey from "../components/Profile/ProfileKey";
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     minHeight: "100%",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "center"
   },
   backgroundBox: {
     position: "absolute",
@@ -26,13 +26,13 @@ const useStyles = makeStyles({
     borderRadius: "30px 30px 0px 0px",
     backgroundColor: tokens.colorNeutralBackground1,
     boxShadow: tokens.shadow16,
-    zIndex: 0,
+    zIndex: 0
   },
   InfoContainer: {
     zIndex: 1,
     width: "100%",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   contentDetail: {
     width: "100%",
@@ -81,7 +81,6 @@ function ProfilePage() {
       </div>
       <div className={styles.backgroundBox}>
         <div className={styles.contentDetail}>
-
           {currentPage === 1 && (
             <div className={styles.flex}>
               <div>
@@ -101,12 +100,18 @@ function ProfilePage() {
 
         <div className={styles.btnContainer}>
           {currentPage > 1 && (
-            <button className={styles.button} onClick={() => setCurrentPage(currentPage - 1)}>
+            <button
+              className={styles.button}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
               이전
             </button>
           )}
           {currentPage < 2 && (
-            <button className={styles.button} onClick={() => setCurrentPage(currentPage + 1)}>
+            <button
+              className={styles.button}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            >
               다음
             </button>
           )}

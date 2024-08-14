@@ -1,7 +1,7 @@
-import React from 'react';
-import { tokens, makeStyles, Image } from '@fluentui/react-components';
+import { tokens, makeStyles, Image } from "@fluentui/react-components";
+import React from "react";
 
-import { mainColor, skeletonColor, backgroundColor } from '../../styles/color';
+import { skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({
   root: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
 
-    width: "55%",
+    width: "55%"
   },
   placeTitle: {
     fontSize: "20px",
@@ -51,12 +51,14 @@ const PlaceList: React.FC<PlaceListProps> = ({ img }) => {
     <div className={styles.root}>
       <div className={styles.imageContainer}>
         <Image
-          src={img || '/profileIMGimsi.png'}
-          style={{ width: '85px', height: '85px' }}
           shape="circular"
+          src={img || "/profileIMGimsi.png"}
+          style={{ width: "85px", height: "85px" }}
         />
       </div>
-      <div className={styles.textContainer}> {/* 프로필 수정을 타고 들어와서 해당id 값 받았을 시, 클릭했을 때 미니맵. 현재 목업이므로 추후 수정 */}
+      <div className={styles.textContainer}>
+        {" "}
+        {/* 프로필 수정을 타고 들어와서 해당id 값 받았을 시, 클릭했을 때 미니맵. 현재 목업이므로 추후 수정 */}
         <div className={styles.placeTitle}>장소명</div>
         <div className={styles.placeDetail}>장소 상세 주소</div>
       </div>

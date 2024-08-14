@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@fluentui/react-components';
-import { Switch } from '@fluentui/react-components';
+import { makeStyles } from "@fluentui/react-components";
+import { Switch } from "@fluentui/react-components";
+import { useState } from "react";
 
-import { mainColor, skeletonColor } from '../../../styles/color';
+import { skeletonColor } from "../../../styles/color";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
     width: "28vw",
-    height: "540px",
+    height: "540px"
   },
   title: {
     color: skeletonColor,
     fontWeight: "bold",
     fontSize: "24px",
     marginTop: "60px",
-    marginBottom: "30px",
+    marginBottom: "30px"
   },
   optionRow: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: "15px",
+    marginBottom: "15px"
   },
   statusText: {
-    marginLeft: "10px",
+    marginLeft: "10px"
   },
   flex: {
     display: "flex"
@@ -50,9 +50,9 @@ function ProfileDetailEdit() {
         <div className={styles.title}> 설정 </div>
         <div>
           <div className={styles.optionRow}>
-            <div className={styles.a}>카카오톡 키워드 알림 전송</div> 
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Switch 
+            <div className={styles.a}>카카오톡 키워드 알림 전송</div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Switch
                 checked={keywordNotification}
                 onChange={(e, data) => setKeywordNotification(data.checked)}
               />
@@ -62,9 +62,9 @@ function ProfileDetailEdit() {
             </div>
           </div>
           <div className={styles.optionRow}>
-            <div className={styles.a}>위치 서비스 동의</div> 
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Switch 
+            <div className={styles.a}>위치 서비스 동의</div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Switch
                 checked={locationService}
                 onChange={(e, data) => setLocationService(data.checked)}
               />
