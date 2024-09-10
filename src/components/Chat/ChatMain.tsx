@@ -99,8 +99,7 @@ const useStyles = makeStyles({
 function ChatMain() {
   const styles = useStyles();
   const { userId } = useAuthStore();
-  const { recipientId } = useChatStore();
-  const [recipientName, setRecipientName] = useState("");
+  const { recipient } = useChatStore();
   const [messages, setMessages] = useState<Chat[]>([]);
   const messageBox = useRef<HTMLDivElement | null>(null);
   const messageArea = useRef<HTMLTextAreaElement | null>(null);
@@ -115,7 +114,7 @@ function ChatMain() {
       ws.current?.send(
         JSON.stringify({
           sender: userId,
-          recipient: recipientId,
+          recipient: recipient?.userId,
           message: message
         })
       );
@@ -148,15 +147,12 @@ function ChatMain() {
   });
 
   useEffect(() => {
-    if (userId && recipientId) {
-      getUser(recipientId).then((user) => {
-        setRecipientName(user.username);
-      });
-      getMessages(userId, recipientId).then((messages) => {
+    if (userId && recipient?.userId) {
+      getMessages(userId, recipient.userId).then((messages) => {
         setMessages(messages);
       });
     }
-  }, [recipientId]);
+  }, [recipient]);
 
   useEffect(() => {
     if (messageBox.current) {
@@ -167,9 +163,6 @@ function ChatMain() {
   return (
     <div className={styles.root}>
       <div className={styles.chatMenu}>
-        <div className={styles.chatMenuText} style={{ color: backgroundColor }}>
-          신고하기
-        </div>
         <div className={styles.chatMenuText} style={{ color: mainColor }}>
           대화 끝내기
         </div>
@@ -178,10 +171,13 @@ function ChatMain() {
         <div className={styles.chatBoxTop}>
           <Image
             className={styles.profileImg}
+            fit="cover"
             shape="circular"
-            src="/logo192.png"
+            src={
+              recipient?.profileImage ? recipient.profileImage : "/logo192.png"
+            }
           />
-          <div className={styles.profileText}>{recipientName}</div>
+          <div className={styles.profileText}>{recipient?.username}</div>
         </div>
         <div ref={messageBox} className={styles.chatBoxMiddle}>
           {messages?.map((message, idx) => (
@@ -204,13 +200,13 @@ function ChatMain() {
           <ReactTextareaAutosize
             ref={messageArea}
             className={styles.chatBoxTextArea}
-            disabled={!recipientId}
-            placeholder={recipientId ? "Type a message..." : "Select user..."}
+            disabled={!recipient}
+            placeholder={recipient ? "Type a message..." : "Select user..."}
           />
           <SendRegular
             color={mainColor}
             fontSize={"32px"}
-            style={{ cursor: `${recipientId ? "pointer" : "not-allowed"}` }}
+            style={{ cursor: `${recipient ? "pointer" : "not-allowed"}` }}
             onClick={() => sendMessage()}
           />
         </form>

@@ -1,14 +1,16 @@
 import { create } from "zustand";
 
+import { User } from "../apis/user";
+
 interface Chat {
-  recipientId: number | undefined;
-  setRecipientId: (value: number | undefined) => void;
+  recipient: User | undefined;
+  setRecipient: (value: User | undefined) => void;
 }
 
 const useChatStore = create<Chat>((set) => ({
-  recipientId: undefined,
-  setRecipientId: (value) => {
-    set({ recipientId: value });
+  recipient: undefined,
+  setRecipient: (value) => {
+    set({ recipient: value });
   }
 }));
 

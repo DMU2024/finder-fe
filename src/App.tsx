@@ -20,7 +20,6 @@ import MainPage from "./pages/MainPage";
 import ProfileEditPage from "./pages/ProfileEditPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
-import SignUpPage from "./pages/SignUpPage";
 import WritePage from "./pages/WritePage";
 import useOptionStore from "./stores/option";
 import usePositionStore from "./stores/position";
@@ -110,7 +109,6 @@ function App() {
                 <Route element={<AchievePage />} path="/achieve" />
                 <Route element={<ChatPage />} path="/chat" />
                 <Route element={<LoginPage />} path="/login" />
-                <Route element={<SignUpPage />} path="/signup" />
               </Routes>
             </div>
           </div>

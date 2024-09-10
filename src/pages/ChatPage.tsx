@@ -25,13 +25,13 @@ const useStyles = makeStyles({
 function ChatPage() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const { isLoggedIn } = useAuthStore();
+  const { userId } = useAuthStore();
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!userId) {
       navigate("/login");
     }
-  }, [isLoggedIn]);
+  }, [userId]);
 
   return (
     <div className={styles.root}>
