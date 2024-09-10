@@ -126,8 +126,10 @@ function ChatMain() {
   useEffect(() => {
     if (!userId) return;
 
+    const protocol = BASE_URL.split("://")[0] === "https" ? "wss" : "ws";
+
     ws.current = new WebSocket(
-      `wss://${BASE_URL.split("://")[1]}/api/ws/chat?userId=${userId}`
+      `${protocol}://${BASE_URL.split("://")[1]}/api/ws/chat?userId=${userId}`
     );
 
     return () => {
