@@ -29,7 +29,8 @@ const getLoginURI = () => {
     `${KAKAO_AUTH}/oauth/authorize?` +
     `client_id=${KAKAO_CLIENTID}` +
     `&redirect_uri=${KAKAO_CALLBACK}` +
-    `&response_type=code`
+    `&response_type=code` +
+    `&prompt=login`
   );
 };
 
