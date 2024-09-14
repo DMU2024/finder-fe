@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { DefaultButton } from "@fluentui/react";
 import { tokens, makeStyles } from "@fluentui/react-components";
+import React, { useState } from "react";
+
 import { mainColor, skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({
@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     width: "28vw",
-    height: "540px",
+    height: "540px"
   },
   title: {
     color: skeletonColor,
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
   keywordSubmit: {
     width: "500px",
-    marginBottom: "30px",
+    marginBottom: "30px"
   },
   placeholder: {
     width: "400px",
@@ -51,7 +51,7 @@ const useStyles = makeStyles({
     height: "50px",
     marginBottom: "18px",
     borderRadius: "15px",
-    backgroundColor: tokens.colorNeutralBackground1Hover,
+    backgroundColor: tokens.colorNeutralBackground1Hover
   },
   keywordDetail: {
     display: "flex",
@@ -69,35 +69,35 @@ const useStyles = makeStyles({
   },
   delete: {
     marginRight: "20px",
-    cursor: "pointer", // 추가: 커서 포인터로 변경
+    cursor: "pointer" // 추가: 커서 포인터로 변경
   }
 });
 
 function ProfileKey() {
   const styles = useStyles();
 
-  const [keyword, setKeyword] = useState<string>('');
+  const [keyword, setKeyword] = useState<string>("");
   const [keywords, setKeywords] = useState<string[]>([]);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
-    setError('');
+    setError("");
   };
 
   const handleAddKeyword = () => {
     if (keywords.length >= 5) {
-      setError('키워드는 최대 5개까지 추가할 수 있습니다.');
+      setError("키워드는 최대 5개까지 추가할 수 있습니다.");
       return;
     }
-    if (keyword.trim() !== '') {
+    if (keyword.trim() !== "") {
       setKeywords([...keywords, keyword]);
-      setKeyword('');
+      setKeyword("");
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleAddKeyword();
     }
   };
@@ -109,20 +109,29 @@ function ProfileKey() {
   return (
     <div className={styles.root}>
       <div className={styles.title}> 내 키워드 </div>
-      <div className={styles.subTitle}> 해당 설정을 사용하면 작성해둔 키워드로 게시물이 뜰 시, 카카오톡 알림이 전송됩니다. </div>
+      <div className={styles.subTitle}>
+        {" "}
+        해당 설정을 사용하면 작성해둔 키워드로 게시물이 뜰 시, 카카오톡 알림이
+        전송됩니다.{" "}
+      </div>
       <div>
         <div className={styles.keywordSubmit}>
           <input
-            type="text"
+            className={styles.placeholder}
             placeholder="키워드를 입력해주세요."
+            type="text"
             value={keyword}
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
-            className={styles.placeholder}
           />
-          <button onClick={handleAddKeyword} className={styles.button}> 입력 </button>
+          <button className={styles.button} onClick={handleAddKeyword}>
+            {" "}
+            입력{" "}
+          </button>
         </div>
-        {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+        {error && (
+          <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
+        )}
         <div>
           {keywords.map((kw, index) => (
             <div key={index} className={styles.keywordList}>
@@ -130,7 +139,13 @@ function ProfileKey() {
                 <div className={styles.circle} />
                 <div className={styles.keywordName}>{kw}</div>
               </div>
-              <div className={styles.delete} onClick={() => handleDeleteKeyword(index)}> 삭제 </div>
+              <div
+                className={styles.delete}
+                onClick={() => handleDeleteKeyword(index)}
+              >
+                {" "}
+                삭제{" "}
+              </div>
             </div>
           ))}
         </div>

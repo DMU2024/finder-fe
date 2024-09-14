@@ -3,6 +3,7 @@ import { Switch, makeStyles, tokens } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
 
+import { postLogout } from "../apis/user";
 import { useAuthStore } from "../stores/auth";
 import useOptionStore from "../stores/option";
 import { backgroundColor, mainColor } from "../styles/color";
@@ -57,7 +58,7 @@ function Header() {
   const styles = useStyles();
   const navigate = useNavigate();
   const { isDarkTheme, setIsDarkTheme } = useOptionStore();
-  const { isLoggedIn, setIsLoggedIn, setUserId } = useAuthStore();
+  const { userId, setUserId } = useAuthStore();
 
   return (
     <div className={styles.root}>
@@ -71,26 +72,22 @@ function Header() {
         <span className={styles.titleText}>Finder</span>
       </div>
       <div className={styles.menu}>
-        {isLoggedIn ? (
+        {userId ? (
           <h2
             className={styles.login}
             onClick={() => {
-              setIsLoggedIn(false);
-              setUserId(undefined);
+              if (userId) {
+                postLogout(userId).then(() => {
+                  setUserId(undefined);
+                  navigate("/");
+                });
+              }
             }}
           >
             Logout
           </h2>
         ) : (
           <>
-            <h2
-              className={styles.signup}
-              onClick={() => {
-                navigate("/signup");
-              }}
-            >
-              SignUp
-            </h2>
             <h2
               className={styles.login}
               onClick={() => {

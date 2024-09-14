@@ -1,10 +1,17 @@
-import { useState } from "react";
 import { Icon } from "@fluentui/react";
-import { makeStyles, tokens, Image, Dialog, DialogSurface, DialogTitle, DialogContent } from "@fluentui/react-components";
-
-import { mainColor, skeletonColor } from '../styles/color';
+import {
+  makeStyles,
+  tokens,
+  Image,
+  Dialog,
+  DialogSurface,
+  DialogTitle,
+  DialogContent
+} from "@fluentui/react-components";
+import { useState } from "react";
 
 import ProfileInfo from "../components/Profile/ProfileInfo";
+import { mainColor, skeletonColor } from "../styles/color";
 
 const useStyles = makeStyles({
   root: {
@@ -13,7 +20,7 @@ const useStyles = makeStyles({
     minHeight: "100%",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "center"
   },
   backgroundBox: {
     position: "absolute",
@@ -26,13 +33,13 @@ const useStyles = makeStyles({
     borderRadius: "30px 30px 0px 0px",
     backgroundColor: tokens.colorNeutralBackground1,
     boxShadow: tokens.shadow16,
-    zIndex: 0,
+    zIndex: 0
   },
   InfoContainer: {
     zIndex: 1,
     width: "100%",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   contentDetail: {
     width: "100%",
@@ -41,13 +48,13 @@ const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    position: "relative",
+    position: "relative"
   },
   title: {
     color: skeletonColor,
     fontWeight: "bold",
     fontSize: "24px",
-    marginBottom: "30px",
+    marginBottom: "30px"
   },
   overlayIcon01: {
     position: "absolute",
@@ -55,7 +62,7 @@ const useStyles = makeStyles({
     left: "400px", // 조정 필요
     fontSize: "40px", // 아이콘 크기 조정
     color: mainColor, // 아이콘 색상
-    cursor: "pointer",
+    cursor: "pointer"
   },
   overlayIcon02: {
     position: "absolute",
@@ -63,7 +70,7 @@ const useStyles = makeStyles({
     left: "800px", // 조정 필요
     fontSize: "40px", // 아이콘 크기 조정
     color: mainColor, // 아이콘 색상
-    cursor: "pointer",
+    cursor: "pointer"
   },
   overlayIcon03: {
     position: "absolute",
@@ -71,7 +78,7 @@ const useStyles = makeStyles({
     left: "1100px", // 조정 필요
     fontSize: "40px", // 아이콘 크기 조정
     color: mainColor, // 아이콘 색상
-    cursor: "pointer",
+    cursor: "pointer"
   },
   overlayIcon04: {
     position: "absolute",
@@ -79,24 +86,24 @@ const useStyles = makeStyles({
     left: "1000px", // 조정 필요
     fontSize: "40px", // 아이콘 크기 조정
     color: mainColor, // 아이콘 색상
-    cursor: "pointer",
+    cursor: "pointer"
   },
   right: {
     alignSelf: "flex-end", // 오른쪽으로 밀기 위한 설정
-    marginRight: "100px", // 오른쪽 여백 설정 (필요에 따라 조정 가능)
+    marginRight: "100px" // 오른쪽 여백 설정 (필요에 따라 조정 가능)
   },
   circle: {
     width: "12px",
     height: "12px",
     borderRadius: "50%",
     backgroundColor: mainColor,
-    marginRight: "8px",
+    marginRight: "8px"
   },
   statusText: {
     display: "flex",
     alignItems: "center",
-    marginBottom: "8px",
-  },
+    marginBottom: "8px"
+  }
 });
 
 function AchievePage() {
@@ -114,52 +121,55 @@ function AchievePage() {
       <div className={styles.backgroundBox}>
         <div className={styles.contentDetail}>
           <div className={styles.right}>
-            <div className={styles.statusText}> 
-              <div className={styles.circle} /> 
-              <div> 업적 미달성 </div> 
+            <div className={styles.statusText}>
+              <div className={styles.circle} />
+              <div> 업적 미달성 </div>
             </div>
-            <div className={styles.statusText}> 
-              <div className={styles.circle} /> 
-              <div> 업적 진행 중 </div> 
+            <div className={styles.statusText}>
+              <div className={styles.circle} />
+              <div> 업적 진행 중 </div>
             </div>
-            <div className={styles.statusText}> 
-              <div className={styles.circle} /> 
-              <div> 업적 완료 </div> 
+            <div className={styles.statusText}>
+              <div className={styles.circle} />
+              <div> 업적 완료 </div>
             </div>
           </div>
 
           <Image
-            src="/map.png"
             alt="지도 이미지"
+            src="/map.png"
             style={{ width: "70%", height: "auto" }}
           />
 
           <Icon
-            iconName="Location"
             className={styles.overlayIcon01}
+            iconName="Location"
             onClick={openModal}
           />
 
           <Icon
-            iconName="Location"
             className={styles.overlayIcon02}
+            iconName="Location"
             onClick={openModal}
           />
 
           <Icon
-            iconName="Location"
             className={styles.overlayIcon03}
+            iconName="Location"
             onClick={openModal}
           />
 
           <Icon
-            iconName="Location"
             className={styles.overlayIcon04}
+            iconName="Location"
             onClick={openModal}
           />
         </div>
 
-        <Dialog open={isModalOpen} onOpenChange={(e, data) => setModalOpen(data.open)}>
+        <Dialog
+          open={isModalOpen}
+          onOpenChange={(e, data) => setModalOpen(data.open)}
+        >
           <DialogSurface>
             <DialogTitle>업적 이름</DialogTitle>
             <DialogContent>

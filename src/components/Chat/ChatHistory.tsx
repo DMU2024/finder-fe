@@ -51,13 +51,12 @@ function ChatHistory() {
       <div className={styles.content}>
         {histories
           ?.filter((data) => data.userId !== userId)
-          .map(({ userId, username }, idx) => (
+          .map((user, idx) => (
             <ChatHistoryItem
               key={idx}
               message={"TEST"}
               timestamp={undefined}
-              userId={userId}
-              username={username}
+              user={user}
             />
           ))}
       </div>

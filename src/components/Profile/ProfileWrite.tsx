@@ -1,7 +1,14 @@
-import React from "react";
-import { tokens, makeStyles, shorthands } from "@fluentui/react-components";
+import { tokens, makeStyles } from "@fluentui/react-components";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow
+} from "@fluentui/react-table";
+
 import { mainColor, skeletonColor } from "../../styles/color";
-import { Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from '@fluentui/react-table';
 
 const useStyles = makeStyles({
   root: {
@@ -11,31 +18,31 @@ const useStyles = makeStyles({
     // alignItems: "center",
     width: "56vw",
     height: "540px",
-    backgroundColor: tokens.colorNeutralBackground1,
+    backgroundColor: tokens.colorNeutralBackground1
   },
   title: {
     color: skeletonColor,
     fontWeight: "bold",
     fontSize: "24px",
-    marginBottom: "30px",
+    marginBottom: "30px"
   },
   tableContainer: {
-    width: "100%",
+    width: "100%"
   },
   table: {
-    width: "100%",
+    width: "100%"
   },
   th: {
     backgroundColor: mainColor,
     color: tokens.colorNeutralForegroundInverted,
     fontWeight: "bold",
     padding: "5px",
-    borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
+    borderBottom: `1px solid ${tokens.colorNeutralStroke1}`
   },
   td: {
     padding: "5px",
-    borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
-  },
+    borderBottom: `1px solid ${tokens.colorNeutralStroke1}`
+  }
 });
 
 const data = [
@@ -45,7 +52,7 @@ const data = [
   { id: 4, title: "Third Post", date: "2023-01-03" },
   { id: 5, title: "Third Post", date: "2023-01-03" },
   { id: 6, title: "Third Post", date: "2023-01-03" },
-  { id: 7, title: "Third Post", date: "2023-01-03" },
+  { id: 7, title: "Third Post", date: "2023-01-03" }
 ];
 
 function ProfileWrite() {

@@ -1,8 +1,8 @@
-import React from 'react';
-import { tokens, makeStyles } from '@fluentui/react-components';
-import { mainColor, skeletonColor } from '../../styles/color';
+import { makeStyles } from "@fluentui/react-components";
+import React from "react";
 
-import PlaceList from '../Profile/PlaceList';
+import { skeletonColor } from "../../styles/color";
+import PlaceList from "../Profile/PlaceList";
 
 const useStyles = makeStyles({
   root: {
@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     // alignItems: "center",
     width: "28vw",
     height: "540px",
-    marginLeft: "20px",
+    marginLeft: "20px"
     // color: tokens.colorNeutralForegroundInverted,
     // backgroundColor: tokens.colorNeutralForeground1
   },
@@ -20,8 +20,8 @@ const useStyles = makeStyles({
     color: skeletonColor,
     fontWeight: "bold",
     fontSize: "24px",
-    marginBottom: "30px",
-  },
+    marginBottom: "30px"
+  }
 });
 
 interface ProfilePlaceProps {
@@ -34,9 +34,9 @@ const ProfilePlace: React.FC<ProfilePlaceProps> = ({ img }) => {
   return (
     <div className={styles.root}>
       <div className={styles.title}>장소 바로가기</div>
-      <PlaceList img={img || '/profilePlaceIcon.png'} />
-      <PlaceList img={img || '/profilePlaceIcon.png'} />
-      <PlaceList img={img || '/profilePlaceIcon.png'} />
+      <PlaceList img={img || "/profilePlaceIcon.png"} />
+      <PlaceList img={img || "/profilePlaceIcon.png"} />
+      <PlaceList img={img || "/profilePlaceIcon.png"} />
     </div>
   );
 };

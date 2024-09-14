@@ -1,5 +1,6 @@
 import { Image, makeStyles, tokens } from "@fluentui/react-components";
 
+import { User } from "../../apis/user";
 import useChatStore from "../../stores/chat";
 import { backgroundColor } from "../../styles/color";
 
@@ -36,30 +37,29 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  userId: number;
-  username: string;
+  user: User;
   message: string;
   timestamp: Date | undefined;
 }
 
-function ChatHistoryItem({ userId, username, message, timestamp }: Props) {
+function ChatHistoryItem({ user, message, timestamp }: Props) {
   const styles = useStyles();
-  const { recipientId, setRecipientId } = useChatStore();
+  const { setRecipient } = useChatStore();
 
   return (
     <div
       className={styles.root}
       onClick={() => {
-        setRecipientId(userId);
+        setRecipient(user);
       }}
     >
       <Image
         className={styles.profileImg}
         shape="circular"
-        src="/logo192.png"
+        src={user.thumbnailImage ? user.thumbnailImage : "/logo192.png"}
       />
       <div className={styles.history}>
-        <div className={styles.historyName}>{username}</div>
+        <div className={styles.historyName}>{user.username}</div>
         <div className={styles.historyMsg}>{message}</div>
       </div>
       <div className={styles.historyDate}>

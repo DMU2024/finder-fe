@@ -1,10 +1,15 @@
-import { Instance } from "../utils/axios";
+import {
+  Instance,
+  KAKAO_AUTH,
+  KAKAO_CALLBACK,
+  KAKAO_CLIENTID
+} from "../utils/axios";
 
 interface User {
   userId: number;
-  email: string;
-  password: string;
   username: string;
+  profileImage: string;
+  thumbnailImage: string;
 }
 
 const getUser = async (userId: number) => {
@@ -19,28 +24,37 @@ const getUsers = async () => {
   return data;
 };
 
-const postSignUpUser = async (
-  email: string,
-  password: string,
-  username: string
-) => {
-  const { data } = await Instance.post<User>("api/users/signup", {
-    email: email,
-    password: password,
-    username: username
+const getLoginURI = () => {
+  return (
+    `${KAKAO_AUTH}/oauth/authorize?` +
+    `client_id=${KAKAO_CLIENTID}` +
+    `&redirect_uri=${KAKAO_CALLBACK}` +
+    `&response_type=code` +
+    `&prompt=login`
+  );
+};
+
+const postLogin = async (code: string) => {
+  const { data } = await Instance.post<User>("api/auth/login", { code: code });
+
+  return data;
+};
+
+const postLogout = async (userId: number) => {
+  const { data } = await Instance.post<User>("api/auth/logout", {
+    userId: userId
   });
 
   return data;
 };
 
-const postLoginUser = async (email: string, password: string) => {
-  const { data } = await Instance.post<User>("api/users/login", {
-    email: email,
-    password: password
+const postUnlink = async (userId: number) => {
+  const { data } = await Instance.post<User>("api/auth/unlink", {
+    userId: userId
   });
 
   return data;
 };
 
 export type { User };
-export { getUser, getUsers, postSignUpUser, postLoginUser };
+export { getUser, getUsers, getLoginURI, postLogin, postLogout, postUnlink };

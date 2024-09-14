@@ -1,7 +1,15 @@
-import * as React from "react";
 import { DefaultButton } from "@fluentui/react";
-import { makeStyles, Image, tokens, Field, ProgressBar, ProgressBarProps } from "@fluentui/react-components";
+import {
+  makeStyles,
+  Image,
+  tokens,
+  Field,
+  ProgressBar,
+  ProgressBarProps
+} from "@fluentui/react-components";
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
+
 import { mainColor, skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({
@@ -26,7 +34,7 @@ const useStyles = makeStyles({
     color: skeletonColor,
     fontWeight: "bold",
     fontSize: "32px",
-    marginBottom: "12px",
+    marginBottom: "12px"
   },
   id: {
     color: mainColor,
@@ -67,9 +75,7 @@ const useStyles = makeStyles({
       backgroundColor: tokens.colorBrandBackgroundPressed
     }
   },
-  profile_02: {
-
-  }
+  profile_02: {}
 });
 
 interface ProfileProps extends Partial<ProgressBarProps> {
@@ -83,8 +89,9 @@ const ProfileInfo: React.FC<ProfileProps> = ({ img, ...progressBarProps }) => {
   return (
     <div className={styles.root}>
       <Image
+        shape="circular"
         src={img ? img : "/profileIMGimsi.png"}
-        style={{ width: "220px", height: "220px" }} shape="circular"
+        style={{ width: "220px", height: "220px" }}
       />
 
       <div className={styles.profile}>
@@ -95,21 +102,22 @@ const ProfileInfo: React.FC<ProfileProps> = ({ img, ...progressBarProps }) => {
           </div>
 
           <div>
-            <DefaultButton 
-              text="업적 확인"
-              className={styles.achieveButton}
-              onClick={() => navigate('/achieve')} />
             <DefaultButton
-              text="프로필 수정"
+              className={styles.achieveButton}
+              text="업적 확인"
+              onClick={() => navigate("/achieve")}
+            />
+            <DefaultButton
               className={styles.profileChangeButton}
-              onClick={() => navigate('/profileedit')}
+              text="프로필 수정"
+              onClick={() => navigate("/profileedit")}
             />
           </div>
         </div>
 
         <div className={styles.profile_02}>
           <Field validationState="none">
-            <ProgressBar {...progressBarProps} value={0.3} thickness="large" />
+            <ProgressBar {...progressBarProps} thickness="large" value={0.3} />
           </Field>
         </div>
       </div>
