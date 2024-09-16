@@ -5,13 +5,12 @@ import { mainColor, skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({
   root: {
+    flex: 1,
     display: "flex",
-    flexDirection: "column",
-    width: "28vw",
-    height: "540px"
+    flexDirection: "column"
   },
   title: {
-    color: skeletonColor,
+    color: tokens.colorNeutralForeground1,
     fontWeight: "bold",
     fontSize: "24px",
     marginBottom: "10px"
@@ -73,7 +72,7 @@ const useStyles = makeStyles({
   }
 });
 
-function ProfileKey() {
+function ProfileKeyword() {
   const styles = useStyles();
 
   const [keyword, setKeyword] = useState<string>("");
@@ -108,11 +107,9 @@ function ProfileKey() {
 
   return (
     <div className={styles.root}>
-      <div className={styles.title}> 내 키워드 </div>
+      <div className={styles.title}>내 키워드</div>
       <div className={styles.subTitle}>
-        {" "}
-        해당 설정을 사용하면 작성해둔 키워드로 게시물이 뜰 시, 카카오톡 알림이
-        전송됩니다.{" "}
+        키워드에 연관된 습득물이 등록될 시, 카카오톡 메시지가 전송됩니다.
       </div>
       <div>
         <div className={styles.keywordSubmit}>
@@ -125,8 +122,7 @@ function ProfileKey() {
             onKeyPress={handleKeyPress}
           />
           <button className={styles.button} onClick={handleAddKeyword}>
-            {" "}
-            입력{" "}
+            입력
           </button>
         </div>
         {error && (
@@ -143,8 +139,7 @@ function ProfileKey() {
                 className={styles.delete}
                 onClick={() => handleDeleteKeyword(index)}
               >
-                {" "}
-                삭제{" "}
+                삭제
               </div>
             </div>
           ))}
@@ -154,4 +149,4 @@ function ProfileKey() {
   );
 }
 
-export default ProfileKey;
+export default ProfileKeyword;

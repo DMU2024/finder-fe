@@ -1,37 +1,28 @@
 import { tokens, makeStyles, Image } from "@fluentui/react-components";
-import React from "react";
-
-import { skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({
   root: {
-    width: "520px",
-    height: "140px",
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "20px",
     borderRadius: "30px",
-    backgroundColor: tokens.colorNeutralBackground1Hover,
-
-    marginLeft: "20px"
+    padding: "20px 44px 20px 44px",
+    backgroundColor: tokens.colorNeutralBackground1Hover
   },
   imageContainer: {
     marginRight: "20px"
   },
   textContainer: {
+    flex: 1,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-
-    width: "55%"
+    justifyContent: "center"
   },
   placeTitle: {
     fontSize: "20px",
     fontWeight: "bold",
-    color: skeletonColor,
-
+    color: tokens.colorNeutralForeground1,
     marginBottom: "10px"
   },
   placeDetail: {
@@ -44,7 +35,7 @@ interface PlaceListProps {
   img?: string;
 }
 
-const PlaceList: React.FC<PlaceListProps> = ({ img }) => {
+function PlaceListItem({ img }: PlaceListProps) {
   const styles = useStyles();
 
   return (
@@ -57,13 +48,12 @@ const PlaceList: React.FC<PlaceListProps> = ({ img }) => {
         />
       </div>
       <div className={styles.textContainer}>
-        {" "}
         {/* 프로필 수정을 타고 들어와서 해당id 값 받았을 시, 클릭했을 때 미니맵. 현재 목업이므로 추후 수정 */}
         <div className={styles.placeTitle}>장소명</div>
         <div className={styles.placeDetail}>장소 상세 주소</div>
       </div>
     </div>
   );
-};
+}
 
-export default PlaceList;
+export default PlaceListItem;

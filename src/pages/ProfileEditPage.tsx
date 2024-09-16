@@ -1,8 +1,8 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 
-import ProfileDetailEdit from "../components/Profile/edit/ProfileDetailEdit";
-import ProfileInfoEdit from "../components/Profile/edit/ProfileInfoEdit";
-import ProfilePlaceEdit from "../components/Profile/edit/ProfilePlaceEdit";
+import ProfileDetailEdit from "../components/Profile/Edit/ProfileDetailEdit";
+import ProfileInfoEdit from "../components/Profile/Edit/ProfileInfoEdit";
+import ProfilePlaceEdit from "../components/Profile/Edit/ProfilePlaceEdit";
 
 const useStyles = makeStyles({
   root: {

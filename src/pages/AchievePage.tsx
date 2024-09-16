@@ -10,7 +10,7 @@ import {
 } from "@fluentui/react-components";
 import { useState } from "react";
 
-import ProfileInfo from "../components/Profile/ProfileInfo";
+import ProfileInfo from "../components/Profile/ProfileHeader";
 import { mainColor, skeletonColor } from "../styles/color";
 
 const useStyles = makeStyles({

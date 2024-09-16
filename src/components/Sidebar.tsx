@@ -85,6 +85,10 @@ function Sidebar() {
       case "/chat":
         setSelectedTab("tab3");
         break;
+      case "/profile":
+      case "/profile/edit":
+        setSelectedTab("tab4");
+        break;
     }
   }, [location]);
 
@@ -121,10 +125,10 @@ function Sidebar() {
           onClick={() => navigate("/chat")}
         />
         <Tab
-          disabled
           className={styles.tab}
           icon={<PersonInfoRegular />}
           value="tab4"
+          onClick={() => navigate("/profile")}
         />
       </TabList>
     </InlineDrawer>

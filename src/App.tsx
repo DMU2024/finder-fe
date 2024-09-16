@@ -105,8 +105,8 @@ function App() {
                 <Route element={<WritePage />} path="/write" />
                 <Route element={<DetailPage />} path="/detail/:id" />
                 <Route element={<ProfilePage />} path="/profile" />
-                <Route element={<ProfileEditPage />} path="/profileedit" />
-                <Route element={<AchievePage />} path="/achieve" />
+                <Route element={<ProfileEditPage />} path="/profile/edit" />
+                <Route element={<AchievePage />} path="/profile/achieve" />
                 <Route element={<ChatPage />} path="/chat" />
                 <Route element={<LoginPage />} path="/login" />
               </Routes>

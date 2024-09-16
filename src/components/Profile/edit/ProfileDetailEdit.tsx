@@ -1,4 +1,4 @@
-import { makeStyles } from "@fluentui/react-components";
+import { Button, makeStyles, tokens } from "@fluentui/react-components";
 import { Switch } from "@fluentui/react-components";
 import { useState } from "react";
 
@@ -6,16 +6,15 @@ import { skeletonColor } from "../../../styles/color";
 
 const useStyles = makeStyles({
   root: {
+    flex: 1,
     display: "flex",
     flexDirection: "column",
-    width: "28vw",
-    height: "540px"
+    marginLeft: "64px"
   },
   title: {
-    color: skeletonColor,
+    color: tokens.colorNeutralForeground1,
     fontWeight: "bold",
     fontSize: "24px",
-    marginTop: "60px",
     marginBottom: "30px"
   },
   optionRow: {
@@ -27,13 +26,13 @@ const useStyles = makeStyles({
   statusText: {
     marginLeft: "10px"
   },
-  flex: {
-    display: "flex"
-  },
   a: {
     fontWeight: "bold",
     fontSize: "16px",
     color: skeletonColor
+  },
+  unlinkButton: {
+    color: "red"
   }
 });
 
@@ -46,40 +45,34 @@ function ProfileDetailEdit() {
 
   return (
     <div className={styles.root}>
+      <div className={styles.title}>설정</div>
       <div>
-        <div className={styles.title}> 설정 </div>
-        <div>
-          <div className={styles.optionRow}>
-            <div className={styles.a}>카카오톡 키워드 알림 전송</div>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Switch
-                checked={keywordNotification}
-                onChange={(e, data) => setKeywordNotification(data.checked)}
-              />
-              <div className={styles.statusText}>
-                {keywordNotification ? "동의" : "비동의"}
-              </div>
+        <div className={styles.optionRow}>
+          <div className={styles.a}>카카오톡 키워드 알림 전송</div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Switch
+              checked={keywordNotification}
+              onChange={(e, data) => setKeywordNotification(data.checked)}
+            />
+            <div className={styles.statusText}>
+              {keywordNotification ? "동의" : "비동의"}
             </div>
           </div>
-          <div className={styles.optionRow}>
-            <div className={styles.a}>위치 서비스 동의</div>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <Switch
-                checked={locationService}
-                onChange={(e, data) => setLocationService(data.checked)}
-              />
-              <div className={styles.statusText}>
-                {locationService ? "동의" : "비동의"}
-              </div>
+        </div>
+        <div className={styles.optionRow}>
+          <div className={styles.a}>위치 서비스 동의</div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Switch
+              checked={locationService}
+              onChange={(e, data) => setLocationService(data.checked)}
+            />
+            <div className={styles.statusText}>
+              {locationService ? "동의" : "비동의"}
             </div>
           </div>
         </div>
       </div>
-
-      <div>
-        <div className={styles.title}> 카카오 계정 확인 </div>
-        <div className={styles.a}> 사용자 이메일 @ kakao.co.kr </div>
-      </div>
+      <Button className={styles.unlinkButton}>탈퇴하기</Button>
     </div>
   );
 }

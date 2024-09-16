@@ -1,26 +1,19 @@
-import { makeStyles } from "@fluentui/react-components";
-import React from "react";
+import { makeStyles, tokens } from "@fluentui/react-components";
 
-import { skeletonColor } from "../../../styles/color";
-import PlaceList from "../PlaceList";
+import PlaceListItem from "../PlaceListItem";
 
 const useStyles = makeStyles({
   root: {
+    flex: 1,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    // alignItems: "center",
-    width: "30vw",
-    height: "540px",
-    marginLeft: "20px"
-    // color: tokens.colorNeutralForegroundInverted,
-    // backgroundColor: tokens.colorNeutralForeground1
+    gap: "20px"
   },
   title: {
-    color: skeletonColor,
+    color: tokens.colorNeutralForeground1,
     fontWeight: "bold",
     fontSize: "24px",
-    marginBottom: "30px"
+    marginBottom: "10px"
   }
 });
 
@@ -28,17 +21,17 @@ interface ProfilePlaceProps {
   img?: string;
 }
 
-const ProfilePlaceEdit: React.FC<ProfilePlaceProps> = ({ img }) => {
+function ProfilePlaceEdit({ img }: ProfilePlaceProps) {
   const styles = useStyles();
 
   return (
     <div className={styles.root}>
-      <div className={styles.title}>즐겨찾기 장소 수정</div>
-      <PlaceList img={img || "/profilePlaceIcon.png"} />
-      <PlaceList img={img || "/profilePlaceIcon.png"} />
-      <PlaceList img={img || "/profilePlaceIcon.png"} />
+      <div className={styles.title}>장소 수정하기</div>
+      <PlaceListItem img={img || "/profilePlaceIcon.png"} />
+      <PlaceListItem img={img || "/profilePlaceIcon.png"} />
+      <PlaceListItem img={img || "/profilePlaceIcon.png"} />
     </div>
   );
-};
+}
 
 export default ProfilePlaceEdit;

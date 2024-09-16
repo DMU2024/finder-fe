@@ -7,31 +7,30 @@ import {
   ProgressBar,
   ProgressBarProps
 } from "@fluentui/react-components";
-import * as React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { mainColor, skeletonColor } from "../../styles/color";
+import { mainColor } from "../../styles/color";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    width: "100%"
+    justifyContent: "center",
+    position: "relative",
+    top: "-32px"
   },
   profile: {
+    flex: 1,
     marginLeft: "36px"
   },
   profile_01: {
-    width: "50vw",
+    flex: 1,
     display: "flex",
-    flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: "20px"
   },
   nickname: {
-    color: skeletonColor,
+    color: tokens.colorNeutralForeground1,
     fontWeight: "bold",
     fontSize: "32px",
     marginBottom: "12px"
@@ -74,15 +73,19 @@ const useStyles = makeStyles({
     "&:active": {
       backgroundColor: tokens.colorBrandBackgroundPressed
     }
-  },
-  profile_02: {}
+  }
 });
 
 interface ProfileProps extends Partial<ProgressBarProps> {
   img?: string;
+  handleEditMode?: () => void;
 }
 
-const ProfileInfo: React.FC<ProfileProps> = ({ img, ...progressBarProps }) => {
+function ProfileHeader({
+  img,
+  handleEditMode,
+  ...progressBarProps
+}: ProfileProps) {
   const styles = useStyles();
   const navigate = useNavigate();
 
@@ -97,25 +100,27 @@ const ProfileInfo: React.FC<ProfileProps> = ({ img, ...progressBarProps }) => {
       <div className={styles.profile}>
         <div className={styles.profile_01}>
           <div>
-            <div className={styles.nickname}> 닉네임Nickname </div>
-            <div className={styles.id}> @ id0123456789 </div>
+            <div className={styles.nickname}>닉네임</div>
+            <div className={styles.id}>@12345678</div>
           </div>
-
           <div>
-            <DefaultButton
+            {/* <DefaultButton
               className={styles.achieveButton}
               text="업적 확인"
-              onClick={() => navigate("/achieve")}
-            />
+              onClick={() => navigate("/profile/achieve")}
+            /> */}
             <DefaultButton
               className={styles.profileChangeButton}
-              text="프로필 수정"
-              onClick={() => navigate("/profileedit")}
+              text="프로필 설정"
+              onClick={() => {
+                if (handleEditMode) {
+                  handleEditMode();
+                }
+              }}
             />
           </div>
         </div>
-
-        <div className={styles.profile_02}>
+        <div>
           <Field validationState="none">
             <ProgressBar {...progressBarProps} thickness="large" value={0.3} />
           </Field>
@@ -123,6 +128,6 @@ const ProfileInfo: React.FC<ProfileProps> = ({ img, ...progressBarProps }) => {
       </div>
     </div>
   );
-};
+}
 
-export default ProfileInfo;
+export default ProfileHeader;
