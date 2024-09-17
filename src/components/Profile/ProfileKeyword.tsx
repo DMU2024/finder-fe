@@ -1,6 +1,13 @@
 import { tokens, makeStyles } from "@fluentui/react-components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
+import {
+  deleteKeyword,
+  getKeywords,
+  Keyword,
+  postKeyword
+} from "../../apis/keyword";
+import { useAuthStore } from "../../stores/auth";
 import { mainColor, skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({
@@ -74,9 +81,10 @@ const useStyles = makeStyles({
 
 function ProfileKeyword() {
   const styles = useStyles();
+  const { userId } = useAuthStore();
 
   const [keyword, setKeyword] = useState<string>("");
-  const [keywords, setKeywords] = useState<string[]>([]);
+  const [keywords, setKeywords] = useState<Keyword[]>([]);
   const [error, setError] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,9 +97,11 @@ function ProfileKeyword() {
       setError("키워드는 최대 5개까지 추가할 수 있습니다.");
       return;
     }
-    if (keyword.trim() !== "") {
-      setKeywords([...keywords, keyword]);
-      setKeyword("");
+    if (keyword.trim() !== "" && userId) {
+      postKeyword(userId, keyword).then((res) => {
+        setKeywords([...keywords, res]);
+        setKeyword("");
+      });
     }
   };
 
@@ -101,9 +111,19 @@ function ProfileKeyword() {
     }
   };
 
-  const handleDeleteKeyword = (index: number) => {
-    setKeywords(keywords.filter((_, i) => i !== index));
+  const handleDeleteKeyword = (keywordId: number) => {
+    deleteKeyword(keywordId).then((res) => {
+      setKeywords(keywords.filter((keyword) => keyword.id !== res));
+    });
   };
+
+  useEffect(() => {
+    if (userId) {
+      getKeywords(userId).then((res) => {
+        setKeywords(res);
+      });
+    }
+  }, []);
 
   return (
     <div className={styles.root}>
@@ -129,15 +149,15 @@ function ProfileKeyword() {
           <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
         )}
         <div>
-          {keywords.map((kw, index) => (
-            <div key={index} className={styles.keywordList}>
+          {keywords.map((keyword) => (
+            <div key={keyword.id} className={styles.keywordList}>
               <div className={styles.keywordDetail}>
                 <div className={styles.circle} />
-                <div className={styles.keywordName}>{kw}</div>
+                <div className={styles.keywordName}>{keyword.keyword}</div>
               </div>
               <div
                 className={styles.delete}
-                onClick={() => handleDeleteKeyword(index)}
+                onClick={() => handleDeleteKeyword(keyword.id)}
               >
                 삭제
               </div>
