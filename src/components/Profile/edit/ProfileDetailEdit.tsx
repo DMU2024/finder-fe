@@ -2,6 +2,8 @@ import { Button, makeStyles, tokens } from "@fluentui/react-components";
 import { Switch } from "@fluentui/react-components";
 import { useState } from "react";
 
+import { postUnlink } from "../../../apis/user";
+import { useAuthStore } from "../../../stores/auth";
 import { skeletonColor } from "../../../styles/color";
 
 const useStyles = makeStyles({
@@ -38,10 +40,19 @@ const useStyles = makeStyles({
 
 function ProfileDetailEdit() {
   const styles = useStyles();
+  const { userId, setUserId } = useAuthStore();
 
   // 스위치 상태 관리
   const [keywordNotification, setKeywordNotification] = useState(false);
   const [locationService, setLocationService] = useState(false);
+
+  const handleUnlinkButton = () => {
+    if (confirm("정말로 탈퇴하시겠습니까?") && userId) {
+      postUnlink(userId).then((res) => {
+        setUserId(undefined);
+      });
+    }
+  };
 
   return (
     <div className={styles.root}>
@@ -72,7 +83,12 @@ function ProfileDetailEdit() {
           </div>
         </div>
       </div>
-      <Button className={styles.unlinkButton}>탈퇴하기</Button>
+      <Button
+        className={styles.unlinkButton}
+        onClick={() => handleUnlinkButton()}
+      >
+        탈퇴하기
+      </Button>
     </div>
   );
 }
