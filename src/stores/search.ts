@@ -7,8 +7,8 @@ interface Search {
   setQuery: (q: string | undefined) => void;
   items: LostFound[];
   setItems: (items: LostFound[]) => void;
-  prevId: string | undefined;
-  setPrevId: (id: string | undefined) => void;
+  page: number;
+  setPage: (page: number) => void;
 }
 
 const useSearchStore = create<Search>((set) => ({
@@ -20,9 +20,9 @@ const useSearchStore = create<Search>((set) => ({
   setItems: (items) => {
     set({ items: items });
   },
-  prevId: undefined,
-  setPrevId: (id) => {
-    set({ prevId: id });
+  page: 0,
+  setPage: (page) => {
+    set({ page: page });
   }
 }));
 

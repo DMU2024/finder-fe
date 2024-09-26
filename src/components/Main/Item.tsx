@@ -89,7 +89,7 @@ function Item({ name, address, category, img, marker, item }: ItemProps) {
               setSelectedMarker(marker);
             }
             if (item) {
-              navigate(`/detail/${item.atcId}?fdSn=${item.fdSn}`);
+              navigate(`/detail/${item.atcId}-${item.fdSn}`);
             }
           }}
         >

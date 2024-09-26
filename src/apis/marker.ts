@@ -18,7 +18,7 @@ const getMarkerByCoords = async (
   lng2: number,
   isLostGoods: boolean
 ) => {
-  const endpoint = isLostGoods ? "/mock" : "/place";
+  const endpoint = isLostGoods ? "/api/lostgoods" : "/api/place";
 
   const { data } = await Instance.get<Marker[]>(endpoint, {
     params: {
@@ -33,7 +33,7 @@ const getMarkerByCoords = async (
 };
 
 const postMarker = async (mock: Marker) => {
-  const { data } = await Instance.post<Marker>("/mock", {
+  const { data } = await Instance.post<Marker>("/api/lostgoods", {
     ...mock
   });
 

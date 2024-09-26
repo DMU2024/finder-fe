@@ -95,7 +95,7 @@ function SearchListItem({ item }: Props) {
     <TableRow
       className={styles.tableRow}
       onClick={() => {
-        navigate(`/detail/${item.atcId}?fdSn=${item.fdSn}`);
+        navigate(`/detail/${item.atcId}-${item.fdSn}`);
       }}
     >
       <TableCell className={styles.imageContainer}>

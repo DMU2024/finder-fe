@@ -114,7 +114,7 @@ function ItemList() {
     setPlaceItemList
   } = useMainStore();
 
-  const [prevId, setPrevId] = useState<string | undefined>(undefined);
+  const [page, setPage] = useState<number>(0);
   const [isEndOfPage, setIsEndOfPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -186,13 +186,11 @@ function ItemList() {
   const getItems = () => {
     setIsLoading(true);
     if (selectedMarker) {
-      placeLostFound(selectedMarker.name, prevId)
+      placeLostFound(selectedMarker.name, page)
         .then((data) => {
-          const lastId = data.at(-1)?._id;
-
-          if (lastId && lastId !== prevId) {
+          if (data.length > 0) {
             setPlaceItemList([...placeItemList, ...data]);
-            setPrevId(lastId);
+            setPage(page + 1);
           } else {
             setIsEndOfPage(true);
           }
@@ -216,7 +214,7 @@ function ItemList() {
 
   useEffect(() => {
     setPlaceItemList([]);
-    setPrevId(undefined);
+    setPage(0);
     setIsEndOfPage(false);
   }, [selectedMarker]);
 

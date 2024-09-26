@@ -31,40 +31,36 @@ interface LostFoundDetail {
   uniq: string;
 }
 
-const getLostFound = async (prevId?: string) => {
-  const { data } = await Instance.get<LostFound[]>("/lostfound", {
-    params: { prevId: prevId }
+const getLostFound = async (page: number) => {
+  const { data } = await Instance.get<LostFound[]>("/api/lostfound", {
+    params: { page: page }
   });
 
   return data;
 };
 
-const getLostFoundDetail = async (actId: string, fdSn: string | null) => {
-  const { data } = await Instance.get<LostFoundDetail>(`/lostfound/${actId}`, {
+const getLostFoundDetail = async (id: string) => {
+  const { data } = await Instance.get<LostFoundDetail>(`/api/lostfound/${id}`);
+
+  return data;
+};
+
+const searchLostFound = async (query: string, page: number) => {
+  const { data } = await Instance.get<LostFound[]>("/api/lostfound/search", {
     params: {
-      fdSn: fdSn
+      keyword: query,
+      page: page
     }
   });
 
   return data;
 };
 
-const searchLostFound = async (query: string, prevId?: string) => {
-  const { data } = await Instance.get<LostFound[]>("/search/lostfound", {
+const placeLostFound = async (query: string, page: number) => {
+  const { data } = await Instance.get<LostFound[]>("/api/lostfound/place", {
     params: {
-      query: query,
-      prevId: prevId
-    }
-  });
-
-  return data;
-};
-
-const placeLostFound = async (query: string, prevId?: string) => {
-  const { data } = await Instance.get<LostFound[]>("/place/lostfound", {
-    params: {
-      query: query,
-      prevId: prevId
+      keyword: query,
+      page: page
     }
   });
 

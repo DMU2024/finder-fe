@@ -60,21 +60,20 @@ const useStyles = makeStyles({
 
 function SearchList() {
   const styles = useStyles();
-  const { query, items, prevId, setItems, setPrevId } = useSearchStore();
+
+  const { query, items, setItems, page, setPage } = useSearchStore();
   const [isEndOfPage, setIsEndOfPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const getItems = () => {
     setIsLoading(true);
-    const task = query ? searchLostFound(query, prevId) : getLostFound(prevId);
+    const task = query ? searchLostFound(query, page) : getLostFound(page);
 
     task
       .then((data) => {
-        const lastId = data.at(-1)?._id;
-
-        if (lastId && lastId !== prevId) {
+        if (data.length > 0) {
           setItems([...items, ...data]);
-          setPrevId(lastId);
+          setPage(page + 1);
         } else {
           setIsEndOfPage(true);
         }
@@ -97,7 +96,7 @@ function SearchList() {
 
   useEffect(() => {
     setItems([]);
-    setPrevId(undefined);
+    setPage(0);
     setIsEndOfPage(false);
   }, [query]);
 

@@ -13,13 +13,13 @@ interface User {
 }
 
 const getUser = async (userId: number) => {
-  const { data } = await Instance.get<User>(`api/users/${userId}`);
+  const { data } = await Instance.get<User>(`/api/users/${userId}`);
 
   return data;
 };
 
 const getUsers = async () => {
-  const { data } = await Instance.get<User[]>("api/users");
+  const { data } = await Instance.get<User[]>("/api/users");
 
   return data;
 };
@@ -35,13 +35,13 @@ const getLoginURI = () => {
 };
 
 const postLogin = async (code: string) => {
-  const { data } = await Instance.post<User>("api/auth/login", { code: code });
+  const { data } = await Instance.post<User>("/api/auth/login", { code: code });
 
   return data;
 };
 
 const postLogout = async (userId: number) => {
-  const { data } = await Instance.post<User>("api/auth/logout", {
+  const { data } = await Instance.post<User>("/api/auth/logout", {
     userId: userId
   });
 
@@ -49,7 +49,7 @@ const postLogout = async (userId: number) => {
 };
 
 const postUnlink = async (userId: number) => {
-  const { data } = await Instance.post<User>("api/auth/unlink", {
+  const { data } = await Instance.post<User>("/api/auth/unlink", {
     userId: userId
   });
 

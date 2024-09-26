@@ -176,8 +176,6 @@ function DetailPage() {
   const { id } = useParams();
 
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const fdSn = queryParams.get("fdSn");
 
   const [item, setItem] = useState<LostFoundDetail>();
   const [isLoading, setIsLoading] = useState(true);
@@ -185,7 +183,7 @@ function DetailPage() {
   useEffect(() => {
     if (id) {
       setIsLoading(true);
-      getLostFoundDetail(id, fdSn)
+      getLostFoundDetail(id)
         .then((data) => {
           setItem(data);
         })
