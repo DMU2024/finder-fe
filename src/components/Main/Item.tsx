@@ -1,8 +1,11 @@
 import { Divider, Image, makeStyles, tokens } from "@fluentui/react-components";
+import { Star32Filled, Star32Regular } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
 
+import { deleteBookMark, postBookMark } from "../../apis/bookmark";
 import { LostFound } from "../../apis/lostfound";
 import { Marker } from "../../apis/marker";
+import { useAuthStore } from "../../stores/auth";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 
@@ -59,13 +62,47 @@ interface ItemProps {
   img?: string;
   marker?: Marker;
   item?: LostFound;
+  isBookmarked?: boolean;
 }
 
-function Item({ name, address, category, img, marker, item }: ItemProps) {
+function Item({
+  name,
+  address,
+  category,
+  img,
+  marker,
+  item,
+  isBookmarked
+}: ItemProps) {
   const styles = useStyle();
   const navigate = useNavigate();
 
-  const { setSelectedMarker } = useMainStore();
+  const { setSelectedMarker, bookmarkMap, setBookmarkMap } = useMainStore();
+  const { userId } = useAuthStore();
+
+  const handleBookmark = () => {
+    if (userId) {
+      if (!bookmarkMap.has(name)) {
+        postBookMark(userId, name).then((res) => {
+          const temp = new Map(bookmarkMap);
+          temp.set(res.location, res.id);
+          setBookmarkMap(temp);
+        });
+      } else {
+        const bookmarkId = bookmarkMap.get(name);
+
+        if (bookmarkId) {
+          deleteBookMark(bookmarkId).then(() => {
+            const temp = new Map(bookmarkMap);
+            temp.delete(name);
+            setBookmarkMap(temp);
+          });
+        }
+      }
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <div>
@@ -81,7 +118,16 @@ function Item({ name, address, category, img, marker, item }: ItemProps) {
             <div className={styles.itemDescription}>{address}</div>
             <div className={styles.itemDescription}>{category}</div>
           </div>
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              handleBookmark();
+            }}
+          >
+            {isBookmarked ? <Star32Filled color="orange" /> : <Star32Regular />}
+          </div>
         </div>
+
         <div
           className={styles.itemDetail}
           onClick={() => {

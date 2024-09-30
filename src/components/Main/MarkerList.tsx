@@ -54,7 +54,7 @@ const useStyles = makeStyles({
 
 function MarkerList() {
   const styles = useStyles();
-  const { markerList, showLostGoods } = useMainStore();
+  const { markerList, showLostGoods, bookmarkMap } = useMainStore();
 
   const renderList = () => {
     if (markerList.length > 0) {
@@ -63,6 +63,7 @@ function MarkerList() {
           key={index}
           address={marker.address}
           category={marker.category}
+          isBookmarked={bookmarkMap.has(marker.name)}
           marker={marker}
           name={marker.name}
         />

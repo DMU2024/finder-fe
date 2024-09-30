@@ -1,9 +1,13 @@
 import { makeStyles, shorthands } from "@fluentui/react-components";
+import { useEffect } from "react";
+
+import { getBookMark } from "../apis/bookmark";
 import ItemList from "../components/Main/ItemList";
+import ItemModal from "../components/Main/ItemModal";
 import KakaoMap from "../components/Main/KakaoMap";
 import MarkerList from "../components/Main/MarkerList";
 import Notificiation from "../components/Main/Notification";
-import ItemModal from "../components/Main/ItemModal";
+import { useAuthStore } from "../stores/auth";
 import useMainStore from "../stores/main";
 
 const useStyles = makeStyles({
@@ -12,35 +16,46 @@ const useStyles = makeStyles({
     position: "relative",
     ...shorthands.padding("16px"),
     "@media (max-width: 390px)": {
-      padding: 0,
-    },
+      padding: 0
+    }
   },
   content: {
     display: "flex",
     gap: "32px",
     "@media (max-width: 390px)": {
-      display: "block",
-    },
+      display: "block"
+    }
   },
   left: {
     width: "40%",
     "@media (max-width: 390px)": {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   right: {
     width: "60%",
     "@media (max-width: 390px)": {
       width: "100%",
       height: "100vh",
-      position: "relative",
-    },
-  },
+      position: "relative"
+    }
+  }
 });
 
 function MainPage() {
   const styles = useStyles();
-  const { selectedMarker } = useMainStore();
+  const { selectedMarker, setBookmarkMap } = useMainStore();
+  const { userId } = useAuthStore();
+
+  useEffect(() => {
+    if (userId) {
+      getBookMark(userId).then((res) => {
+        const temp = new Map<string, number>();
+        res.map((bookmark) => temp.set(bookmark.location, bookmark.id));
+        setBookmarkMap(temp);
+      });
+    }
+  }, []);
 
   return (
     <div className={styles.root}>
