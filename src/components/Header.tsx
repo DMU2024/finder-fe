@@ -1,14 +1,17 @@
 import { Depths } from "@fluentui/react";
 import { Switch, makeStyles, tokens } from "@fluentui/react-components";
-import { LocationRegular } from "@fluentui/react-icons";
+import { LocationRegular, NavigationRegular } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 import { postLogout } from "../apis/user";
 import { useAuthStore } from "../stores/auth";
 import useOptionStore from "../stores/option";
 import { backgroundColor, mainColor } from "../styles/color";
-import { contentMargin, headerHeight } from "../styles/margin";
+import { contentMargin, contentMobileMargin, headerHeight, headerMobileHeight } from "../styles/margin";
 import { sideBarWidth } from "../styles/size";
+
+import SidebarMobile from "./SidebarMobile";
 
 const useStyles = makeStyles({
   root: {
@@ -19,30 +22,47 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     boxShadow: Depths.depth16,
     position: "fixed",
-    zIndex: 1
+    zIndex: 2,
+    "@media (max-width: 390px)": {
+      width: "100vw",
+      height: headerMobileHeight,
+      justifyContent: "space-between"
+    }
   },
   title: {
     marginLeft: contentMargin,
     display: "flex",
     alignItems: "center",
     gap: "15px",
-    cursor: "pointer"
+    cursor: "pointer",
+    "@media (max-width: 390px)": {
+      marginLeft: `calc(${contentMobileMargin} - 12px)`,
+    }
   },
   titleIcon: {
     color: backgroundColor,
-    fontSize: "20px"
+    fontSize: "20px",
+    "@media (max-width: 390px)": {
+      display: "none"
+    }
   },
   titleText: {
     color: mainColor,
     fontSize: "32px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    "@media (max-width: 390px)": {
+      fontSize: "20px"
+    }
   },
   menu: {
     display: "flex",
     alignItems: "center",
     marginLeft: "auto",
     marginRight: contentMargin,
-    gap: "32px"
+    gap: "32px",
+    "@media (max-width: 390px)": {
+      display: "none"
+    }
   },
   signup: {
     color: backgroundColor,
@@ -51,6 +71,15 @@ const useStyles = makeStyles({
   login: {
     color: mainColor,
     cursor: "pointer"
+  },
+  menuIcon: {
+    color: backgroundColor,
+    fontSize: "28px",
+    marginTop: "8px",
+    marginRight: `calc(${contentMobileMargin} - 16px)`,
+    "@media (min-width: 391px)": {
+      display: "none"
+    }
   }
 });
 
@@ -59,6 +88,7 @@ function Header() {
   const navigate = useNavigate();
   const { isDarkTheme, setIsDarkTheme } = useOptionStore();
   const { userId, setUserId } = useAuthStore();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className={styles.root}>
@@ -106,6 +136,13 @@ function Header() {
           }}
         />
       </div>
+      <div>
+        <NavigationRegular
+          className={styles.menuIcon}
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </div>
+      {isSidebarOpen && <SidebarMobile isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />}
     </div>
   );
 }

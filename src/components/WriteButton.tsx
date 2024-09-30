@@ -18,7 +18,10 @@ const useStyle = makeStyles({
     boxShadow: Depths.depth16,
     ":hover": {
       backgroundColor: mainColor
-    }
+    },
+    "@media (max-width: 390px)": {
+      display: "none",
+    },
   },
   writeIcon: {
     color: "white",

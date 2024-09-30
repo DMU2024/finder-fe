@@ -29,7 +29,10 @@ const useStyle = makeStyles({
     position: "fixed",
     zIndex: 1,
     left: 0,
-    top: 0
+    top: 0,
+    "@media (max-width: 390px)": {
+      display: "none"
+    }
   },
   toolbar: {
     width: "100%",
