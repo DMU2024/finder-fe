@@ -13,7 +13,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { LostFoundDetail, getLostFoundDetail } from "../apis/lostfound";
 import { mainColor } from "../styles/color";
-import { headerHeight } from "../styles/margin";
+import { headerHeight, headerMobileHeight } from "../styles/margin";
 import { sideBarWidth } from "../styles/size";
 
 const useStyles = makeStyles({
@@ -26,31 +26,54 @@ const useStyles = makeStyles({
     left: `calc(${sideBarWidth} + 48px)`,
     fontSize: "20px",
     fontWeight: "bold",
-    cursor: "pointer"
+    cursor: "pointer",
+    "@media (max-width: 390px)": {
+      display: "none"
+    },
   },
   root: {
     flex: 1,
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    "@media (max-width: 390px)": {
+      width: "100vw",
+      height: `calc( 100vh + 30vh )`,
+    },
   },
   content: {
     flex: 1,
+    width: "80%",
     display: "flex",
     flexDirection: "column",
     marginTop: "58px",
     padding: 0,
     borderRadius: "20px 20px 0 0",
-    boxShadow: Depths.depth16
+    boxShadow: Depths.depth16,
+    "@media (max-width: 390px)": {
+      width: "100%",
+      height: "100vh",
+      borderRadius: "0 0 0 0",
+      marginTop: "0px"
+    },
   },
   contentTop: {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    "@media (max-width: 390px)": {
+      flexDirection: "column",
+    },
   },
   contentTopImage: {
     width: "400px",
     height: "400px",
     marginLeft: "64px",
-    backgroundColor: tokens.colorNeutralBackground3
+    backgroundColor: tokens.colorNeutralBackground3,
+    "@media (max-width: 390px)": {
+      width: "100%",
+      height: "400px",
+      marginLeft: "0px",
+      backgroundColor: "white",
+    },
   },
   contentTopTexts: {
     flex: 1,
@@ -61,21 +84,40 @@ const useStyles = makeStyles({
     marginTop: "36px",
     marginLeft: "44px",
     marginBottom: "42px",
-    marginRight: "44px"
+    marginRight: "44px",
+    "@media (max-width: 390px)": {
+      fontSize: "20px",
+      marginTop: "12px",
+      marginLeft: "20px",
+      marginRight: "20px",
+      marginBottom: "12px",
+      gap: "20px",
+    },
   },
   contentTopMain: {
     fontSize: "48px",
     lineHeight: "48px",
-    color: tokens.colorNeutralForeground2
+    color: tokens.colorNeutralForeground2,
+    "@media (max-width: 390px)": {
+      fontSize: "20px",
+    },
   },
   contentTopSub: {
     fontSize: "24px",
     lineHeight: "24px",
-    color: mainColor
+    color: mainColor,
+    "@media (max-width: 390px)": {
+      fontSize: "14px",
+      lineHeight: "0px",
+    },
   },
   contentTopInfo: {
     fontSize: "20px",
-    color: tokens.colorNeutralStroke1
+    color: tokens.colorNeutralStroke1,
+    "@media (max-width: 390px)": {
+      fontSize: "14px",
+      lineHeight: "14px",
+    },
   },
   contentTopChat: {
     display: "flex",
@@ -88,9 +130,14 @@ const useStyles = makeStyles({
     fontSize: "14px",
     fontWeight: "bold",
     color: mainColor,
-    textDecorationLine: "none"
+    textDecorationLine: "none",
+    "@media (max-width: 390px)": {
+      marginTop: "12px",
+      marginRight: "16px",
+    },
   },
   contentBottom: {
+    width: "100vw",
     height: "100%",
     borderRadius: "20px",
     marginLeft: "44px",
@@ -100,7 +147,25 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground3,
     fontSize: "20px",
     fontWeight: "bold",
-    whiteSpace: "pre-line"
+    whiteSpace: "pre-line",
+    "@media (max-width: 390px)": {
+      display: "flex",
+      borderRadius: "0px",
+      marginLeft: "0px",
+      marginRight: "0px",
+      fontSize: "14px",
+      color: tokens.colorNeutralForeground2,
+      backgroundColor: "none",
+      padding: "0px",
+      justifyContent: "center"
+    },
+  },
+  contentBottomDetail: {
+    width: "100%",
+    "@media (max-width: 390px)": {
+      width: "90%",
+      marginTop: "20px"
+    },
   }
 });
 
@@ -187,11 +252,13 @@ function DetailPage() {
             {renderContent()}
             <a className={styles.contentTopChat} href={`tel:${item?.tel}`}>
               <span>연락하기</span>
-              <ChatArrowBackRegular fontSize="24px" />
+              <ChatArrowBackRegular fontSize="14px" />
             </a>
           </div>
           <div className={styles.contentBottom}>
-            {item?.uniq?.split("내용\r\n\r\n")}
+            <div className={styles.contentBottomDetail}>
+              {item?.uniq?.split("내용\r\n\r\n")}
+            </div>
           </div>
         </Card>
       </div>
