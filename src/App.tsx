@@ -5,12 +5,13 @@ import {
   createLightTheme,
   createDarkTheme
 } from "@fluentui/react-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { getCoord2RegionCode } from "./apis/kakaoMap";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import SidebarMobile from "./components/SidebarMobile";
 import WriteButton from "./components/WriteButton";
 import AchievePage from "./pages/AchievePage";
 import ChatPage from "./pages/ChatPage";
@@ -24,7 +25,7 @@ import WritePage from "./pages/WritePage";
 import useOptionStore from "./stores/option";
 import usePositionStore from "./stores/position";
 import { mainColor } from "./styles/color";
-import { contentMargin, headerHeight } from "./styles/margin";
+import { contentMargin, headerHeight, headerMobileHeight } from "./styles/margin";
 import { sideBarWidth } from "./styles/size";
 
 const useStyles = makeStyles({
@@ -37,14 +38,24 @@ const useStyles = makeStyles({
   wrapper: {
     display: "flex",
     width: `calc(100% - ${sideBarWidth})`,
-    marginLeft: sideBarWidth
+    marginLeft: sideBarWidth,
+    "@media (max-width: 390px)": {
+      marginLeft: 0,
+      height: `calc(100vh - ${headerMobileHeight})`,
+      width: "100%"
+    }
   },
   content: {
     flex: 1,
     display: "flex",
     marginTop: `calc(${contentMargin} + ${headerHeight})`,
     marginLeft: contentMargin,
-    marginRight: contentMargin
+    marginRight: contentMargin,
+    "@media (max-width: 390px)": {
+      marginTop: headerMobileHeight,
+      marginLeft: 0,
+      marginRight: 0,
+    }
   }
 });
 
@@ -75,6 +86,7 @@ function App() {
   const styles = useStyles();
   const { isDarkTheme } = useOptionStore();
   const { latitude, longitude, getCoords, setAddress } = usePositionStore();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (latitude == 0 || longitude == 0) {
@@ -95,6 +107,7 @@ function App() {
       <Router>
         <div className={styles.root}>
           <Sidebar />
+          <SidebarMobile isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
           <WriteButton />
           <div className={styles.wrapper}>
             <Header />
