@@ -5,7 +5,6 @@ import {
   TableRow
 } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
-
 import { LostFound } from "../../apis/lostfound";
 
 interface Props {
@@ -27,7 +26,7 @@ function SearchListItem({ item }: Props) {
             <Image
               fit="contain"
               src={item.fdFilePathImg}
-              style={{ width: "128px", height: "128px" }}
+              style={{ width: "102px", height: "102px" }}
             />
           }
         />

@@ -2,7 +2,7 @@ import { makeStyles } from "@fluentui/react-components";
 
 import SearchForm from "../components/Search/SearchForm";
 import SearchList from "../components/Search/SearchList";
-import { contentMargin, headerHeight } from "../styles/margin";
+import { contentMargin, headerHeight, headerMobileHeight, contentMobileMargin } from "../styles/margin";
 
 const useStyles = makeStyles({
   root: {
@@ -10,7 +10,10 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: "16px",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`
+    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    "@media (max-width: 390px)": {
+      height: `calc(100vh - ${headerMobileHeight} - ${contentMobileMargin})`,
+    }
   }
 });
 

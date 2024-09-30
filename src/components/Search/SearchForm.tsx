@@ -12,12 +12,25 @@ const useStyles = makeStyles({
     gap: "12px"
   },
   searchHeader: {
-    display: "flex"
+    display: "flex",
+    margin: "16px 10px 10px 10px",
+    "@media (max-width: 390px)": {
+      margin: "16px 10px 0px 10px",
+    }
   },
   searchBox: {
     flex: 1,
     maxWidth: "100%",
-    minHeight: "48px"
+    minHeight: "48px",
+    "@media (max-width: 390px)": {
+      minHeight: "32px",
+    }
+  },
+  title: {
+    fontSize: "4em",
+    "@media (max-width: 390px)": {
+      fontSize: "2em",
+    }
   }
 });
 
@@ -37,8 +50,8 @@ function SearchForm() {
     <div className={styles.root}>
       <div className={styles.searchHeader}>
         <div>
-          <SearchRegular style={{ color: mainColor, fontSize: "50px" }} />
-          <span style={{ fontSize: "64px" }}>검색</span>
+          <SearchRegular style={{ color: mainColor, fontSize: "2em" }} />
+          <span className={styles.title}>검색</span>
         </div>
       </div>
       <SearchBox
