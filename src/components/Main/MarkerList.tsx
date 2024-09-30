@@ -11,7 +11,10 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`
+    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    "@media (max-width: 390px)": {
+      height: "auto",
+    },
   },
   title: {
     marginLeft: "8px",
@@ -29,10 +32,15 @@ const useStyles = makeStyles({
     marginTop: "18px",
     borderRadius: "20px",
     boxShadow: Depths.depth16,
-    overflow: "auto"
-    // "::-webkit-scrollbar": {
+    overflow: "auto",
+        // "::-webkit-scrollbar": {
     //   display: "none"
     // }
+    "@media (max-width: 390px)": {
+      height: "70vh",
+      borderRadius: 0,
+      boxShadow: "none"
+    },
   },
   empty: {
     flex: 1,

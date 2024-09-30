@@ -10,55 +10,81 @@ import { getMarkerByCoords } from "../../apis/marker";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
-import { contentMargin, headerHeight } from "../../styles/margin";
+import { contentMargin, headerHeight, headerMobileHeight, contentMobileMargin } from "../../styles/margin";
 
 const useStyle = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
-    gap: "15px"
+    gap: "15px",
+    "@media (max-width: 390px)": {
+      height: `calc(100vh - ${headerMobileHeight})`,
+      padding: 0,
+      zIndex: 0
+    },
   },
   title: {
     display: "flex",
     alignItems: "flex-end",
     marginTop: "68px",
-    marginLeft: "8px"
+    marginLeft: "8px",
+    "@media (max-width: 390px)": {
+      display: "none",
+    },
   },
   titleKor: {
     fontSize: "48px",
     lineHeight: "48px",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   titleEng: {
     fontSize: "20px",
     lineHeight: "20px",
     fontWeight: "bold",
-    color: mainColor
+    color: mainColor,
   },
   titleInfo: {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",
-    marginLeft: "auto"
+    marginLeft: "auto",
+    "@media (max-width: 390px)": {
+      display: "none",
+    },
   },
   position: {
     color: mainColor,
     fontSize: "14px",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   map: {
     width: "100%",
     height: "100%",
     padding: 0,
     borderRadius: "20px",
-    boxShadow: Depths.depth16
+    boxShadow: Depths.depth16,
+    "@media (max-width: 390px)": {
+      borderRadius: 0,
+      boxShadow: "none",
+      zIndex: 0
+    },
   },
   control: {
     position: "absolute",
     top: "14px",
     right: "14px",
-    zIndex: 1
+    zIndex: 1,
+    "@media (max-width: 390px)": {
+      top: "8px",
+    },
+  },
+  cardMap: {
+    width: "100%",
+    height: "100%",
+    "@media (max-width: 390px)": {
+      height: `calc(100vh - ${headerMobileHeight})`,
+    },
   }
 });
 
@@ -167,7 +193,7 @@ function KakaoMap() {
           ref={mapRef}
           center={{ lat: latitude, lng: longitude }}
           level={zoomLevel}
-          style={{ width: "100%", height: "100%" }}
+          className={styles.cardMap}
           onClick={(_, event) => {
             const latLng = event.latLng;
             const [lat, lng] = [latLng.getLat(), latLng.getLng()];

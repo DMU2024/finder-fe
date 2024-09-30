@@ -18,7 +18,12 @@ const useStyles = makeStyles({
     padding: "24px",
     justifyContent: "center",
     boxShadow: Depths.depth16,
-    borderRadius: "20px"
+    borderRadius: "20px",
+    fontSize: "20px",
+    "@media (max-width: 390px)": {
+      padding: "18px",
+      fontSize: "16px"
+    },
   }
 });
 
@@ -51,7 +56,7 @@ function KakaoMapPopup() {
                 color: "black"
               }}
             >
-              <div style={{ fontSize: "20px" }}>
+              <div>
                 {info.name ? info.name : info.address}
               </div>
               {info.name && (
