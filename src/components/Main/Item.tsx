@@ -9,7 +9,8 @@ import { mainColor } from "../../styles/color";
 const useStyle = makeStyles({
   root: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    padding: "10px"
   },
   itemTop: {
     display: "flex",
@@ -25,12 +26,18 @@ const useStyle = makeStyles({
   itemName: {
     fontSize: "20px",
     fontWeight: "bold",
-    color: tokens.colorNeutralForeground1
+    color: tokens.colorNeutralForeground1,
+    "@media (max-width: 390px)": {
+      fontSize: "16px",
+    },
   },
   itemDescription: {
     fontSize: "14px",
     fontWeight: "bold",
-    color: tokens.colorNeutralForeground4
+    color: tokens.colorNeutralForeground4,
+    "@media (max-width: 390px)": {
+      fontSize: "11px",
+    },
   },
   itemDetail: {
     marginLeft: "auto",
@@ -38,7 +45,10 @@ const useStyle = makeStyles({
     fontSize: "14px",
     fontWeight: "bold",
     color: mainColor,
-    cursor: "pointer"
+    cursor: "pointer",
+    "@media (max-width: 390px)": {
+      fontSize: "11px",
+    },
   }
 });
 
@@ -63,8 +73,8 @@ function Item({ name, address, category, img, marker, item }: ItemProps) {
         <div className={styles.itemTop}>
           <Image
             fit="contain"
-            src={img ? img : "/logo192.png"}
-            style={{ width: "192px", height: "192px" }}
+            src={img ? img : "/img105.png"}
+            style={{ width: "112px", height: "112px" }}
           />
           <div className={styles.itemBox}>
             <div className={styles.itemName}>{name}</div>

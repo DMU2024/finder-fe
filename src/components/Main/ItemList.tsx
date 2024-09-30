@@ -21,7 +21,10 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`
+    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    "@media (max-width: 390px)": {
+      height: "auto",
+    },
   },
   title: {
     display: "flex"
@@ -48,10 +51,15 @@ const useStyles = makeStyles({
     marginTop: "18px",
     borderRadius: "20px",
     boxShadow: Depths.depth16,
-    overflow: "auto"
-    // "::-webkit-scrollbar": {
+    overflow: "auto",
+        // "::-webkit-scrollbar": {
     //   display: "none"
     // }
+    "@media (max-width: 390px)": {
+      height: "70vh", // 모바일에서 높이 축소
+      borderRadius: 0, // 모서리 둥글기 제거
+      boxShadow: "none"
+    },
   },
   empty: {
     flex: 1,
