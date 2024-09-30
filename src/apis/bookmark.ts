@@ -3,6 +3,9 @@ import { Instance } from "../utils/axios";
 interface BookMark {
   id: number;
   location: string;
+  address: string;
+  lat: number;
+  lng: number;
 }
 
 const getBookMark = async (userId: number) => {

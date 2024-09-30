@@ -2,6 +2,7 @@ import { makeStyles, tokens } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { BookMark, getBookMark } from "../apis/bookmark";
 import ProfileDetailEdit from "../components/Profile/Edit/ProfileDetailEdit";
 import ProfilePlaceEdit from "../components/Profile/Edit/ProfilePlaceEdit";
 import ProfileHeader from "../components/Profile/ProfileHeader";
@@ -9,6 +10,7 @@ import ProfileKeyword from "../components/Profile/ProfileKeyword";
 import ProfilePlace from "../components/Profile/ProfilePlace";
 import ProfileWrite from "../components/Profile/ProfileWrite";
 import { useAuthStore } from "../stores/auth";
+import useGlobalStore from "../stores/global";
 
 const useStyles = makeStyles({
   root: {
@@ -37,6 +39,7 @@ function ProfilePage() {
   const styles = useStyles();
   const navigate = useNavigate();
   const [isEditMode, setIsEditMode] = useState(false);
+  const { setBookmarkMap } = useGlobalStore();
   const { userId } = useAuthStore();
 
   useEffect(() => {
@@ -44,6 +47,16 @@ function ProfilePage() {
       navigate("/login");
     }
   }, [userId]);
+
+  useEffect(() => {
+    if (userId) {
+      getBookMark(userId).then((res) => {
+        const temp = new Map<string, BookMark>();
+        res.map((bookmark) => temp.set(bookmark.location, bookmark));
+        setBookmarkMap(temp);
+      });
+    }
+  }, []);
 
   const handleEditMode = () => {
     setIsEditMode(!isEditMode);

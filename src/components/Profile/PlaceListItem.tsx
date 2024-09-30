@@ -1,4 +1,8 @@
 import { tokens, makeStyles, Image } from "@fluentui/react-components";
+import { useNavigate } from "react-router-dom";
+
+import { BookMark } from "../../apis/bookmark";
+import usePositionStore from "../../stores/position";
 
 const useStyles = makeStyles({
   root: {
@@ -8,7 +12,8 @@ const useStyles = makeStyles({
     alignItems: "center",
     borderRadius: "30px",
     padding: "20px 44px 20px 44px",
-    backgroundColor: tokens.colorNeutralBackground1Hover
+    backgroundColor: tokens.colorNeutralBackground1Hover,
+    cursor: "pointer"
   },
   imageContainer: {
     marginRight: "20px"
@@ -33,13 +38,29 @@ const useStyles = makeStyles({
 
 interface PlaceListProps {
   img?: string;
+  bookmark?: BookMark;
 }
 
-function PlaceListItem({ img }: PlaceListProps) {
+function PlaceListItem({ img, bookmark }: PlaceListProps) {
   const styles = useStyles();
+  const navigate = useNavigate();
+  const { setLatitude, setLongitude } = usePositionStore();
+
+  const handlePlaceClick = () => {
+    if (bookmark) {
+      setLatitude(bookmark.lat);
+      setLongitude(bookmark.lng);
+      navigate("/");
+    }
+  };
 
   return (
-    <div className={styles.root}>
+    <div
+      className={styles.root}
+      onClick={() => {
+        handlePlaceClick();
+      }}
+    >
       <div className={styles.imageContainer}>
         <Image
           shape="circular"
@@ -48,9 +69,8 @@ function PlaceListItem({ img }: PlaceListProps) {
         />
       </div>
       <div className={styles.textContainer}>
-        {/* 프로필 수정을 타고 들어와서 해당id 값 받았을 시, 클릭했을 때 미니맵. 현재 목업이므로 추후 수정 */}
-        <div className={styles.placeTitle}>장소명</div>
-        <div className={styles.placeDetail}>장소 상세 주소</div>
+        <div className={styles.placeTitle}>{bookmark?.location}</div>
+        <div className={styles.placeDetail}>{bookmark?.address}</div>
       </div>
     </div>
   );

@@ -12,8 +12,6 @@ interface Main {
   setPlaceItemList: (items: LostFound[]) => void;
   showLostGoods: boolean;
   setShowLostGoods: (value: boolean) => void;
-  bookmarkMap: Map<string, number>;
-  setBookmarkMap: (bookmarks: Map<string, number>) => void;
 }
 
 const useMainStore = create<Main>((set) => ({
@@ -32,10 +30,6 @@ const useMainStore = create<Main>((set) => ({
   showLostGoods: false,
   setShowLostGoods: (value) => {
     set({ showLostGoods: value });
-  },
-  bookmarkMap: new Map(),
-  setBookmarkMap: (bookmarks) => {
-    set({ bookmarkMap: bookmarks });
   }
 }));
 

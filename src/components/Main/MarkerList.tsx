@@ -3,6 +3,7 @@ import { Card, makeStyles } from "@fluentui/react-components";
 import { BookExclamationMarkRegular } from "@fluentui/react-icons";
 
 import Item from "./Item";
+import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -54,7 +55,8 @@ const useStyles = makeStyles({
 
 function MarkerList() {
   const styles = useStyles();
-  const { markerList, showLostGoods, bookmarkMap } = useMainStore();
+  const { markerList, showLostGoods } = useMainStore();
+  const { bookmarkMap } = useGlobalStore();
 
   const renderList = () => {
     if (markerList.length > 0) {

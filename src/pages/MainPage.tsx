@@ -1,13 +1,14 @@
 import { makeStyles, shorthands } from "@fluentui/react-components";
 import { useEffect } from "react";
 
-import { getBookMark } from "../apis/bookmark";
+import { BookMark, getBookMark } from "../apis/bookmark";
 import ItemList from "../components/Main/ItemList";
 import ItemModal from "../components/Main/ItemModal";
 import KakaoMap from "../components/Main/KakaoMap";
 import MarkerList from "../components/Main/MarkerList";
 import Notificiation from "../components/Main/Notification";
 import { useAuthStore } from "../stores/auth";
+import useGlobalStore from "../stores/global";
 import useMainStore from "../stores/main";
 
 const useStyles = makeStyles({
@@ -44,14 +45,15 @@ const useStyles = makeStyles({
 
 function MainPage() {
   const styles = useStyles();
-  const { selectedMarker, setBookmarkMap } = useMainStore();
+  const { selectedMarker } = useMainStore();
+  const { setBookmarkMap } = useGlobalStore();
   const { userId } = useAuthStore();
 
   useEffect(() => {
     if (userId) {
       getBookMark(userId).then((res) => {
-        const temp = new Map<string, number>();
-        res.map((bookmark) => temp.set(bookmark.location, bookmark.id));
+        const temp = new Map<string, BookMark>();
+        res.map((bookmark) => temp.set(bookmark.location, bookmark));
         setBookmarkMap(temp);
       });
     }

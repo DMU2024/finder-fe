@@ -6,6 +6,7 @@ import { deleteBookMark, postBookMark } from "../../apis/bookmark";
 import { LostFound } from "../../apis/lostfound";
 import { Marker } from "../../apis/marker";
 import { useAuthStore } from "../../stores/auth";
+import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 
@@ -77,7 +78,8 @@ function Item({
   const styles = useStyle();
   const navigate = useNavigate();
 
-  const { setSelectedMarker, bookmarkMap, setBookmarkMap } = useMainStore();
+  const { setSelectedMarker } = useMainStore();
+  const { bookmarkMap, setBookmarkMap } = useGlobalStore();
   const { userId } = useAuthStore();
 
   const handleBookmark = () => {
@@ -85,11 +87,11 @@ function Item({
       if (!bookmarkMap.has(name)) {
         postBookMark(userId, name).then((res) => {
           const temp = new Map(bookmarkMap);
-          temp.set(res.location, res.id);
+          temp.set(res.location, res);
           setBookmarkMap(temp);
         });
       } else {
-        const bookmarkId = bookmarkMap.get(name);
+        const bookmarkId = bookmarkMap.get(name)?.id;
 
         if (bookmarkId) {
           deleteBookMark(bookmarkId).then(() => {
