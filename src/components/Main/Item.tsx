@@ -121,7 +121,10 @@ function Item({
             <div className={styles.itemDescription}>{category}</div>
           </div>
           <div
-            style={{ cursor: "pointer" }}
+            style={{
+              cursor: "pointer",
+              height: "100%"
+            }}
             onClick={() => {
               handleBookmark();
             }}
