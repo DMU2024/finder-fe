@@ -9,7 +9,11 @@ import { mainColor, skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({
   title: {
-    marginLeft: "40px"
+    marginLeft: "40px",
+    "@media (max-width: 390px)": {
+      marginLeft: "20px",
+      fontSize: "24px"
+    },
   },
   modalContent: {
     position: "absolute",
@@ -23,10 +27,16 @@ const useStyles = makeStyles({
     padding: "20px",
     backgroundColor: "#fff",
     borderRadius: "20px",
-    transition: "width 0.3s"
+    transition: "width 0.3s",
+    overflowY: "auto",
+    "@media (max-width: 390px)": {
+      width: "80vw",
+      maxHeight: "75vh",
+      top: "50%",
+    },
   },
   modalContentSmall: {
-    width: "40vw"
+    width: "40vw",
   },
   modalOverlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -40,7 +50,12 @@ const useStyles = makeStyles({
   gridContainer: {
     display: "grid",
     gridTemplateColumns: "repeat(5, 1fr)",
-    gridGap: "40px"
+    gridGap: "40px",
+    "@media (max-width: 390px)": {
+      gridTemplateColumns: "repeat(4, 1fr)",
+      gridGap: "10px",
+      padding: "0px 10px 10px 10px",
+    },
   },
   gridItem: {
     display: "flex",
@@ -55,29 +70,39 @@ const useStyles = makeStyles({
     outline: "none",
     fontSize: "16px",
     color: skeletonColor,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   icon: {
     fontSize: "46px",
     marginBottom: "16px",
-    color: mainColor
+    color: mainColor,
+    "@media (max-width: 390px)": {
+      fontSize: "32px",
+      marginBottom: "10px",
+    },
   },
   buttonContainer: {
     display: "flex",
     justifyContent: "flex-end",
-    marginTop: "20px"
+    marginTop: "20px",
   },
   button: {
     backgroundColor: "transparent",
-    border: "1px solid " + mainColor,
+    border: "1px solid " + skeletonColor,
     padding: "10px 20px",
     borderRadius: "5px",
     cursor: "pointer",
-    color: mainColor,
+    color: skeletonColor,
     fontSize: "16px",
     outline: "none",
     transition: "background-color 0.3s, color 0.3s",
-    marginLeft: "10px"
+    margin: "40px 10px 0 10px",
+    "@media (max-width: 390px)": {
+      padding: "8px 16px",
+      fontSize: "12px",
+      marginTop: "20px",
+      color: skeletonColor
+    },
   },
   subcategoryList: {
     listStyle: "none",

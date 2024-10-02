@@ -7,11 +7,18 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    width: "100%"
+    width: "100%",
+    "@media (max-width: 390px)": {
+      height: `calc( 100vh + 10vh )`,
+    },
   },
   content: {
     display: "flex",
-    width: "50vw"
+    width: "50vw",
+    "@media (max-width: 390px)": {
+      width: "90vw",
+      marginTop: "5vh",
+    },
   },
   submitButtonContainer: {
     marginTop: "20px",

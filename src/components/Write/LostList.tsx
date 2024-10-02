@@ -24,28 +24,53 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     fontSize: "16px",
     fontWeight: "bold",
-    marginBottom: "40px"
+    marginBottom: "24px",
+    "@media (max-width: 390px)": {
+      fontSize: "12px",
+      marginBottom: "20px"
+    },
   },
   subTitle: {
     color: skeletonColor,
     fontSize: "20px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    "@media (max-width: 390px)": {
+      fontSize: "14px",
+    },
   },
   listContainer: {
     position: "relative",
     marginTop: "10px"
   },
   listMargin: {
-    marginBottom: "40px"
+    marginBottom: "30px",
+    "@media (max-width: 390px)": {
+      marginBottom: "30px",
+    },
   },
   input: {
     width: "100%",
-    height: "53px",
+    height: "46px",
     border: "1px solid #D9D9D9",
     padding: "8px",
     boxSizing: "border-box",
     fontSize: "14px",
-    outline: "none"
+    outline: "none",
+    "@media (max-width: 390px)": {
+      height: "40px",
+    },
+  },
+  addInput: {
+    width: "100%",
+    height: "140px",
+    border: "1px solid #D9D9D9",
+    padding: "8px",
+    boxSizing: "border-box",
+    fontSize: "14px",
+    outline: "none",
+    "@media (max-width: 390px)": {
+      height: "160px",
+    },
   },
   datePicker: {
     display: "unset!important"
@@ -60,6 +85,7 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorBrandBackground,
     color: "white",
     borderRadius: "4px",
+    outline: "none",
     fontSize: "16px",
     boxShadow: tokens.shadow4,
     transition: "background-color 0.3s",
@@ -105,14 +131,21 @@ function LostList() {
   const renderTitle = () => {
     if (selectedCategory && selectedSubcategory) {
       return (
-        <h1>
-          {selectedCategory} {">"} {selectedSubcategory}
-        </h1>
+        <div>
+          <h1>{"대분류: "} {selectedCategory}</h1>
+          <h2>{"소분류: "} {selectedSubcategory}</h2>
+        </div>
       );
     } else {
-      return <h1>대분류 {">"} 소분류</h1>;
+      return (
+        <div>
+          <h1>대분류</h1>
+          <h2>소분류</h2>
+        </div>
+      );
     }
   };
+  
 
   return (
     <div className={styles.root}>
@@ -163,7 +196,7 @@ function LostList() {
       <div className={styles.listMargin}>
         <a className={styles.subTitle}>추가 설명</a>
         <div className={styles.listContainer}>
-          <input ref={infoRef} className={styles.input} type="text" />
+          <input ref={infoRef} className={styles.addInput} type="text" />
         </div>
       </div>
       <div className={styles.submitButtonContainer}>
