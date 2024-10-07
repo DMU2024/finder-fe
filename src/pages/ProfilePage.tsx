@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { BookMark, getBookMark } from "../apis/bookmark";
+import { getKakaoScopes, getUser, User } from "../apis/user";
 import ProfileDetailEdit from "../components/Profile/Edit/ProfileDetailEdit";
 import ProfilePlaceEdit from "../components/Profile/Edit/ProfilePlaceEdit";
 import ProfileHeader from "../components/Profile/ProfileHeader";
@@ -39,6 +40,8 @@ function ProfilePage() {
   const styles = useStyles();
   const navigate = useNavigate();
   const [isEditMode, setIsEditMode] = useState(false);
+  const [user, setUser] = useState<User>();
+  const [isMessageAgreed, setIsMessageAgreed] = useState(false);
   const { setBookmarkMap } = useGlobalStore();
   const { userId } = useAuthStore();
 
@@ -50,10 +53,20 @@ function ProfilePage() {
 
   useEffect(() => {
     if (userId) {
+      getUser(userId).then((res) => {
+        setUser(res);
+      });
       getBookMark(userId).then((res) => {
         const temp = new Map<string, BookMark>();
         res.map((bookmark) => temp.set(bookmark.location, bookmark));
         setBookmarkMap(temp);
+      });
+      getKakaoScopes(userId).then((res) => {
+        res.scopes.map((scope) => {
+          if (scope.id === "talk_message") {
+            setIsMessageAgreed(scope.agreed);
+          }
+        });
       });
     }
   }, []);
@@ -64,13 +77,17 @@ function ProfilePage() {
 
   return (
     <div className={styles.root}>
-      <ProfileHeader handleEditMode={handleEditMode} />
+      <ProfileHeader handleEditMode={handleEditMode} user={user} />
       <div className={styles.content}>
         <div className={isEditMode ? styles.right : styles.left}>
           {isEditMode ? <ProfilePlaceEdit /> : <ProfileKeyword />}
         </div>
         <div className={isEditMode ? styles.left : styles.right}>
-          {isEditMode ? <ProfileDetailEdit /> : <ProfilePlace />}
+          {isEditMode ? (
+            <ProfileDetailEdit isMessageAgreed={isMessageAgreed} />
+          ) : (
+            <ProfilePlace />
+          )}
         </div>
       </div>
     </div>

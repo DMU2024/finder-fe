@@ -18,7 +18,6 @@ import ChatPage from "./pages/ChatPage";
 import DetailPage from "./pages/DetailPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
-import ProfileEditPage from "./pages/ProfileEditPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import WritePage from "./pages/WritePage";
@@ -118,7 +117,6 @@ function App() {
                 <Route element={<WritePage />} path="/write" />
                 <Route element={<DetailPage />} path="/detail/:id" />
                 <Route element={<ProfilePage />} path="/profile" />
-                <Route element={<ProfileEditPage />} path="/profile/edit" />
                 <Route element={<AchievePage />} path="/profile/achieve" />
                 <Route element={<ChatPage />} path="/chat" />
                 <Route element={<LoginPage />} path="/login" />

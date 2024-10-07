@@ -21,9 +21,11 @@ function LoginPage() {
   const { setUserId } = useAuthStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const code = searchParams.get("code");
+  const scope = searchParams.get("scope");
 
   const kakaoLogin = () => {
-    window.open(getLoginURI(), "_self");
+    const uri = getLoginURI() + (scope ? `&scope=${scope}` : "&prompt=login");
+    window.open(uri, "_self");
   };
 
   useEffect(() => {
@@ -37,6 +39,9 @@ function LoginPage() {
           alert(err);
           navigate("/login");
         });
+    }
+    if (scope) {
+      kakaoLogin();
     }
   }, []);
 

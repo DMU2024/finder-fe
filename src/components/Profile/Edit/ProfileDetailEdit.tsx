@@ -1,8 +1,9 @@
 import { Button, makeStyles, tokens } from "@fluentui/react-components";
 import { Switch } from "@fluentui/react-components";
 import { useState } from "react";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
-import { postUnlink } from "../../../apis/user";
+import { postRevokeKakaoScopes, postUnlink } from "../../../apis/user";
 import { useAuthStore } from "../../../stores/auth";
 import { skeletonColor } from "../../../styles/color";
 
@@ -38,18 +39,45 @@ const useStyles = makeStyles({
   }
 });
 
-function ProfileDetailEdit() {
+interface Props {
+  isMessageAgreed: boolean;
+}
+
+function ProfileDetailEdit({ isMessageAgreed }: Props) {
   const styles = useStyles();
+  const navigate = useNavigate();
   const { userId, setUserId } = useAuthStore();
 
   // 스위치 상태 관리
-  const [keywordNotification, setKeywordNotification] = useState(false);
+  const [keywordNotification, setKeywordNotification] =
+    useState(isMessageAgreed);
   const [locationService, setLocationService] = useState(false);
 
+  const handleKeywordNotification = () => {
+    if (userId) {
+      if (keywordNotification) {
+        if (confirm("정말로 동의를 철회하시겠습니까?")) {
+          postRevokeKakaoScopes(userId, ["talk_message"]).then(() => {
+            setKeywordNotification(false);
+            alert("철회 되었습니다.");
+          });
+        }
+      } else {
+        navigate({
+          pathname: "/login",
+          search: createSearchParams({
+            scope: "talk_message"
+          }).toString()
+        });
+      }
+    }
+  };
+
   const handleUnlinkButton = () => {
-    if (confirm("정말로 탈퇴하시겠습니까?") && userId) {
-      postUnlink(userId).then((res) => {
+    if (userId && confirm("정말로 탈퇴하시겠습니까?")) {
+      postUnlink(userId).then(() => {
         setUserId(undefined);
+        alert("탈퇴 되었습니다.");
       });
     }
   };
@@ -63,7 +91,7 @@ function ProfileDetailEdit() {
           <div style={{ display: "flex", alignItems: "center" }}>
             <Switch
               checked={keywordNotification}
-              onChange={(e, data) => setKeywordNotification(data.checked)}
+              onChange={() => handleKeywordNotification()}
             />
             <div className={styles.statusText}>
               {keywordNotification ? "동의" : "비동의"}

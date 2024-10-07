@@ -9,6 +9,7 @@ import {
 } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
 
+import { User } from "../../apis/user";
 import { mainColor } from "../../styles/color";
 
 const useStyles = makeStyles({
@@ -77,13 +78,13 @@ const useStyles = makeStyles({
 });
 
 interface ProfileProps extends Partial<ProgressBarProps> {
-  img?: string;
   handleEditMode?: () => void;
+  user?: User;
 }
 
 function ProfileHeader({
-  img,
   handleEditMode,
+  user,
   ...progressBarProps
 }: ProfileProps) {
   const styles = useStyles();
@@ -92,16 +93,17 @@ function ProfileHeader({
   return (
     <div className={styles.root}>
       <Image
+        fit="cover"
         shape="circular"
-        src={img ? img : "/profileIMGimsi.png"}
+        src={user ? user.profileImage : "/profileIMGimsi.png"}
         style={{ width: "220px", height: "220px" }}
       />
 
       <div className={styles.profile}>
         <div className={styles.profile_01}>
           <div>
-            <div className={styles.nickname}>닉네임</div>
-            <div className={styles.id}>@12345678</div>
+            <div className={styles.nickname}>{user?.username}</div>
+            <div className={styles.id}>{`@${user?.userId}`}</div>
           </div>
           <div>
             {/* <DefaultButton

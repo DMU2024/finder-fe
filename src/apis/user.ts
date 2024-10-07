@@ -12,6 +12,20 @@ interface User {
   thumbnailImage: string;
 }
 
+interface KakaoScopeInfo {
+  id: number;
+  scopes: KakaoScope[];
+}
+
+interface KakaoScope {
+  id: string;
+  display_name: string;
+  type: string;
+  using: boolean;
+  agreed: boolean;
+  revocable: boolean;
+}
+
 const getUser = async (userId: number) => {
   const { data } = await Instance.get<User>(`/api/users/${userId}`);
 
@@ -24,13 +38,29 @@ const getUsers = async () => {
   return data;
 };
 
+const getKakaoScopes = async (userId: number) => {
+  const { data } = await Instance.get<KakaoScopeInfo>(
+    `/api/users/scopes/${userId}`
+  );
+
+  return data;
+};
+
+const postRevokeKakaoScopes = async (userId: number, scopes: string[]) => {
+  const { data } = await Instance.post<KakaoScopeInfo>(
+    `/api/users/scopes/${userId}`,
+    { scopes: scopes.join(",") }
+  );
+
+  return data;
+};
+
 const getLoginURI = () => {
   return (
     `${KAKAO_AUTH}/oauth/authorize?` +
     `client_id=${KAKAO_CLIENTID}` +
     `&redirect_uri=${KAKAO_CALLBACK}` +
-    `&response_type=code` +
-    `&prompt=login`
+    `&response_type=code`
   );
 };
 
@@ -56,5 +86,14 @@ const postUnlink = async (userId: number) => {
   return data;
 };
 
-export type { User };
-export { getUser, getUsers, getLoginURI, postLogin, postLogout, postUnlink };
+export type { User, KakaoScopeInfo, KakaoScope };
+export {
+  getUser,
+  getUsers,
+  getKakaoScopes,
+  postRevokeKakaoScopes,
+  getLoginURI,
+  postLogin,
+  postLogout,
+  postUnlink
+};
