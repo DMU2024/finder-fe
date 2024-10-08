@@ -1,17 +1,26 @@
 import { Depths } from "@fluentui/react";
 import { Switch, makeStyles, tokens } from "@fluentui/react-components";
-import { LocationRegular, NavigationRegular } from "@fluentui/react-icons";
-import { useNavigate } from "react-router-dom";
+import {
+  LocationRegular,
+  NavigationRegular,
+  WeatherMoonRegular,
+  WeatherSunnyRegular
+} from "@fluentui/react-icons";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import SidebarMobile from "./SidebarMobile";
 import { postLogout } from "../apis/user";
 import { useAuthStore } from "../stores/auth";
 import useOptionStore from "../stores/option";
 import { backgroundColor, mainColor } from "../styles/color";
-import { contentMargin, contentMobileMargin, headerHeight, headerMobileHeight } from "../styles/margin";
+import {
+  contentMargin,
+  contentMobileMargin,
+  headerHeight,
+  headerMobileHeight
+} from "../styles/margin";
 import { sideBarWidth } from "../styles/size";
-
-import SidebarMobile from "./SidebarMobile";
 
 const useStyles = makeStyles({
   root: {
@@ -36,7 +45,7 @@ const useStyles = makeStyles({
     gap: "15px",
     cursor: "pointer",
     "@media (max-width: 390px)": {
-      marginLeft: `calc(${contentMobileMargin} - 12px)`,
+      marginLeft: `calc(${contentMobileMargin} - 12px)`
     }
   },
   titleIcon: {
@@ -128,13 +137,14 @@ function Header() {
             </h2>
           </>
         )}
-
-        <Switch
-          defaultChecked={isDarkTheme}
-          onChange={(_, data) => {
-            setIsDarkTheme(data.checked);
+        <div
+          style={{ fontSize: 28, cursor: "pointer" }}
+          onClick={() => {
+            setIsDarkTheme(!isDarkTheme);
           }}
-        />
+        >
+          {isDarkTheme ? <WeatherSunnyRegular /> : <WeatherMoonRegular />}
+        </div>
       </div>
       <div>
         <NavigationRegular
@@ -142,7 +152,9 @@ function Header() {
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         />
       </div>
-      {isSidebarOpen && <SidebarMobile isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />}
+      {isSidebarOpen && (
+        <SidebarMobile isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      )}
     </div>
   );
 }
