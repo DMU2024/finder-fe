@@ -85,6 +85,11 @@ function Item({
   const handleBookmark = () => {
     if (userId) {
       if (!bookmarkMap.has(name)) {
+        if (bookmarkMap.size >= 3) {
+          alert("즐겨찾기는 최대 3개까지 가능합니다.");
+          return;
+        }
+
         postBookMark(userId, name).then((res) => {
           const temp = new Map(bookmarkMap);
           temp.set(res.location, res);
