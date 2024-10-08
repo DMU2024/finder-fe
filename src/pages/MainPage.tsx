@@ -1,7 +1,13 @@
 import { makeStyles, shorthands } from "@fluentui/react-components";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { BookMark, getBookMark } from "../apis/bookmark";
+import {
+  BookMark,
+  deleteBookMark,
+  getBookMark,
+  postBookMark
+} from "../apis/bookmark";
 import ItemList from "../components/Main/ItemList";
 import ItemModal from "../components/Main/ItemModal";
 import KakaoMap from "../components/Main/KakaoMap";
@@ -45,9 +51,39 @@ const useStyles = makeStyles({
 
 function MainPage() {
   const styles = useStyles();
+  const navigate = useNavigate();
   const { selectedMarker } = useMainStore();
-  const { setBookmarkMap } = useGlobalStore();
+  const { bookmarkMap, setBookmarkMap } = useGlobalStore();
   const { userId } = useAuthStore();
+
+  const handleBookmark = (name: string) => {
+    if (userId) {
+      if (!bookmarkMap.has(name)) {
+        if (bookmarkMap.size >= 3) {
+          alert("즐겨찾기는 최대 3개까지 가능합니다.");
+          return;
+        }
+
+        postBookMark(userId, name).then((res) => {
+          const temp = new Map(bookmarkMap);
+          temp.set(res.location, res);
+          setBookmarkMap(temp);
+        });
+      } else {
+        const bookmarkId = bookmarkMap.get(name)?.id;
+
+        if (bookmarkId) {
+          deleteBookMark(bookmarkId).then(() => {
+            const temp = new Map(bookmarkMap);
+            temp.delete(name);
+            setBookmarkMap(temp);
+          });
+        }
+      }
+    } else {
+      navigate("/login");
+    }
+  };
 
   useEffect(() => {
     if (userId) {
@@ -64,10 +100,14 @@ function MainPage() {
       <Notificiation />
       <div className={styles.content}>
         <div className={styles.left}>
-          {selectedMarker ? <ItemList /> : <MarkerList />}
+          {selectedMarker ? (
+            <ItemList />
+          ) : (
+            <MarkerList handleBookmark={handleBookmark} />
+          )}
         </div>
         <div className={styles.right}>
-          <KakaoMap />
+          <KakaoMap handleBookmark={handleBookmark} />
         </div>
       </div>
 

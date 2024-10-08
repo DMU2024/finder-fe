@@ -53,7 +53,11 @@ const useStyles = makeStyles({
   }
 });
 
-function MarkerList() {
+interface Props {
+  handleBookmark: (name: string) => void;
+}
+
+function MarkerList({ handleBookmark }: Props) {
   const styles = useStyles();
   const { markerList, showLostGoods } = useMainStore();
   const { bookmarkMap } = useGlobalStore();
@@ -65,6 +69,7 @@ function MarkerList() {
           key={index}
           address={marker.address}
           category={marker.category}
+          handleBookmark={handleBookmark}
           isBookmarked={bookmarkMap.has(marker.name)}
           marker={marker}
           name={marker.name}

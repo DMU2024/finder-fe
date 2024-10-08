@@ -2,11 +2,8 @@ import { Divider, Image, makeStyles, tokens } from "@fluentui/react-components";
 import { Star32Filled, Star32Regular } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
 
-import { deleteBookMark, postBookMark } from "../../apis/bookmark";
 import { LostFound } from "../../apis/lostfound";
 import { Marker } from "../../apis/marker";
-import { useAuthStore } from "../../stores/auth";
-import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 
@@ -64,6 +61,7 @@ interface ItemProps {
   marker?: Marker;
   item?: LostFound;
   isBookmarked?: boolean;
+  handleBookmark?: (name: string) => void;
 }
 
 function Item({
@@ -73,41 +71,31 @@ function Item({
   img,
   marker,
   item,
-  isBookmarked
+  isBookmarked,
+  handleBookmark
 }: ItemProps) {
   const styles = useStyle();
   const navigate = useNavigate();
 
   const { setSelectedMarker } = useMainStore();
-  const { bookmarkMap, setBookmarkMap } = useGlobalStore();
-  const { userId } = useAuthStore();
 
-  const handleBookmark = () => {
-    if (userId) {
-      if (!bookmarkMap.has(name)) {
-        if (bookmarkMap.size >= 3) {
-          alert("즐겨찾기는 최대 3개까지 가능합니다.");
-          return;
-        }
-
-        postBookMark(userId, name).then((res) => {
-          const temp = new Map(bookmarkMap);
-          temp.set(res.location, res);
-          setBookmarkMap(temp);
-        });
-      } else {
-        const bookmarkId = bookmarkMap.get(name)?.id;
-
-        if (bookmarkId) {
-          deleteBookMark(bookmarkId).then(() => {
-            const temp = new Map(bookmarkMap);
-            temp.delete(name);
-            setBookmarkMap(temp);
-          });
-        }
-      }
-    } else {
-      navigate("/login");
+  const renderBookmark = () => {
+    if (marker) {
+      return (
+        <div
+          style={{
+            cursor: "pointer",
+            height: "100%"
+          }}
+          onClick={() => {
+            if (handleBookmark) {
+              handleBookmark(name);
+            }
+          }}
+        >
+          {isBookmarked ? <Star32Filled color="orange" /> : <Star32Regular />}
+        </div>
+      );
     }
   };
 
@@ -125,17 +113,7 @@ function Item({
             <div className={styles.itemDescription}>{address}</div>
             <div className={styles.itemDescription}>{category}</div>
           </div>
-          <div
-            style={{
-              cursor: "pointer",
-              height: "100%"
-            }}
-            onClick={() => {
-              handleBookmark();
-            }}
-          >
-            {isBookmarked ? <Star32Filled color="orange" /> : <Star32Regular />}
-          </div>
+          {renderBookmark()}
         </div>
 
         <div

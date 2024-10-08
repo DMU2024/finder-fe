@@ -1,8 +1,11 @@
 import { Depths } from "@fluentui/react";
 import { Card, makeStyles } from "@fluentui/react-components";
+import { StarFilled, StarRegular } from "@fluentui/react-icons";
+import { useEffect, useState } from "react";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import { useNavigate } from "react-router-dom";
 
+import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
@@ -23,17 +26,43 @@ const useStyles = makeStyles({
     "@media (max-width: 390px)": {
       padding: "18px",
       fontSize: "16px"
-    },
+    }
   }
 });
 
-function KakaoMapPopup() {
+interface Props {
+  handleBookmark?: (name: string) => void;
+  isBookmarked?: boolean;
+}
+
+function KakaoMapPopup({ handleBookmark, isBookmarked }: Props) {
   const styles = useStyles();
   const navigate = useNavigate();
 
   const { clickedInfo } = usePositionStore();
-  const { selectedMarker } = useMainStore();
+  const { selectedMarker, showLostGoods } = useMainStore();
   const info = selectedMarker || clickedInfo;
+
+  const renderBookmark = () => {
+    if (!showLostGoods) {
+      return (
+        <div
+          style={{
+            cursor: "pointer",
+            height: "100%",
+            marginLeft: "auto"
+          }}
+          onClick={() => {
+            if (handleBookmark) {
+              handleBookmark(selectedMarker?.name ?? "");
+            }
+          }}
+        >
+          {isBookmarked ? <StarFilled color="orange" /> : <StarRegular />}
+        </div>
+      );
+    }
+  };
 
   return (
     <>
@@ -56,8 +85,9 @@ function KakaoMapPopup() {
                 color: "black"
               }}
             >
-              <div>
-                {info.name ? info.name : info.address}
+              <div style={{ display: "flex", fontSize: "20px" }}>
+                <div>{info.name ? info.name : info.address}</div>
+                {renderBookmark()}
               </div>
               {info.name && (
                 <div style={{ color: mainColor }}>{info.address}</div>

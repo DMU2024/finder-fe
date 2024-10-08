@@ -7,6 +7,7 @@ import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 import KakaoMapPopup from "./KakaoMapPopup";
 import { getCoord2Address } from "../../apis/kakaoMap";
 import { getMarkerByCoords } from "../../apis/marker";
+import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
@@ -88,7 +89,11 @@ const useStyle = makeStyles({
   }
 });
 
-function KakaoMap() {
+interface Props {
+  handleBookmark: (name: string) => void;
+}
+
+function KakaoMap({ handleBookmark }: Props) {
   const styles = useStyle();
 
   const {
@@ -115,6 +120,8 @@ function KakaoMap() {
     showLostGoods,
     setShowLostGoods
   } = useMainStore();
+
+  const { bookmarkMap } = useGlobalStore();
 
   useEffect(() => {
     if (latitude !== 0 && longitude !== 0) {
@@ -252,7 +259,10 @@ function KakaoMap() {
               onClick={() => setClickedInfo(undefined)}
             />
           )}
-          <KakaoMapPopup />
+          <KakaoMapPopup
+            handleBookmark={handleBookmark}
+            isBookmarked={bookmarkMap.has(selectedMarker?.name ?? "")}
+          />
         </Map>
         <Button
           className={styles.control}
