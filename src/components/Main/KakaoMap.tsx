@@ -199,14 +199,22 @@ function KakaoMap() {
             const [lat, lng] = [latLng.getLat(), latLng.getLng()];
 
             setSelectedMarker(undefined);
-            getCoord2Address(lat, lng).then(({ address_name, building_name }) =>
-              setClickedInfo({
-                address: address_name,
-                name: building_name,
-                lat: lat,
-                lng: lng
-              })
-            );
+            if (showLostGoods) {
+              getCoord2Address(lat, lng)
+                .then(({ address_name, building_name }) =>
+                  setClickedInfo({
+                    address: address_name,
+                    name: building_name,
+                    lat: lat,
+                    lng: lng
+                  })
+                )
+                .catch((err) => {
+                  if (err !== "ZERO_RESULT") {
+                    console.error(err);
+                  }
+                });
+            }
           }}
           onDragEnd={(map) => {
             const center = map.getCenter();
