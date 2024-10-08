@@ -3,6 +3,7 @@ import { Button, Card, Switch, makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
 import { useEffect, useRef } from "react";
 import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import KakaoMapPopup from "./KakaoMapPopup";
 import { getCoord2Address } from "../../apis/kakaoMap";
@@ -95,6 +96,8 @@ interface Props {
 
 function KakaoMap({ handleBookmark }: Props) {
   const styles = useStyle();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const {
     latitude,
@@ -172,6 +175,20 @@ function KakaoMap({ handleBookmark }: Props) {
       setClickedInfo(undefined);
     }
   }, [selectedMarker]);
+
+  useEffect(() => {
+    const place = searchParams.get("place");
+
+    if (place) {
+      markerList.map((marker) => {
+        if (marker._id === place) {
+          setSelectedMarker(marker);
+          navigate("/");
+          return;
+        }
+      });
+    }
+  }, [markerList]);
 
   return (
     <div className={styles.root}>

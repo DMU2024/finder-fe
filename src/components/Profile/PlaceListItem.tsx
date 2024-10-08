@@ -1,7 +1,8 @@
 import { tokens, makeStyles, Image } from "@fluentui/react-components";
-import { useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 import { BookMark } from "../../apis/bookmark";
+import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 
 const useStyles = makeStyles({
@@ -44,13 +45,22 @@ interface PlaceListProps {
 function PlaceListItem({ img, bookmark }: PlaceListProps) {
   const styles = useStyles();
   const navigate = useNavigate();
-  const { setLatitude, setLongitude } = usePositionStore();
+  const { setSelectedMarker, setShowLostGoods } = useMainStore();
+  const { setLatitude, setLongitude, setZoomLevel } = usePositionStore();
 
   const handlePlaceClick = () => {
     if (bookmark) {
+      setSelectedMarker(undefined);
+      setShowLostGoods(false);
       setLatitude(bookmark.lat);
       setLongitude(bookmark.lng);
-      navigate("/");
+      setZoomLevel(3);
+      navigate({
+        pathname: "/",
+        search: createSearchParams({
+          place: bookmark.location
+        }).toString()
+      });
     }
   };
 
