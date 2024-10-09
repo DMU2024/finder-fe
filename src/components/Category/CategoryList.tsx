@@ -36,7 +36,10 @@ const useStyles = makeStyles({
     },
   },
   modalContentSmall: {
-    width: "40vw",
+    width: "80vw",
+    "@media (max-width: 390px)": {
+      transition: "width 0.3s",
+    }
   },
   modalOverlay: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
