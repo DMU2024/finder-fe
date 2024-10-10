@@ -21,4 +21,4 @@ const useAuthStore = create(
 );
 
 export type { Auth };
-export { useAuthStore };
+export default useAuthStore;

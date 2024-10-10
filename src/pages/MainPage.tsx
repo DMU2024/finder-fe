@@ -13,7 +13,7 @@ import ItemModal from "../components/Main/ItemModal";
 import KakaoMap from "../components/Main/KakaoMap";
 import MarkerList from "../components/Main/MarkerList";
 import Notificiation from "../components/Main/Notification";
-import { useAuthStore } from "../stores/auth";
+import useAuthStore from "../stores/auth";
 import useGlobalStore from "../stores/global";
 import useMainStore from "../stores/main";
 
@@ -111,7 +111,7 @@ function MainPage() {
         </div>
       </div>
 
-      <ItemModal />
+      <ItemModal handleBookmark={handleBookmark} />
     </div>
   );
 }

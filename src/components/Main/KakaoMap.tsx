@@ -12,7 +12,12 @@ import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
-import { contentMargin, headerHeight, headerMobileHeight, contentMobileMargin } from "../../styles/margin";
+import {
+  contentMargin,
+  headerHeight,
+  headerMobileHeight,
+  contentMobileMargin
+} from "../../styles/margin";
 
 const useStyle = makeStyles({
   root: {
@@ -24,7 +29,7 @@ const useStyle = makeStyles({
       height: `calc(100vh - ${headerMobileHeight})`,
       padding: 0,
       zIndex: 0
-    },
+    }
   },
   title: {
     display: "flex",
@@ -32,19 +37,19 @@ const useStyle = makeStyles({
     marginTop: "68px",
     marginLeft: "8px",
     "@media (max-width: 390px)": {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   titleKor: {
     fontSize: "48px",
     lineHeight: "48px",
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   titleEng: {
     fontSize: "20px",
     lineHeight: "20px",
     fontWeight: "bold",
-    color: mainColor,
+    color: mainColor
   },
   titleInfo: {
     display: "flex",
@@ -52,13 +57,13 @@ const useStyle = makeStyles({
     alignItems: "flex-end",
     marginLeft: "auto",
     "@media (max-width: 390px)": {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   position: {
     color: mainColor,
     fontSize: "14px",
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   map: {
     width: "100%",
@@ -70,7 +75,7 @@ const useStyle = makeStyles({
       borderRadius: 0,
       boxShadow: "none",
       zIndex: 0
-    },
+    }
   },
   control: {
     position: "absolute",
@@ -78,15 +83,15 @@ const useStyle = makeStyles({
     right: "14px",
     zIndex: 1,
     "@media (max-width: 390px)": {
-      top: "8px",
-    },
+      top: "8px"
+    }
   },
   cardMap: {
     width: "100%",
     height: "100%",
     "@media (max-width: 390px)": {
-      height: `calc(100vh - ${headerMobileHeight})`,
-    },
+      height: `calc(100vh - ${headerMobileHeight})`
+    }
   }
 });
 
@@ -216,8 +221,8 @@ function KakaoMap({ handleBookmark }: Props) {
         <Map
           ref={mapRef}
           center={{ lat: latitude, lng: longitude }}
-          level={zoomLevel}
           className={styles.cardMap}
+          level={zoomLevel}
           onClick={(_, event) => {
             const latLng = event.latLng;
             const [lat, lng] = [latLng.getLat(), latLng.getLng()];

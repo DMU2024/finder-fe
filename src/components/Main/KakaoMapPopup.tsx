@@ -1,11 +1,9 @@
 import { Depths } from "@fluentui/react";
 import { Card, makeStyles } from "@fluentui/react-components";
 import { StarFilled, StarRegular } from "@fluentui/react-icons";
-import { useEffect, useState } from "react";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import { useNavigate } from "react-router-dom";
 
-import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";

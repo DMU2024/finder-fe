@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { makeStyles, Image, Tab, TabList } from "@fluentui/react-components";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -16,20 +16,20 @@ const useStyles = makeStyles({
     transition: "transform 0.3s ease-in-out",
     zIndex: 2,
     "@media (min-width: 391px)": {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   open: {
     transform: "translateX(0)",
     "@media (min-width: 391px)": {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   closed: {
     transform: "translateX(100%)",
     "@media (min-width: 391px)": {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   overlay: {
     position: "fixed",
@@ -40,8 +40,8 @@ const useStyles = makeStyles({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 0,
     "@media (min-width: 391px)": {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   profile: {
     display: "flex",
@@ -54,7 +54,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    padding: "30px",
+    padding: "30px"
   },
   subInfo01: {
     fontSize: "16px",
@@ -93,7 +93,7 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
       case "/chat":
         setSelectedTab("tab3");
         break;
-      case "/mypage":
+      case "/profile":
         setSelectedTab("tab4");
         break;
       default:
@@ -105,11 +105,11 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
   return (
     <>
       <div className={`${styles.root} ${isOpen ? styles.open : styles.closed}`}>
-
         <div className={styles.profile}>
           <Image
+            shape="circular"
             src={img ? img : "/profileIMGimsi.png"}
-            style={{ width: "150px", height: "150px" }} shape="circular"
+            style={{ width: "150px", height: "150px" }}
           />
           <div className={styles.subInfoContainer}>
             <div className={styles.subInfo01}> 닉네임Nickname 님 </div>
@@ -118,51 +118,49 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
         </div>
 
         <div>
-          <TabList selectedValue={selectedTab} vertical>
+          <TabList vertical selectedValue={selectedTab}>
             <Tab
+              className={`${styles.tab} ${selectedTab === "tab1" ? selectedTab : ""}`} // className 수정
               value="tab1"
               onClick={() => {
                 navigate("/");
                 setIsOpen(false);
               }}
-              className={`${styles.tab} ${selectedTab === "tab1" ? selectedTab : ""}`} // className 수정
             >
               메인화면
             </Tab>
             <Tab
+              className={`${styles.tab} ${selectedTab === "tab2" ? selectedTab : ""}`} // className 수정
               value="tab2"
               onClick={() => {
                 navigate("/search");
                 setIsOpen(false);
               }}
-              className={`${styles.tab} ${selectedTab === "tab2" ? selectedTab : ""}`} // className 수정
             >
               검색
             </Tab>
             <Tab
+              className={`${styles.tab} ${selectedTab === "tab3" ? selectedTab : ""}`} // className 수정
               value="tab3"
               onClick={() => {
                 navigate("/chat");
                 setIsOpen(false);
               }}
-              className={`${styles.tab} ${selectedTab === "tab3" ? selectedTab : ""}`} // className 수정
             >
               대화
             </Tab>
             <Tab
+              className={`${styles.tab} ${selectedTab === "tab4" ? selectedTab : ""}`} // className 수정
               value="tab4"
               onClick={() => {
-                navigate("/mypage");
+                navigate("/profile");
                 setIsOpen(false);
               }}
-              className={`${styles.tab} ${selectedTab === "tab4" ? selectedTab : ""}`} // className 수정
             >
               마이페이지
             </Tab>
           </TabList>
-
         </div>
-
       </div>
       {isOpen && (
         <div className={styles.overlay} onClick={() => setIsOpen(false)} />

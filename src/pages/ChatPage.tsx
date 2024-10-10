@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import ChatHistory from "../components/Chat/ChatHistory";
 import ChatMain from "../components/Chat/ChatMain";
-import { useAuthStore } from "../stores/auth";
+import useAuthStore from "../stores/auth";
 
 const useStyles = makeStyles({
   root: {

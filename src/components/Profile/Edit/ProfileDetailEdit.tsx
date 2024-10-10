@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 
 import { postRevokeKakaoScopes, postUnlink } from "../../../apis/user";
-import { useAuthStore } from "../../../stores/auth";
+import useAuthStore from "../../../stores/auth";
 import { skeletonColor } from "../../../styles/color";
 
 const useStyles = makeStyles({

@@ -1,17 +1,17 @@
 import { Depths } from "@fluentui/react";
-import { Switch, makeStyles, tokens } from "@fluentui/react-components";
+import { makeStyles, tokens } from "@fluentui/react-components";
 import {
   LocationRegular,
   NavigationRegular,
   WeatherMoonRegular,
   WeatherSunnyRegular
 } from "@fluentui/react-icons";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import SidebarMobile from "./SidebarMobile";
 import { postLogout } from "../apis/user";
-import { useAuthStore } from "../stores/auth";
+import useAuthStore from "../stores/auth";
 import useOptionStore from "../stores/option";
 import { backgroundColor, mainColor } from "../styles/color";
 import {

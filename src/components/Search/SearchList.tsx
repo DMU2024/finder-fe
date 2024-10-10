@@ -10,6 +10,7 @@ import {
 } from "@fluentui/react-components";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+
 import SearchListItem from "./SearchListItem";
 import { searchLostFound, getLostFound } from "../../apis/lostfound";
 import useIntersect from "../../hooks/useIntersect";
@@ -23,19 +24,19 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     fontSize: "12px !important",
     "@media (max-width: 390px)": {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   tableBody: {
     "@media (max-width: 390px)": {
-      display: "block",
-    },
+      display: "block"
+    }
   },
   tableRow: {
     "@media (max-width: 390px)": {
       display: "block",
-      marginBottom: "16px",
-    },
+      marginBottom: "16px"
+    }
   },
   tableCell: {
     "@media (max-width: 390px)": {
@@ -46,9 +47,9 @@ const useStyles = makeStyles({
         content: "attr(data-label)",
         fontWeight: "bold",
         display: "block",
-        marginBottom: "4px",
-      },
-    },
+        marginBottom: "4px"
+      }
+    }
   },
   spinner: {
     margin: "16px",

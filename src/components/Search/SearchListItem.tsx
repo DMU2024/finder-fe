@@ -4,9 +4,10 @@ import {
   TableCellLayout,
   TableRow
 } from "@fluentui/react-components";
-import { useNavigate } from "react-router-dom";
-import { LostFound } from "../../apis/lostfound";
 import { makeStyles } from "@fluentui/react-components";
+import { useNavigate } from "react-router-dom";
+
+import { LostFound } from "../../apis/lostfound";
 import { mainColor, skeletonColor, secondaryColor } from "../../styles/color";
 
 const useStyles = makeStyles({
@@ -15,13 +16,13 @@ const useStyles = makeStyles({
       height: "auto",
       display: "flex",
       flexDirection: "row",
-      alignItems: "center",
-    },
+      alignItems: "center"
+    }
   },
   tableCell: {
     "@media (max-width: 390px)": {
       display: "none"
-    },
+    }
   },
   tableCell02: {
     display: "none",
@@ -36,8 +37,8 @@ const useStyles = makeStyles({
         content: "attr(data-label)",
         fontWeight: "bold",
         display: "block",
-        marginBottom: "4px",
-      },
+        marginBottom: "4px"
+      }
     }
   },
   imageContainer: {
@@ -57,29 +58,29 @@ const useStyles = makeStyles({
     "@media (max-width: 390px)": {
       width: "11vh",
       height: "11vh",
-      marginRight: "0",
-    },
+      marginRight: "0"
+    }
   },
   title: {
     "@media (max-width: 390px)": {
       color: skeletonColor,
       fontSize: "16px",
       fontWeight: "bold"
-    },
+    }
   },
   categoryTitle: {
     "@media (max-width: 390px)": {
       color: mainColor,
       fontSize: "12px",
       fontWeight: "bold"
-    },
+    }
   },
   subTitle: {
     "@media (max-width: 390px)": {
       color: secondaryColor,
       fontSize: "12px",
       fontWeight: "bold"
-    },
+    }
   }
 });
 

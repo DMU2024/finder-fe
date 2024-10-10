@@ -3,7 +3,7 @@ import { SearchRegular, FilterRegular } from "@fluentui/react-icons"; // 필터 
 import { useEffect, useState } from "react";
 
 import useSearchStore from "../../stores/search";
-import { mainColor, secondaryColor } from "../../styles/color"; // 필요한 색상 추가
+import { mainColor } from "../../styles/color"; // 필요한 색상 추가
 
 const useStyles = makeStyles({
   root: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     display: "flex",
     margin: "16px 10px 10px 10px",
     "@media (max-width: 390px)": {
-      margin: "16px 10px 0px 10px",
+      margin: "16px 10px 0px 10px"
     }
   },
   searchContainer: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     outline: "none",
     "@media (max-width: 390px)": {
       width: "100%",
-      minHeight: "32px",
+      minHeight: "32px"
     }
   },
   filterIcon: {
@@ -46,13 +46,13 @@ const useStyles = makeStyles({
     cursor: "pointer",
     marginRight: "10px",
     "@media (max-width: 390px)": {
-      fontSize: "1.5em",
+      fontSize: "1.5em"
     }
   },
   title: {
     fontSize: "4em",
     "@media (max-width: 390px)": {
-      fontSize: "2em",
+      fontSize: "2em"
     }
   }
 });
@@ -80,9 +80,9 @@ function SearchForm() {
       <div className={styles.searchContainer}>
         <FilterRegular className={styles.filterIcon} />
         <SearchBox
+          appearance="underline"
           className={styles.searchBox}
           defaultValue={debouncedQuery}
-          appearance="underline"
           placeholder="Search for..."
           onChange={(event, data) => {
             if (event.nativeEvent instanceof MouseEvent) {

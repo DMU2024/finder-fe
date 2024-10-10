@@ -6,10 +6,9 @@ import ReactTextareaAutosize from "react-textarea-autosize";
 
 import ChatMainItem from "./ChatMainItem";
 import { Chat, getMessages } from "../../apis/chat";
-import { getUser } from "../../apis/user";
-import { useAuthStore } from "../../stores/auth";
+import useAuthStore from "../../stores/auth";
 import useChatStore from "../../stores/chat";
-import { backgroundColor, mainColor } from "../../styles/color";
+import { mainColor } from "../../styles/color";
 import { headerHeight, contentMargin } from "../../styles/margin";
 import { BASE_URL } from "../../utils/axios";
 

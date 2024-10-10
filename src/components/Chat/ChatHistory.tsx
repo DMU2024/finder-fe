@@ -1,10 +1,10 @@
 import { Depths } from "@fluentui/react";
 import { makeStyles, tokens } from "@fluentui/react-components";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import ChatHistoryItem from "./ChatHistoryItem";
 import { getUsers, User } from "../../apis/user";
-import { useAuthStore } from "../../stores/auth";
+import useAuthStore from "../../stores/auth";
 import { mainColor } from "../../styles/color";
 import { headerHeight, contentMargin } from "../../styles/margin";
 

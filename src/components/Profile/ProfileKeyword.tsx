@@ -7,7 +7,7 @@ import {
   Keyword,
   postKeyword
 } from "../../apis/keyword";
-import { useAuthStore } from "../../stores/auth";
+import useAuthStore from "../../stores/auth";
 import { mainColor, skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({

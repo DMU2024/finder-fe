@@ -10,7 +10,7 @@ import ProfileHeader from "../components/Profile/ProfileHeader";
 import ProfileKeyword from "../components/Profile/ProfileKeyword";
 import ProfilePlace from "../components/Profile/ProfilePlace";
 import ProfileWrite from "../components/Profile/ProfileWrite";
-import { useAuthStore } from "../stores/auth";
+import useAuthStore from "../stores/auth";
 import useGlobalStore from "../stores/global";
 
 const useStyles = makeStyles({

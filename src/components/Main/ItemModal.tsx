@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { makeStyles } from "@fluentui/react-components";
+import { useState } from "react";
+
 import ItemList from "./ItemList";
 import MarkerList from "./MarkerList";
 import useMainStore from "../../stores/main";
@@ -18,8 +19,8 @@ const useStyles = makeStyles({
     borderRadius: "4px",
     boxShadow: "0 -4px 12px rgba(0, 0, 0, 0.1)",
     "@media (min-width: 391px)": {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   contentContainer: {
     position: "fixed",
@@ -35,7 +36,7 @@ const useStyles = makeStyles({
     borderRadius: "40px 40px 0px 0px"
   },
   contentVisible: {
-    transform: "translateY(0)",
+    transform: "translateY(0)"
   },
   closeButton: {
     position: "absolute",
@@ -44,11 +45,15 @@ const useStyles = makeStyles({
     cursor: "pointer",
     fontSize: "24px",
     fontWeight: "bold",
-    color: "#333",
-  },
+    color: "#333"
+  }
 });
 
-function ItemModal() {
+interface Props {
+  handleBookmark: (name: string) => void;
+}
+
+function ItemModal({ handleBookmark }: Props) {
   const styles = useStyles();
   const { selectedMarker } = useMainStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -75,7 +80,11 @@ function ItemModal() {
           >
             ✕
           </div>
-          {selectedMarker ? <ItemList /> : <MarkerList />}
+          {selectedMarker ? (
+            <ItemList />
+          ) : (
+            <MarkerList handleBookmark={handleBookmark} />
+          )}
         </div>
       </div>
     </>
