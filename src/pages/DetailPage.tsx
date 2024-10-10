@@ -9,7 +9,7 @@ import {
 } from "@fluentui/react-components";
 import { ArrowLeftRegular, ChatArrowBackRegular } from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { LostFoundDetail, getLostFoundDetail } from "../apis/lostfound";
 import { mainColor } from "../styles/color";
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     cursor: "pointer",
     "@media (max-width: 390px)": {
       display: "none"
-    },
+    }
   },
   root: {
     flex: 1,
@@ -37,8 +37,8 @@ const useStyles = makeStyles({
     flexDirection: "column",
     "@media (max-width: 390px)": {
       width: "100vw",
-      height: `calc( 100vh + 30vh )`,
-    },
+      height: `calc( 100vh + 30vh )`
+    }
   },
   content: {
     flex: 1,
@@ -54,14 +54,14 @@ const useStyles = makeStyles({
       height: "100vh",
       borderRadius: "0 0 0 0",
       marginTop: "0px"
-    },
+    }
   },
   contentTop: {
     display: "flex",
     justifyContent: "center",
     "@media (max-width: 390px)": {
-      flexDirection: "column",
-    },
+      flexDirection: "column"
+    }
   },
   contentTopImage: {
     width: "400px",
@@ -72,8 +72,8 @@ const useStyles = makeStyles({
       width: "100%",
       height: "400px",
       marginLeft: "0px",
-      backgroundColor: "white",
-    },
+      backgroundColor: tokens.colorNeutralBackground3
+    }
   },
   contentTopTexts: {
     flex: 1,
@@ -91,16 +91,16 @@ const useStyles = makeStyles({
       marginLeft: "20px",
       marginRight: "20px",
       marginBottom: "12px",
-      gap: "20px",
-    },
+      gap: "20px"
+    }
   },
   contentTopMain: {
     fontSize: "48px",
     lineHeight: "48px",
     color: tokens.colorNeutralForeground2,
     "@media (max-width: 390px)": {
-      fontSize: "20px",
-    },
+      fontSize: "20px"
+    }
   },
   contentTopSub: {
     fontSize: "24px",
@@ -108,16 +108,16 @@ const useStyles = makeStyles({
     color: mainColor,
     "@media (max-width: 390px)": {
       fontSize: "14px",
-      lineHeight: "0px",
-    },
+      lineHeight: "0px"
+    }
   },
   contentTopInfo: {
     fontSize: "20px",
     color: tokens.colorNeutralStroke1,
     "@media (max-width: 390px)": {
       fontSize: "14px",
-      lineHeight: "14px",
-    },
+      lineHeight: "14px"
+    }
   },
   contentTopChat: {
     display: "flex",
@@ -133,8 +133,8 @@ const useStyles = makeStyles({
     textDecorationLine: "none",
     "@media (max-width: 390px)": {
       marginTop: "12px",
-      marginRight: "16px",
-    },
+      marginRight: "16px"
+    }
   },
   contentBottom: {
     width: "100vw",
@@ -158,14 +158,14 @@ const useStyles = makeStyles({
       backgroundColor: "none",
       padding: "0px",
       justifyContent: "center"
-    },
+    }
   },
   contentBottomDetail: {
     width: "100%",
     "@media (max-width: 390px)": {
       width: "90%",
       marginTop: "20px"
-    },
+    }
   }
 });
 
@@ -174,8 +174,6 @@ function DetailPage() {
 
   const navigate = useNavigate();
   const { id } = useParams();
-
-  const location = useLocation();
 
   const [item, setItem] = useState<LostFoundDetail>();
   const [isLoading, setIsLoading] = useState(true);

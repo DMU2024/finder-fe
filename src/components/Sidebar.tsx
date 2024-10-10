@@ -89,7 +89,6 @@ function Sidebar() {
         setSelectedTab("tab3");
         break;
       case "/profile":
-      case "/profile/edit":
         setSelectedTab("tab4");
         break;
     }

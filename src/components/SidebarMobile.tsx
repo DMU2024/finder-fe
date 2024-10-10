@@ -1,4 +1,10 @@
-import { makeStyles, Image, Tab, TabList } from "@fluentui/react-components";
+import {
+  makeStyles,
+  Image,
+  Tab,
+  TabList,
+  tokens
+} from "@fluentui/react-components";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -11,7 +17,7 @@ const useStyles = makeStyles({
     right: 0,
     height: "100vh",
     width: "70vw",
-    backgroundColor: "#fff",
+    backgroundColor: tokens.colorNeutralBackground1,
     boxShadow: "0 0 10px rgba(0,0,0,0.2)",
     transition: "transform 0.3s ease-in-out",
     zIndex: 2,

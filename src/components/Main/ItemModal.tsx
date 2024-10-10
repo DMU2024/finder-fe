@@ -1,4 +1,4 @@
-import { makeStyles } from "@fluentui/react-components";
+import { makeStyles, tokens } from "@fluentui/react-components";
 import { useState } from "react";
 
 import ItemList from "./ItemList";
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     transform: "translateX(-50%)",
     textAlign: "center",
     padding: "8px 16px",
-    backgroundColor: "#fff",
+    backgroundColor: tokens.colorNeutralBackground1,
     cursor: "pointer",
     zIndex: 0,
     borderRadius: "4px",
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     left: 0,
     width: "100%",
     height: "80vh",
-    backgroundColor: "#fff",
+    backgroundColor: tokens.colorNeutralBackground1,
     zIndex: 1,
     overflowY: "auto",
     transform: "translateY(100%)",
