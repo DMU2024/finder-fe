@@ -1,10 +1,10 @@
 import { create } from "zustand";
 
-import { User } from "../apis/user";
+import { ChatHistory } from "../apis/chat";
 
 interface Chat {
-  recipient: User | undefined;
-  setRecipient: (value: User | undefined) => void;
+  recipient: ChatHistory | undefined;
+  setRecipient: (value: ChatHistory | undefined) => void;
 }
 
 const useChatStore = create<Chat>((set) => ({

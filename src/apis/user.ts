@@ -32,12 +32,6 @@ const getUser = async (userId: number) => {
   return data;
 };
 
-const getUsers = async () => {
-  const { data } = await Instance.get<User[]>("/api/users");
-
-  return data;
-};
-
 const getKakaoScopes = async (userId: number) => {
   const { data } = await Instance.get<KakaoScopeInfo>(
     `/api/users/scopes/${userId}`
@@ -89,7 +83,6 @@ const postUnlink = async (userId: number) => {
 export type { User, KakaoScopeInfo, KakaoScope };
 export {
   getUser,
-  getUsers,
   getKakaoScopes,
   postRevokeKakaoScopes,
   getLoginURI,

@@ -2,7 +2,7 @@ import { makeStyles } from "@fluentui/react-components";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import ChatHistory from "../components/Chat/ChatHistory";
+import ChatHistory from "../components/Chat/ChatHistoryList";
 import ChatMain from "../components/Chat/ChatMain";
 import useAuthStore from "../stores/auth";
 

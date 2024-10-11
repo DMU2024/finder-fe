@@ -178,7 +178,9 @@ function ChatMain() {
               recipient?.profileImage ? recipient.profileImage : "/logo192.png"
             }
           />
-          <div className={styles.profileText}>{recipient?.username}</div>
+          <div className={styles.profileText}>
+            {recipient?.username ? recipient.username : "탈퇴한 사용자"}
+          </div>
         </div>
         <div ref={messageBox} className={styles.chatBoxMiddle}>
           {messages?.map((message, idx) => (
