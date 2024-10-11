@@ -9,10 +9,11 @@ import { useNavigate } from "react-router-dom";
 
 import { LostFound } from "../../apis/lostfound";
 import { mainColor, skeletonColor, secondaryColor } from "../../styles/color";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   tableRow: {
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: "auto",
       display: "flex",
       flexDirection: "row",
@@ -20,13 +21,13 @@ const useStyles = makeStyles({
     }
   },
   tableCell: {
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
   tableCell02: {
     display: "none",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
@@ -42,7 +43,7 @@ const useStyles = makeStyles({
     }
   },
   imageContainer: {
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "flex",
       width: "12vh",
       height: "12vh",
@@ -55,28 +56,28 @@ const useStyles = makeStyles({
     width: "14vh",
     height: "14vh",
     marginRight: "16px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       width: "11vh",
       height: "11vh",
       marginRight: "0"
     }
   },
   title: {
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       color: skeletonColor,
       fontSize: "16px",
       fontWeight: "bold"
     }
   },
   categoryTitle: {
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       color: mainColor,
       fontSize: "12px",
       fontWeight: "bold"
     }
   },
   subTitle: {
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       color: secondaryColor,
       fontSize: "12px",
       fontWeight: "bold"

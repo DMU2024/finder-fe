@@ -10,6 +10,7 @@ import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import useWriteStore from "../../stores/write";
 import { mainColor, skeletonColor } from "../../styles/color";
+import { mobileWidth } from "../../styles/size";
 import Category from "../Category/CategoryList";
 
 const useStyles = makeStyles({
@@ -25,7 +26,7 @@ const useStyles = makeStyles({
     fontSize: "16px",
     fontWeight: "bold",
     marginBottom: "24px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "12px",
       marginBottom: "20px"
     },
@@ -34,7 +35,7 @@ const useStyles = makeStyles({
     color: skeletonColor,
     fontSize: "20px",
     fontWeight: "bold",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "14px",
     },
   },
@@ -44,7 +45,7 @@ const useStyles = makeStyles({
   },
   listMargin: {
     marginBottom: "30px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       marginBottom: "30px",
     },
   },
@@ -56,7 +57,7 @@ const useStyles = makeStyles({
     boxSizing: "border-box",
     fontSize: "14px",
     outline: "none",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: "40px",
     },
   },
@@ -68,7 +69,7 @@ const useStyles = makeStyles({
     boxSizing: "border-box",
     fontSize: "14px",
     outline: "none",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: "160px",
     },
   },

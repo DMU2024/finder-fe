@@ -7,13 +7,14 @@ import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: "auto",
     },
   },
@@ -37,7 +38,7 @@ const useStyles = makeStyles({
         // "::-webkit-scrollbar": {
     //   display: "none"
     // }
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: "70vh",
       borderRadius: 0,
       boxShadow: "none"

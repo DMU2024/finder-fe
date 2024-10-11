@@ -15,6 +15,7 @@ import SearchListItem from "./SearchListItem";
 import { searchLostFound, getLostFound } from "../../apis/lostfound";
 import useIntersect from "../../hooks/useIntersect";
 import useSearchStore from "../../stores/search";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -23,23 +24,23 @@ const useStyles = makeStyles({
   tableHeader: {
     backgroundColor: tokens.colorNeutralBackground1,
     fontSize: "12px !important",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
   tableBody: {
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "block"
     }
   },
   tableRow: {
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "block",
       marginBottom: "16px"
     }
   },
   tableCell: {
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "block",
       padding: "8px 0",
       textAlign: "left",

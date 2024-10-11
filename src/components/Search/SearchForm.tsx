@@ -3,7 +3,8 @@ import { SearchRegular, FilterRegular } from "@fluentui/react-icons"; // 필터 
 import { useEffect, useState } from "react";
 
 import useSearchStore from "../../stores/search";
-import { mainColor } from "../../styles/color"; // 필요한 색상 추가
+import { mainColor } from "../../styles/color";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
   searchHeader: {
     display: "flex",
     margin: "16px 10px 10px 10px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       margin: "16px 10px 0px 10px"
     }
   },
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     width: "100%",
     minHeight: "48px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       width: "90vw",
       minHeight: "32px",
       padding: "5px 20px 0 20px"
@@ -35,7 +36,7 @@ const useStyles = makeStyles({
     borderRadius: "8px",
     padding: "8px",
     outline: "none",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
       minHeight: "32px"
     }
@@ -45,13 +46,13 @@ const useStyles = makeStyles({
     color: mainColor,
     cursor: "pointer",
     marginRight: "10px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "1.5em"
     }
   },
   title: {
     fontSize: "4em",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "2em"
     }
   }

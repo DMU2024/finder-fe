@@ -16,13 +16,14 @@ import useIntersect from "../../hooks/useIntersect";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: "auto",
     },
   },
@@ -55,7 +56,7 @@ const useStyles = makeStyles({
         // "::-webkit-scrollbar": {
     //   display: "none"
     // }
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: "70vh", // 모바일에서 높이 축소
       borderRadius: 0, // 모서리 둥글기 제거
       boxShadow: "none"

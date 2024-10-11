@@ -12,12 +12,8 @@ import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
-import {
-  contentMargin,
-  headerHeight,
-  headerMobileHeight,
-  contentMobileMargin
-} from "../../styles/margin";
+import { mobileWidth } from "../../styles/size";
+import { contentMargin, headerHeight, headerMobileHeight } from "../../styles/margin";
 
 const useStyle = makeStyles({
   root: {
@@ -25,7 +21,7 @@ const useStyle = makeStyles({
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
     gap: "15px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: `calc(100vh - ${headerMobileHeight})`,
       padding: 0,
       zIndex: 0
@@ -36,7 +32,7 @@ const useStyle = makeStyles({
     alignItems: "flex-end",
     marginTop: "68px",
     marginLeft: "8px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
@@ -56,7 +52,7 @@ const useStyle = makeStyles({
     flexDirection: "column",
     alignItems: "flex-end",
     marginLeft: "auto",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
@@ -71,7 +67,7 @@ const useStyle = makeStyles({
     padding: 0,
     borderRadius: "20px",
     boxShadow: Depths.depth16,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       borderRadius: 0,
       boxShadow: "none",
       zIndex: 0
@@ -82,14 +78,14 @@ const useStyle = makeStyles({
     top: "14px",
     right: "14px",
     zIndex: 1,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       top: "8px"
     }
   },
   cardMap: {
     width: "100%",
     height: "100%",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: `calc(100vh - ${headerMobileHeight})`
     }
   }

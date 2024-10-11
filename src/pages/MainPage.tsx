@@ -15,31 +15,32 @@ import MarkerList from "../components/Main/MarkerList";
 import useAuthStore from "../stores/auth";
 import useGlobalStore from "../stores/global";
 import useMainStore from "../stores/main";
+import { mobileWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
     flex: 1,
     position: "relative",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       padding: 0
     }
   },
   content: {
     display: "flex",
     gap: "32px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "block"
     }
   },
   left: {
     width: "40%",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
   right: {
     width: "60%",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
       height: "100vh",
       position: "relative"

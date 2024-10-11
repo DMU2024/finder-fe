@@ -1,6 +1,7 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 
 import LostList from "../components/Write/LostList";
+import { mobileWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -8,14 +9,14 @@ const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
     width: "100%",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: `calc( 100vh + 10vh )`,
     },
   },
   content: {
     display: "flex",
     width: "50vw",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       width: "90vw",
       marginTop: "5vh",
     },

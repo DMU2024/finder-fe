@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   popup: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles({
     boxShadow: Depths.depth16,
     borderRadius: "20px",
     fontSize: "20px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       padding: "18px",
       fontSize: "16px"
     }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import ItemList from "./ItemList";
 import MarkerList from "./MarkerList";
 import useMainStore from "../../stores/main";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   modalTrigger: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles({
     zIndex: 0,
     borderRadius: "4px",
     boxShadow: "0 -4px 12px rgba(0, 0, 0, 0.1)",
-    "@media (min-width: 391px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },

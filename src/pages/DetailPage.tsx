@@ -2,7 +2,6 @@ import { Depths } from "@fluentui/react";
 import {
   Card,
   Image,
-  Skeleton,
   SkeletonItem,
   makeStyles,
   tokens
@@ -13,8 +12,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { LostFoundDetail, getLostFoundDetail } from "../apis/lostfound";
 import { mainColor } from "../styles/color";
-import { headerHeight, headerMobileHeight } from "../styles/margin";
-import { sideBarWidth } from "../styles/size";
+import { headerHeight } from "../styles/margin";
+import { sideBarWidth, mobileWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   back: {
@@ -27,7 +26,7 @@ const useStyles = makeStyles({
     fontSize: "20px",
     fontWeight: "bold",
     cursor: "pointer",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
@@ -35,7 +34,7 @@ const useStyles = makeStyles({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       width: "100vw",
       height: `calc( 100vh + 30vh )`
     }
@@ -49,7 +48,7 @@ const useStyles = makeStyles({
     padding: 0,
     borderRadius: "20px 20px 0 0",
     boxShadow: Depths.depth16,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
       height: "100vh",
       borderRadius: "0 0 0 0",
@@ -59,7 +58,7 @@ const useStyles = makeStyles({
   contentTop: {
     display: "flex",
     justifyContent: "center",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       flexDirection: "column"
     }
   },
@@ -68,7 +67,7 @@ const useStyles = makeStyles({
     height: "400px",
     marginLeft: "64px",
     backgroundColor: tokens.colorNeutralBackground3,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
       height: "400px",
       marginLeft: "0px",
@@ -85,7 +84,7 @@ const useStyles = makeStyles({
     marginLeft: "44px",
     marginBottom: "42px",
     marginRight: "44px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "20px",
       marginTop: "12px",
       marginLeft: "20px",
@@ -98,7 +97,7 @@ const useStyles = makeStyles({
     fontSize: "48px",
     lineHeight: "48px",
     color: tokens.colorNeutralForeground2,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "20px"
     }
   },
@@ -106,7 +105,7 @@ const useStyles = makeStyles({
     fontSize: "24px",
     lineHeight: "24px",
     color: mainColor,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "14px",
       lineHeight: "0px"
     }
@@ -114,7 +113,7 @@ const useStyles = makeStyles({
   contentTopInfo: {
     fontSize: "20px",
     color: tokens.colorNeutralStroke1,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "14px",
       lineHeight: "14px"
     }
@@ -131,7 +130,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     color: mainColor,
     textDecorationLine: "none",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       marginTop: "12px",
       marginRight: "16px"
     }
@@ -148,7 +147,7 @@ const useStyles = makeStyles({
     fontSize: "20px",
     fontWeight: "bold",
     whiteSpace: "pre-line",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "flex",
       borderRadius: "0px",
       marginLeft: "0px",
@@ -162,7 +161,7 @@ const useStyles = makeStyles({
   },
   contentBottomDetail: {
     width: "100%",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       width: "90%",
       marginTop: "20px"
     }

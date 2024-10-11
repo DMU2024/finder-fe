@@ -6,6 +6,7 @@ import { LostFound } from "../../apis/lostfound";
 import { Marker } from "../../apis/marker";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
+import { mobileWidth } from "../../styles/size";
 
 const useStyle = makeStyles({
   root: {
@@ -28,7 +29,7 @@ const useStyle = makeStyles({
     fontSize: "20px",
     fontWeight: "bold",
     color: tokens.colorNeutralForeground1,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "16px"
     }
   },
@@ -36,7 +37,7 @@ const useStyle = makeStyles({
     fontSize: "14px",
     fontWeight: "bold",
     color: tokens.colorNeutralForeground4,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "11px"
     }
   },
@@ -47,7 +48,7 @@ const useStyle = makeStyles({
     fontWeight: "bold",
     color: mainColor,
     cursor: "pointer",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "11px"
     }
   }
