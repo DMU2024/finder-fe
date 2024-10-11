@@ -86,7 +86,7 @@ const useStyles = makeStyles({
     fontSize: "28px",
     marginTop: "8px",
     marginRight: `calc(${contentMobileMargin} - 16px)`,
-    [`@media (max-width: ${mobileWidth})`]: {
+    "@media (min-width: 481px)": {
       display: "none"
     }
   }
