@@ -17,7 +17,7 @@ import {
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { sideBarWidth } from "../styles/size";
+import { sideBarWidth, mobileWidth } from "../styles/size";
 
 const useStyle = makeStyles({
   root: {
@@ -30,7 +30,7 @@ const useStyle = makeStyles({
     zIndex: 1,
     left: 0,
     top: 0,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },

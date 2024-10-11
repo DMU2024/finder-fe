@@ -7,6 +7,7 @@ import {
 } from "@fluentui/react-components";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { mobileWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -21,19 +22,19 @@ const useStyles = makeStyles({
     boxShadow: "0 0 10px rgba(0,0,0,0.2)",
     transition: "transform 0.3s ease-in-out",
     zIndex: 2,
-    "@media (min-width: 391px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
   open: {
     transform: "translateX(0)",
-    "@media (min-width: 391px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
   closed: {
     transform: "translateX(100%)",
-    "@media (min-width: 391px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
@@ -45,7 +46,7 @@ const useStyles = makeStyles({
     height: "100vh",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 0,
-    "@media (min-width: 391px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },

@@ -25,7 +25,7 @@ import useOptionStore from "./stores/option";
 import usePositionStore from "./stores/position";
 import { mainColor } from "./styles/color";
 import { contentMargin, headerHeight, headerMobileHeight } from "./styles/margin";
-import { sideBarWidth } from "./styles/size";
+import { sideBarWidth, mobileWidth } from "./styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
     display: "flex",
     width: `calc(100% - ${sideBarWidth})`,
     marginLeft: sideBarWidth,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       marginLeft: 0,
       height: `calc(100vh - ${headerMobileHeight})`,
       width: "100%"
@@ -50,7 +50,7 @@ const useStyles = makeStyles({
     marginTop: `calc(${contentMargin} + ${headerHeight})`,
     marginLeft: contentMargin,
     marginRight: contentMargin,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       marginTop: headerMobileHeight,
       marginLeft: 0,
       marginRight: 0,

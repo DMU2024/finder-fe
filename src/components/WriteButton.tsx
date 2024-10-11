@@ -4,7 +4,7 @@ import { EditRegular } from "@fluentui/react-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { mainColor } from "../styles/color";
-import { sideBarWidth } from "../styles/size";
+import { sideBarWidth, mobileWidth } from "../styles/size";
 
 const useStyle = makeStyles({
   writeButton: {
@@ -19,7 +19,7 @@ const useStyle = makeStyles({
     ":hover": {
       backgroundColor: mainColor
     },
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none",
     },
   },
