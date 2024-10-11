@@ -29,16 +29,16 @@ const useStyle = makeStyles({
     fontWeight: "bold",
     color: tokens.colorNeutralForeground1,
     "@media (max-width: 390px)": {
-      fontSize: "16px",
-    },
+      fontSize: "16px"
+    }
   },
   itemDescription: {
     fontSize: "14px",
     fontWeight: "bold",
     color: tokens.colorNeutralForeground4,
     "@media (max-width: 390px)": {
-      fontSize: "11px",
-    },
+      fontSize: "11px"
+    }
   },
   itemDetail: {
     marginLeft: "auto",
@@ -48,8 +48,8 @@ const useStyle = makeStyles({
     color: mainColor,
     cursor: "pointer",
     "@media (max-width: 390px)": {
-      fontSize: "11px",
-    },
+      fontSize: "11px"
+    }
   }
 });
 
@@ -77,10 +77,10 @@ function Item({
   const styles = useStyle();
   const navigate = useNavigate();
 
-  const { setSelectedMarker } = useMainStore();
+  const { setSelectedMarker, showLostGoods } = useMainStore();
 
   const renderBookmark = () => {
-    if (marker) {
+    if (marker && !showLostGoods) {
       return (
         <div
           style={{
