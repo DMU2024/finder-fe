@@ -1,5 +1,5 @@
 import { Depths } from "@fluentui/react";
-import { Card, makeStyles } from "@fluentui/react-components";
+import { Card, makeStyles, tokens } from "@fluentui/react-components";
 import { StarFilled, StarRegular } from "@fluentui/react-icons";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import { useNavigate } from "react-router-dom";
@@ -14,8 +14,6 @@ const useStyles = makeStyles({
     gap: "8px"
   },
   popupCards: {
-    backgroundColor: mainColor,
-    color: "white",
     padding: "24px",
     justifyContent: "center",
     boxShadow: Depths.depth16,
@@ -75,12 +73,16 @@ function KakaoMapPopup({ handleBookmark, isBookmarked }: Props) {
               event.preventDefault();
               kakao.maps.event.preventMap();
             }}
+            onTouchStart={(event) => {
+              event.preventDefault();
+              kakao.maps.event.preventMap();
+            }}
           >
             <Card
               className={styles.popupCards}
               style={{
-                backgroundColor: "white",
-                color: "black"
+                backgroundColor: tokens.colorNeutralBackground1,
+                color: tokens.colorNeutralForeground1
               }}
             >
               <div style={{ display: "flex", fontSize: "20px" }}>
