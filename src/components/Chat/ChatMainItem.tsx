@@ -1,35 +1,46 @@
 import { makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
 
 import { mainColor } from "../../styles/color";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    maxWidth: "60%"
+    maxWidth: "60%",
+    [`@media (max-width: ${mobileWidth})`]: {
+      maxWidth: "100%",
+      fontSize: "12px"
+    }
   },
   myRoot: { marginLeft: "auto" },
   myChat: {
-    color: tokens.colorNeutralForeground1,
+    color: tokens.colorNeutralBackground1,
     borderRadius: "20px 20px 0 20px",
-    backgroundColor: tokens.colorNeutralStroke1,
+    backgroundColor: mainColor,
     padding: "16px"
   },
   myChatTime: {
     marginRight: "16px",
     alignContent: "end",
-    color: tokens.colorNeutralStroke1
+    color: mainColor,
+    [`@media (max-width: ${mobileWidth})`]: {
+      marginRight: "10px",
+    }
   },
   othersRoot: { marginRight: "auto" },
   othersChat: {
-    color: tokens.colorNeutralBackground1,
+    color: tokens.colorNeutralForeground1,
     borderRadius: "20px 20px 20px 0",
-    backgroundColor: mainColor,
+    backgroundColor: tokens.colorNeutralStroke1,
     padding: "16px"
   },
   othersChatTime: {
     marginLeft: "16px",
     alignContent: "end",
-    color: mainColor
+    color: tokens.colorNeutralStroke1,
+    [`@media (max-width: ${mobileWidth})`]: {
+      marginLeft: "10px",
+    }
   }
 });
 

@@ -10,24 +10,32 @@ import useAuthStore from "../../stores/auth";
 import useChatStore from "../../stores/chat";
 import { mainColor } from "../../styles/color";
 import { headerHeight, contentMargin } from "../../styles/margin";
+import { mobileWidth } from "../../styles/size";
 import { BASE_URL } from "../../utils/axios";
+
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`
+    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    [`@media (max-width: ${mobileWidth})`]: {
+      height: `calc(100vh - ${headerHeight})`,
+    }
   },
   chatMenu: {
     display: "flex",
+    justifyContent: "flex-end",
     alignItems: "center",
-    marginLeft: "auto",
+    width: "100%",
     height: "5%",
-    gap: "16px"
   },
   chatMenuText: {
+    height: "auto",
+    paddingRight: "16px",
     fontSize: "14px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+
   },
   chatBox: {
     display: "flex",
@@ -36,14 +44,14 @@ const useStyles = makeStyles({
     height: "95%",
     borderRadius: "20px 20px 0 0",
     boxShadow: Depths.depth16,
-    backgroundColor: tokens.colorNeutralBackground3
+    backgroundColor: tokens.colorNeutralBackground3,
   },
   chatBoxTop: {
     display: "flex",
     alignItems: "center",
     height: "64px",
     borderRadius: "20px 20px 0 0",
-    backgroundColor: tokens.colorNeutralBackground1
+    backgroundColor: tokens.colorNeutralBackground1,
   },
   profileImg: {
     position: "absolute",
@@ -52,12 +60,22 @@ const useStyles = makeStyles({
     maxWidth: "128px",
     maxHeight: "128px",
     boxShadow: Depths.depth16,
-    backgroundColor: tokens.colorNeutralBackground1
+    backgroundColor: tokens.colorNeutralBackground1,
+    [`@media (max-width: ${mobileWidth})`]: {
+      maxWidth: "64px",
+      maxHeight: "64px",
+      top: "6px",
+      left: "24px",
+    }
   },
   profileText: {
     marginLeft: "184px",
     fontSize: "18px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    [`@media (max-width: ${mobileWidth})`]: {
+      marginLeft: "102px",
+      fontSize: "16px",
+    }
   },
   chatBoxMiddle: {
     flex: 1,
@@ -66,7 +84,7 @@ const useStyles = makeStyles({
     padding: "32px",
     paddingTop: "48px",
     gap: "16px",
-    overflow: "auto"
+    overflow: "auto",
   },
   chatBoxBottom: {
     display: "flex",
@@ -79,23 +97,27 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     paddingLeft: "32px",
     paddingRight: "32px",
-    gap: "16px"
+    gap: "16px",
   },
   chatBoxTextArea: {
     flex: 1,
     color: tokens.colorNeutralForeground1,
-    fontSize: "24px",
+    fontSize: "16px",
     fontFamily: "inherit",
     lineHeight: "24px",
     maxHeight: "300px",
     backgroundColor: "transparent",
     border: "none",
     outline: "none",
-    resize: "none"
-  }
+    resize: "none",
+  },
 });
 
-function ChatMain() {
+interface ChatMainProps {
+  setIsRightVisible?: (isVisible: boolean) => void;
+}
+
+function ChatMain({ setIsRightVisible }: ChatMainProps) {
   const styles = useStyles();
   const { userId } = useAuthStore();
   const { recipient } = useChatStore();
@@ -161,10 +183,17 @@ function ChatMain() {
     }
   }, [messages]);
 
+  const handleEndConversation = () => {
+    console.log('대화 끝내기 클릭됨');
+    if (setIsRightVisible) {
+      setIsRightVisible(false);
+    }
+  };
+
   return (
     <div className={styles.root}>
       <div className={styles.chatMenu}>
-        <div className={styles.chatMenuText} style={{ color: mainColor }}>
+        <div className={styles.chatMenuText} style={{ color: mainColor }} onClick={handleEndConversation}>
           대화 끝내기
         </div>
       </div>
