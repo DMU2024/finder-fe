@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { getCoord2RegionCode } from "./apis/kakaoMap";
 import Header from "./components/Header";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
 import SidebarMobile from "./components/SidebarMobile";
 import WriteButton from "./components/WriteButton";
@@ -24,7 +25,11 @@ import WritePage from "./pages/WritePage";
 import useOptionStore from "./stores/option";
 import usePositionStore from "./stores/position";
 import { mainColor } from "./styles/color";
-import { contentMargin, headerHeight, headerMobileHeight } from "./styles/margin";
+import {
+  contentMargin,
+  headerHeight,
+  headerMobileHeight
+} from "./styles/margin";
 import { sideBarWidth, mobileWidth } from "./styles/size";
 
 const useStyles = makeStyles({
@@ -53,7 +58,7 @@ const useStyles = makeStyles({
     [`@media (max-width: ${mobileWidth})`]: {
       marginTop: headerMobileHeight,
       marginLeft: 0,
-      marginRight: 0,
+      marginRight: 0
     }
   }
 });
@@ -114,12 +119,24 @@ function App() {
               <Routes>
                 <Route element={<MainPage />} path="/" />
                 <Route element={<SearchPage />} path="/search" />
-                <Route element={<WritePage />} path="/write" />
                 <Route element={<DetailPage />} path="/detail/:id" />
-                <Route element={<ProfilePage />} path="/profile" />
-                <Route element={<AchievePage />} path="/profile/achieve" />
-                <Route element={<ChatPage />} path="/chat" />
                 <Route element={<LoginPage />} path="/login" />
+                <Route
+                  element={<ProtectedRoute element={<WritePage />} />}
+                  path="/write"
+                />
+                <Route
+                  element={<ProtectedRoute element={<ChatPage />} />}
+                  path="/chat"
+                />
+                <Route
+                  element={<ProtectedRoute element={<ProfilePage />} />}
+                  path="/profile"
+                />
+                <Route
+                  element={<ProtectedRoute element={<AchievePage />} />}
+                  path="/profile/achieve"
+                />
               </Routes>
             </div>
           </div>

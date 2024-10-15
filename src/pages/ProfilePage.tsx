@@ -38,18 +38,11 @@ const useStyles = makeStyles({
 
 function ProfilePage() {
   const styles = useStyles();
-  const navigate = useNavigate();
   const [isEditMode, setIsEditMode] = useState(false);
   const [user, setUser] = useState<User>();
   const [isMessageAgreed, setIsMessageAgreed] = useState(false);
   const { setBookmarkMap } = useGlobalStore();
   const { userId } = useAuthStore();
-
-  useEffect(() => {
-    if (!userId) {
-      navigate("/login");
-    }
-  }, [userId]);
 
   useEffect(() => {
     if (userId) {
