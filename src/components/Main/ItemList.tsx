@@ -1,5 +1,6 @@
 import { Depths } from "@fluentui/react";
 import {
+  Button,
   Card,
   Image,
   Spinner,
@@ -9,10 +10,12 @@ import {
 import { BookExclamationMarkRegular } from "@fluentui/react-icons";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 import Item from "./Item";
 import { placeLostFound } from "../../apis/lostfound";
 import useIntersect from "../../hooks/useIntersect";
+import useAuthStore from "../../stores/auth";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
@@ -24,8 +27,8 @@ const useStyles = makeStyles({
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
     [`@media (max-width: ${mobileWidth})`]: {
-      height: "auto",
-    },
+      height: "auto"
+    }
   },
   title: {
     display: "flex"
@@ -53,14 +56,14 @@ const useStyles = makeStyles({
     borderRadius: "20px",
     boxShadow: Depths.depth16,
     overflow: "auto",
-        // "::-webkit-scrollbar": {
+    // "::-webkit-scrollbar": {
     //   display: "none"
     // }
     [`@media (max-width: ${mobileWidth})`]: {
       height: "70vh", // 모바일에서 높이 축소
       borderRadius: 0, // 모서리 둥글기 제거
       boxShadow: "none"
-    },
+    }
   },
   empty: {
     flex: 1,
@@ -107,6 +110,8 @@ const useStyles = makeStyles({
 
 function ItemList() {
   const styles = useStyles();
+  const navigate = useNavigate();
+
   const {
     selectedMarker,
     placeItemList,
@@ -114,6 +119,8 @@ function ItemList() {
     setSelectedMarker,
     setPlaceItemList
   } = useMainStore();
+
+  const { userId } = useAuthStore();
 
   const [page, setPage] = useState<number>(0);
   const [isEndOfPage, setIsEndOfPage] = useState(false);
@@ -150,6 +157,21 @@ function ItemList() {
               className={styles.contentInfo}
             >{`내용: ${selectedMarker?.info}`}</div>
           </div>
+          {userId !== selectedMarker?.userId && (
+            <Button
+              style={{ marginTop: "auto" }}
+              onClick={() => {
+                navigate({
+                  pathname: "/chat",
+                  search: createSearchParams({
+                    recipient: `${selectedMarker?.userId}`
+                  }).toString()
+                });
+              }}
+            >
+              연락하기
+            </Button>
+          )}
         </div>
       );
     } else if (placeItemList.length == 0 && isEndOfPage) {

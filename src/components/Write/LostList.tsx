@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { postMarker } from "../../apis/marker";
+import useAuthStore from "../../stores/auth";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import useWriteStore from "../../stores/write";
@@ -29,15 +30,15 @@ const useStyles = makeStyles({
     [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "12px",
       marginBottom: "20px"
-    },
+    }
   },
   subTitle: {
     color: skeletonColor,
     fontSize: "20px",
     fontWeight: "bold",
     [`@media (max-width: ${mobileWidth})`]: {
-      fontSize: "14px",
-    },
+      fontSize: "14px"
+    }
   },
   listContainer: {
     position: "relative",
@@ -46,8 +47,8 @@ const useStyles = makeStyles({
   listMargin: {
     marginBottom: "30px",
     [`@media (max-width: ${mobileWidth})`]: {
-      marginBottom: "30px",
-    },
+      marginBottom: "30px"
+    }
   },
   input: {
     width: "100%",
@@ -58,8 +59,8 @@ const useStyles = makeStyles({
     fontSize: "14px",
     outline: "none",
     [`@media (max-width: ${mobileWidth})`]: {
-      height: "40px",
-    },
+      height: "40px"
+    }
   },
   addInput: {
     width: "100%",
@@ -70,8 +71,8 @@ const useStyles = makeStyles({
     fontSize: "14px",
     outline: "none",
     [`@media (max-width: ${mobileWidth})`]: {
-      height: "160px",
-    },
+      height: "160px"
+    }
   },
   datePicker: {
     display: "unset!important"
@@ -128,13 +129,18 @@ function LostList() {
   } = usePositionStore();
 
   const { setShowLostGoods } = useMainStore();
+  const { userId } = useAuthStore();
 
   const renderTitle = () => {
     if (selectedCategory && selectedSubcategory) {
       return (
         <div>
-          <h1>{"대분류: "} {selectedCategory}</h1>
-          <h2>{"소분류: "} {selectedSubcategory}</h2>
+          <h1>
+            {"대분류: "} {selectedCategory}
+          </h1>
+          <h2>
+            {"소분류: "} {selectedSubcategory}
+          </h2>
         </div>
       );
     } else {
@@ -146,7 +152,6 @@ function LostList() {
       );
     }
   };
-  
 
   return (
     <div className={styles.root}>
@@ -213,7 +218,8 @@ function LostList() {
               category: `${selectedCategory} > ${selectedSubcategory}`,
               info: `${infoRef.current?.value}`,
               lat: clickedInfo?.lat ? clickedInfo.lat : latitude,
-              lng: clickedInfo?.lng ? clickedInfo.lng : longitude
+              lng: clickedInfo?.lng ? clickedInfo.lng : longitude,
+              userId: userId
             }).then((data) => {
               // write
               setSelectedCategory(undefined);

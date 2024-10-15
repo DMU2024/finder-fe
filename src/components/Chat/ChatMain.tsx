@@ -1,18 +1,16 @@
 import { Depths } from "@fluentui/react";
 import { Image, makeStyles, tokens } from "@fluentui/react-components";
 import { AddRegular, SendRegular } from "@fluentui/react-icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
 import ChatMainItem from "./ChatMainItem";
-import { Chat, getMessages } from "../../apis/chat";
+import { Chat } from "../../apis/chat";
 import useAuthStore from "../../stores/auth";
 import useChatStore from "../../stores/chat";
 import { mainColor } from "../../styles/color";
 import { headerHeight, contentMargin } from "../../styles/margin";
 import { mobileWidth } from "../../styles/size";
-import { BASE_URL } from "../../utils/axios";
-
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +18,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
     [`@media (max-width: ${mobileWidth})`]: {
-      height: `calc(100vh - ${headerHeight})`,
+      height: `calc(100vh - ${headerHeight})`
     }
   },
   chatMenu: {
@@ -28,14 +26,13 @@ const useStyles = makeStyles({
     justifyContent: "flex-end",
     alignItems: "center",
     width: "100%",
-    height: "5%",
+    height: "5%"
   },
   chatMenuText: {
     height: "auto",
     paddingRight: "16px",
     fontSize: "14px",
-    fontWeight: "bold",
-
+    fontWeight: "bold"
   },
   chatBox: {
     display: "flex",
@@ -44,14 +41,14 @@ const useStyles = makeStyles({
     height: "95%",
     borderRadius: "20px 20px 0 0",
     boxShadow: Depths.depth16,
-    backgroundColor: tokens.colorNeutralBackground3,
+    backgroundColor: tokens.colorNeutralBackground3
   },
   chatBoxTop: {
     display: "flex",
     alignItems: "center",
     height: "64px",
     borderRadius: "20px 20px 0 0",
-    backgroundColor: tokens.colorNeutralBackground1,
+    backgroundColor: tokens.colorNeutralBackground1
   },
   profileImg: {
     position: "absolute",
@@ -65,7 +62,7 @@ const useStyles = makeStyles({
       maxWidth: "64px",
       maxHeight: "64px",
       top: "6px",
-      left: "24px",
+      left: "24px"
     }
   },
   profileText: {
@@ -74,7 +71,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     [`@media (max-width: ${mobileWidth})`]: {
       marginLeft: "102px",
-      fontSize: "16px",
+      fontSize: "16px"
     }
   },
   chatBoxMiddle: {
@@ -84,7 +81,7 @@ const useStyles = makeStyles({
     padding: "32px",
     paddingTop: "48px",
     gap: "16px",
-    overflow: "auto",
+    overflow: "auto"
   },
   chatBoxBottom: {
     display: "flex",
@@ -97,7 +94,7 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     paddingLeft: "32px",
     paddingRight: "32px",
-    gap: "16px",
+    gap: "16px"
   },
   chatBoxTextArea: {
     flex: 1,
@@ -109,73 +106,35 @@ const useStyles = makeStyles({
     backgroundColor: "transparent",
     border: "none",
     outline: "none",
-    resize: "none",
-  },
+    resize: "none"
+  }
 });
 
 interface ChatMainProps {
+  messages: Chat[];
+  sendMessage: (message: string) => void;
   setIsRightVisible?: (isVisible: boolean) => void;
 }
 
-function ChatMain({ setIsRightVisible }: ChatMainProps) {
+function ChatMain({ messages, sendMessage, setIsRightVisible }: ChatMainProps) {
   const styles = useStyles();
-  const { userId } = useAuthStore();
-  const { recipient } = useChatStore();
-  const [messages, setMessages] = useState<Chat[]>([]);
   const messageBox = useRef<HTMLDivElement | null>(null);
   const messageArea = useRef<HTMLTextAreaElement | null>(null);
-  const ws = useRef<WebSocket | null>(null);
 
-  const sendMessage = () => {
+  const { userId } = useAuthStore();
+  const { recipient, setRecipient } = useChatStore();
+
+  const handleSendMessage = () => {
     if (messageArea.current) {
       const message = messageArea.current.value;
 
       if (!message) return;
 
-      ws.current?.send(
-        JSON.stringify({
-          sender: userId,
-          recipient: recipient?.userId,
-          message: message
-        })
-      );
+      sendMessage(message);
 
       messageArea.current.value = "";
     }
   };
-
-  useEffect(() => {
-    if (!userId) return;
-
-    const protocol = BASE_URL.split("://")[0] === "https" ? "wss" : "ws";
-
-    ws.current = new WebSocket(
-      `${protocol}://${BASE_URL.split("://")[1]}/api/ws/chat?userId=${userId}`
-    );
-
-    return () => {
-      if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-        ws.current.close();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!ws.current) return;
-
-    ws.current.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setMessages([...messages, data]);
-    };
-  });
-
-  useEffect(() => {
-    if (userId && recipient?.userId) {
-      getMessages(userId, recipient.userId).then((messages) => {
-        setMessages(messages);
-      });
-    }
-  }, [recipient]);
 
   useEffect(() => {
     if (messageBox.current) {
@@ -184,16 +143,23 @@ function ChatMain({ setIsRightVisible }: ChatMainProps) {
   }, [messages]);
 
   const handleEndConversation = () => {
-    console.log('대화 끝내기 클릭됨');
     if (setIsRightVisible) {
       setIsRightVisible(false);
     }
+    setRecipient(undefined);
   };
 
   return (
     <div className={styles.root}>
       <div className={styles.chatMenu}>
-        <div className={styles.chatMenuText} style={{ color: mainColor }} onClick={handleEndConversation}>
+        <div
+          className={styles.chatMenuText}
+          style={{
+            color: mainColor,
+            cursor: `${recipient ? "pointer" : "not-allowed"}`
+          }}
+          onClick={handleEndConversation}
+        >
           대화 끝내기
         </div>
       </div>
@@ -208,7 +174,11 @@ function ChatMain({ setIsRightVisible }: ChatMainProps) {
             }
           />
           <div className={styles.profileText}>
-            {recipient?.username ? recipient.username : "탈퇴한 사용자"}
+            {!recipient
+              ? "채팅할 상대 선택..."
+              : recipient.username
+                ? recipient.username
+                : "탈퇴한 사용자"}
           </div>
         </div>
         <div ref={messageBox} className={styles.chatBoxMiddle}>
@@ -225,7 +195,7 @@ function ChatMain({ setIsRightVisible }: ChatMainProps) {
           className={styles.chatBoxBottom}
           onSubmit={(e) => {
             e.preventDefault();
-            sendMessage();
+            handleSendMessage();
           }}
         >
           <AddRegular fontSize={"32px"} style={{ cursor: "not-allowed" }} />
@@ -239,7 +209,7 @@ function ChatMain({ setIsRightVisible }: ChatMainProps) {
             color={mainColor}
             fontSize={"32px"}
             style={{ cursor: `${recipient ? "pointer" : "not-allowed"}` }}
-            onClick={() => sendMessage()}
+            onClick={() => handleSendMessage()}
           />
         </form>
       </div>

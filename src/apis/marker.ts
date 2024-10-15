@@ -9,6 +9,7 @@ interface Marker {
   info: string;
   lat: number;
   lng: number;
+  userId?: number;
 }
 
 const getMarkerByCoords = async (
