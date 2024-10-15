@@ -111,32 +111,21 @@ function Header() {
         <span className={styles.titleText}>Finder</span>
       </div>
       <div className={styles.menu}>
-        {userId ? (
-          <h2
-            className={styles.login}
-            onClick={() => {
-              if (userId) {
-                postLogout(userId).then(() => {
-                  setUserId(undefined);
-                  navigate("/");
-                });
-              }
-            }}
-          >
-            Logout
-          </h2>
-        ) : (
-          <>
-            <h2
-              className={styles.login}
-              onClick={() => {
-                navigate("/login");
-              }}
-            >
-              Login
-            </h2>
-          </>
-        )}
+        <h2
+          className={styles.login}
+          onClick={() => {
+            if (userId) {
+              postLogout(userId).then(() => {
+                setUserId(undefined);
+                navigate("/");
+              });
+            } else {
+              navigate("/login");
+            }
+          }}
+        >
+          {userId ? "Logout" : "Login"}
+        </h2>
         <div
           style={{ fontSize: 28, cursor: "pointer" }}
           onClick={() => {

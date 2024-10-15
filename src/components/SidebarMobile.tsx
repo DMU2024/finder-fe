@@ -9,6 +9,11 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { mobileWidth02 } from "../styles/size";
 
+import { getUser, postLogout, User } from "../apis/user";
+import useAuthStore from "../stores/auth";
+import useOptionStore from "../stores/option";
+import { mainColor } from "../styles/color";
+
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -69,11 +74,17 @@ const useStyles = makeStyles({
   },
   subInfo02: {
     fontSize: "12px",
-    color: "#D9D9D9",
+    color: mainColor,
     fontWeight: "bold"
   },
   tab: {
     margin: "10px 0px 10px 20px"
+  },
+  bottomContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "auto",
+    padding: "30px"
   }
 });
 
@@ -88,6 +99,17 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState("");
+  const [user, setUser] = useState<User>();
+  const { userId, setUserId } = useAuthStore();
+  const { isDarkTheme, setIsDarkTheme } = useOptionStore();
+
+  useEffect(() => {
+    if (userId) {
+      getUser(userId).then((res) => {
+        setUser(res);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     switch (location.pathname) {
@@ -114,13 +136,18 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
       <div className={`${styles.root} ${isOpen ? styles.open : styles.closed}`}>
         <div className={styles.profile}>
           <Image
+            fit="cover"
             shape="circular"
-            src={img ? img : "/profileIMGimsi.png"}
+            src={user ? user.profileImage : "/profileIMGimsi.png"}
             style={{ width: "150px", height: "150px" }}
           />
           <div className={styles.subInfoContainer}>
-            <div className={styles.subInfo01}> 닉네임Nickname 님 </div>
-            <div className={styles.subInfo02}> @ id </div>
+            <div className={styles.subInfo01}>
+              {user ? user.username : "Guest"}
+            </div>
+            <div className={styles.subInfo02}>
+              {user ? `@${user?.userId}` : ""}
+            </div>
           </div>
         </div>
 
@@ -167,6 +194,34 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
               마이페이지
             </Tab>
           </TabList>
+        </div>
+
+        <div className={styles.bottomContainer}>
+          <div
+            onClick={() => {
+              if (userId) {
+                postLogout(userId).then(() => {
+                  setUserId(undefined);
+                  setUser(undefined);
+                  navigate("/");
+                  setIsOpen(false);
+                });
+              } else {
+                navigate("/login");
+                setIsOpen(false);
+              }
+            }}
+          >
+            {userId ? "로그아웃" : "로그인"}
+          </div>
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setIsDarkTheme(!isDarkTheme);
+            }}
+          >
+            {isDarkTheme ? "라이트모드" : "다크모드"}
+          </div>
         </div>
       </div>
       {isOpen && (
