@@ -4,7 +4,9 @@ const BASE_URL = process.env.REACT_APP_BASE_URL ?? "http://localhost:8081";
 const KAKAO_AUTH = "https://kauth.kakao.com";
 const KAKAO_CLIENTID = process.env.REACT_APP_KAKAO_REST;
 const KAKAO_CALLBACK =
-  process.env.REACT_APP_KAKAO_CALLBACK ?? "http://localhost:3000/login";
+  !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+    ? "http://localhost:3000/login"
+    : process.env.REACT_APP_KAKAO_CALLBACK ?? "http://localhost:3000/login";
 
 const Instance = axios.create({
   baseURL: BASE_URL

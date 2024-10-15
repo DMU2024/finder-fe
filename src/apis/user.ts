@@ -59,7 +59,10 @@ const getLoginURI = () => {
 };
 
 const postLogin = async (code: string) => {
-  const { data } = await Instance.post<User>("/api/auth/login", { code: code });
+  const { data } = await Instance.post<User>("/api/auth/login", {
+    code: code,
+    isDev: !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+  });
 
   return data;
 };
