@@ -8,6 +8,7 @@ import {
   getBookMark,
   postBookMark
 } from "../apis/bookmark";
+import { getCoord2RegionCode } from "../apis/kakaoMap";
 import ItemList from "../components/Main/ItemList";
 import ItemModal from "../components/Main/ItemModal";
 import KakaoMap from "../components/Main/KakaoMap";
@@ -15,6 +16,7 @@ import MarkerList from "../components/Main/MarkerList";
 import useAuthStore from "../stores/auth";
 import useGlobalStore from "../stores/global";
 import useMainStore from "../stores/main";
+import usePositionStore from "../stores/position";
 import { mobileWidth } from "../styles/size";
 
 const useStyles = makeStyles({
@@ -51,8 +53,10 @@ const useStyles = makeStyles({
 function MainPage() {
   const styles = useStyles();
   const navigate = useNavigate();
+
   const { selectedMarker } = useMainStore();
   const { bookmarkMap, setBookmarkMap } = useGlobalStore();
+  const { latitude, longitude, getCoords, setAddress } = usePositionStore();
   const { userId } = useAuthStore();
 
   const handleBookmark = (name: string) => {
@@ -85,6 +89,9 @@ function MainPage() {
   };
 
   useEffect(() => {
+    if (latitude == 0 || longitude == 0) {
+      getCoords();
+    }
     if (userId) {
       getBookMark(userId).then((res) => {
         const temp = new Map<string, BookMark>();
@@ -93,6 +100,14 @@ function MainPage() {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (latitude != 0 && longitude != 0) {
+      getCoord2RegionCode(latitude, longitude)
+        .then((addr) => setAddress(addr))
+        .catch(() => setAddress("알 수 없는 위치"));
+    }
+  }, [latitude, longitude]);
 
   return (
     <div className={styles.root}>
