@@ -1,6 +1,7 @@
 import { makeStyles } from "@fluentui/react-components";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import { Chat, ChatHistory, getChatHistories, getMessages } from "../apis/chat";
 import { getUser } from "../apis/user";
@@ -67,11 +68,20 @@ function ChatPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const rcptId = searchParams.get("recipient");
-  const ws = useRef<WebSocket | null>(null);
 
   const { userId } = useAuthStore();
   const { recipient, setRecipient } = useChatStore();
 
+  const protocol = BASE_URL.split("://")[0] === "https" ? "wss" : "ws";
+  const wsUrl = `${protocol}://${BASE_URL.split("://")[1]}/api/ws/chat?userId=${userId}`;
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(wsUrl, {
+    shouldReconnect: () => true,
+    reconnectAttempts: 5,
+    reconnectInterval: (attemptNumber) =>
+      Math.min(Math.pow(2, attemptNumber) * 1000, 10000)
+  });
+
+  // 메시지 목록 갱신
   const fetchHistories = () => {
     if (userId) {
       getChatHistories(userId).then((res) => {
@@ -80,44 +90,44 @@ function ChatPage() {
     }
   };
 
+  // 메시지 송신
   const sendMessage = (message: string, targetId?: number) => {
-    ws.current?.send(
-      JSON.stringify({
-        sender: userId,
-        recipient: targetId ? targetId : recipient?.userId,
-        message: message
-      })
-    );
+    sendJsonMessage({
+      sender: userId,
+      recipient: targetId ? targetId : recipient?.userId,
+      message: message
+    });
   };
 
+  // 웹소켓 연결 성공
   useEffect(() => {
-    const protocol = BASE_URL.split("://")[0] === "https" ? "wss" : "ws";
-
-    ws.current = new WebSocket(
-      `${protocol}://${BASE_URL.split("://")[1]}/api/ws/chat?userId=${userId}`
-    );
-
-    fetchHistories();
-
-    return () => {
-      if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-        ws.current.close();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!ws.current) return;
-
-    ws.current.onmessage = (event) => {
-      if (recipient) {
-        const data = JSON.parse(event.data);
-        if (data.sender === userId || data.sender === recipient.userId)
-          setMessages([...messages, data]);
-      }
+    if (readyState === ReadyState.OPEN) {
       fetchHistories();
-    };
-  });
+    }
+  }, [readyState]);
+
+  // 메시지 수신
+  useEffect(() => {
+    if (lastJsonMessage && recipient) {
+      const data = lastJsonMessage as Chat;
+
+      if (data.sender === userId || data.sender === recipient.userId)
+        setMessages([...messages, data]);
+    }
+    fetchHistories();
+  }, [lastJsonMessage]);
+
+  // 채팅 목록 선택
+  useEffect(() => {
+    if (userId && recipient?.userId) {
+      getMessages(userId, recipient.userId).then((messages) => {
+        setMessages(messages);
+      });
+    }
+    if (!recipient) {
+      setMessages([]);
+    }
+  }, [recipient]);
 
   useEffect(() => {
     if (rcptId && histories) {
@@ -141,17 +151,6 @@ function ChatPage() {
       });
     }
   }, [rcptId, histories]);
-
-  useEffect(() => {
-    if (userId && recipient?.userId) {
-      getMessages(userId, recipient.userId).then((messages) => {
-        setMessages(messages);
-      });
-    }
-    if (!recipient) {
-      setMessages([]);
-    }
-  }, [recipient]);
 
   return (
     <div className={styles.root}>
