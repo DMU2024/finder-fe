@@ -79,7 +79,7 @@ function ChatPage() {
 
   const protocol = BASE_URL.split("://")[0] === "https" ? "wss" : "ws";
   const wsUrl = `${protocol}://${BASE_URL.split("://")[1]}/api/ws/chat?userId=${userId}`;
-  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(wsUrl, {
+  const { sendJsonMessage, lastJsonMessage } = useWebSocket(wsUrl, {
     shouldReconnect: () => true,
     reconnectAttempts: 5,
     reconnectInterval: (attemptNumber) =>
@@ -137,13 +137,6 @@ function ChatPage() {
       }
     }
   }, [location]);
-
-  // 웹소켓 연결 성공
-  useEffect(() => {
-    if (readyState === ReadyState.OPEN) {
-      fetchHistories();
-    }
-  }, [readyState]);
 
   // 메시지 수신
   useEffect(() => {
