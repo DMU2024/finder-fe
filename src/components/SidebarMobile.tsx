@@ -7,12 +7,12 @@ import {
 } from "@fluentui/react-components";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { mobileWidth02 } from "../styles/size";
 
 import { getUser, postLogout, User } from "../apis/user";
 import useAuthStore from "../stores/auth";
 import useOptionStore from "../stores/option";
 import { mainColor } from "../styles/color";
+import { mobileWidth02 } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -104,7 +104,7 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
   const { isDarkTheme, setIsDarkTheme } = useOptionStore();
 
   useEffect(() => {
-    if (userId) {
+    if (userId && isOpen) {
       getUser(userId).then((res) => {
         setUser(res);
       });
