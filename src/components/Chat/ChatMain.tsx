@@ -6,8 +6,8 @@ import ReactTextareaAutosize from "react-textarea-autosize";
 
 import ChatMainItem from "./ChatMainItem";
 import { Chat } from "../../apis/chat";
+import { User } from "../../apis/user";
 import useAuthStore from "../../stores/auth";
-import useChatStore from "../../stores/chat";
 import { mainColor } from "../../styles/color";
 import { headerHeight, contentMargin } from "../../styles/margin";
 import { mobileWidth } from "../../styles/size";
@@ -111,18 +111,25 @@ const useStyles = makeStyles({
 });
 
 interface ChatMainProps {
+  recipient: User | undefined;
+  setRecipient: (user: User | undefined) => void;
   messages: Chat[];
   sendMessage: (message: string) => void;
   setIsRightVisible?: (isVisible: boolean) => void;
 }
 
-function ChatMain({ messages, sendMessage, setIsRightVisible }: ChatMainProps) {
+function ChatMain({
+  recipient,
+  setRecipient,
+  messages,
+  sendMessage,
+  setIsRightVisible
+}: ChatMainProps) {
   const styles = useStyles();
   const messageBox = useRef<HTMLDivElement | null>(null);
   const messageArea = useRef<HTMLTextAreaElement | null>(null);
 
   const { userId } = useAuthStore();
-  const { recipient, setRecipient } = useChatStore();
 
   const handleSendMessage = () => {
     if (messageArea.current) {
@@ -182,14 +189,16 @@ function ChatMain({ messages, sendMessage, setIsRightVisible }: ChatMainProps) {
           </div>
         </div>
         <div ref={messageBox} className={styles.chatBoxMiddle}>
-          {messages?.map((message, idx) => (
-            <ChatMainItem
-              key={idx}
-              isMine={message.sender === userId}
-              message={message.message}
-              timestamp={message.messageTime}
-            />
-          ))}
+          {messages
+            ?.filter((message) => message.messageType !== "ENTER")
+            .map((message) => (
+              <ChatMainItem
+                key={message.messageId}
+                isMine={message.sender === userId}
+                message={message.message}
+                timestamp={message.messageTime}
+              />
+            ))}
         </div>
         <form
           className={styles.chatBoxBottom}

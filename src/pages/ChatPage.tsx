@@ -1,14 +1,20 @@
 import { makeStyles } from "@fluentui/react-components";
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 
-import { Chat, ChatHistory, getChatHistories, getMessages } from "../apis/chat";
-import { getUser } from "../apis/user";
+import {
+  Chat,
+  ChatHistory,
+  createChatRoom,
+  getChatHistories,
+  getMessages
+} from "../apis/chat";
+import { getUser, User } from "../apis/user";
 import ChatHistoryList from "../components/Chat/ChatHistoryList";
 import ChatMain from "../components/Chat/ChatMain";
 import useAuthStore from "../stores/auth";
-import useChatStore from "../stores/chat";
 import { headerHeight } from "../styles/margin";
 import { mobileWidth } from "../styles/size";
 import { BASE_URL } from "../utils/axios";
@@ -62,15 +68,14 @@ const useStyles = makeStyles({
 
 function ChatPage() {
   const styles = useStyles();
-  const [isRightVisible, setIsRightVisible] = useState(false);
-  const [messages, setMessages] = useState<Chat[]>([]);
-  const [histories, setHistories] = useState<ChatHistory[]>();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
-  const rcptId = searchParams.get("recipient");
+  const [isRightVisible, setIsRightVisible] = useState(false);
+  const [recipient, setRecipient] = useState<User>();
+  const [histories, setHistories] = useState<ChatHistory[]>();
+  const [messages, setMessages] = useState<Chat[]>([]);
 
   const { userId } = useAuthStore();
-  const { recipient, setRecipient } = useChatStore();
 
   const protocol = BASE_URL.split("://")[0] === "https" ? "wss" : "ws";
   const wsUrl = `${protocol}://${BASE_URL.split("://")[1]}/api/ws/chat?userId=${userId}`;
@@ -91,13 +96,47 @@ function ChatPage() {
   };
 
   // 메시지 송신
-  const sendMessage = (message: string, targetId?: number) => {
+  const sendMessage = (message: string) => {
     sendJsonMessage({
       sender: userId,
-      recipient: targetId ? targetId : recipient?.userId,
+      recipient: recipient?.userId,
       message: message
     });
   };
+
+  // 연락하기 기능으로 채팅 시작 시
+  useEffect(() => {
+    if (location.state) {
+      const targetId = location.state.targetId;
+
+      if (userId) {
+        getUser(targetId)
+          .then((target) => {
+            getMessages(userId, targetId).then((messages) => {
+              if (messages.length > 0) {
+                setRecipient(target);
+                setIsRightVisible(true);
+                fetchHistories();
+              } else {
+                createChatRoom(userId, targetId).then(() => {
+                  setRecipient(target);
+                  setIsRightVisible(true);
+                  fetchHistories();
+                });
+              }
+            });
+          })
+          .catch((err: AxiosError) => {
+            if (err.response?.status !== 404) {
+              console.error(err);
+            }
+          })
+          .finally(() => {
+            window.history.replaceState({}, document.title);
+          });
+      }
+    }
+  }, [location]);
 
   // 웹소켓 연결 성공
   useEffect(() => {
@@ -129,29 +168,6 @@ function ChatPage() {
     }
   }, [recipient]);
 
-  useEffect(() => {
-    if (rcptId && histories) {
-      const targetId = Number.parseInt(rcptId);
-      const target = histories?.filter(
-        (history) => history.userId === targetId
-      )[0];
-
-      if (target) {
-        setRecipient(target);
-      } else {
-        getUser(targetId).then((res) => {
-          if (res.userId) {
-            sendMessage("안녕하세요", res.userId);
-          }
-        });
-      }
-      setSearchParams((params) => {
-        params.delete("recipient");
-        return params;
-      });
-    }
-  }, [rcptId, histories]);
-
   return (
     <div className={styles.root}>
       <div className={styles.content}>
@@ -159,6 +175,7 @@ function ChatPage() {
           <ChatHistoryList
             histories={histories}
             setIsRightVisible={setIsRightVisible}
+            setRecipient={setRecipient}
           />
         </div>
 
@@ -169,13 +186,20 @@ function ChatPage() {
         >
           <ChatMain
             messages={messages}
+            recipient={recipient}
             sendMessage={sendMessage}
             setIsRightVisible={setIsRightVisible}
+            setRecipient={setRecipient}
           />
         </div>
 
         <div className={styles.right}>
-          <ChatMain messages={messages} sendMessage={sendMessage} />
+          <ChatMain
+            messages={messages}
+            recipient={recipient}
+            sendMessage={sendMessage}
+            setRecipient={setRecipient}
+          />
         </div>
       </div>
     </div>

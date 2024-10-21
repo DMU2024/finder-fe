@@ -10,8 +10,10 @@ interface ChatHistory {
 }
 
 interface Chat {
+  messageId: number;
   sender: number;
   message: string;
+  messageType: string;
   messageDate: string;
   messageTime: string;
 }
@@ -35,5 +37,14 @@ const getMessages = async (userId1: number, userId2: number) => {
   return data;
 };
 
+const createChatRoom = async (userId1: number, userId2: number) => {
+  const { data } = await Instance.post<Chat>("api/chat", {
+    userId: userId1,
+    targetId: userId2
+  });
+
+  return data;
+};
+
 export type { ChatHistory, Chat };
-export { getChatHistories, getMessages };
+export { getChatHistories, getMessages, createChatRoom };

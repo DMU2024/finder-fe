@@ -3,6 +3,7 @@ import { makeStyles, tokens } from "@fluentui/react-components";
 
 import ChatHistoryItem from "./ChatHistoryItem";
 import { ChatHistory } from "../../apis/chat";
+import { User } from "../../apis/user";
 import { mainColor } from "../../styles/color";
 import { headerHeight, contentMargin } from "../../styles/margin";
 import { mobileWidth } from "../../styles/size";
@@ -36,11 +37,13 @@ const useStyles = makeStyles({
 });
 
 interface ChatHistoryListProps {
+  setRecipient: (user: User | undefined) => void;
   histories: ChatHistory[] | undefined;
   setIsRightVisible: (isVisible: boolean) => void;
 }
 
 function ChatHistoryList({
+  setRecipient,
   histories,
   setIsRightVisible
 }: ChatHistoryListProps) {
@@ -50,11 +53,12 @@ function ChatHistoryList({
     <div className={styles.root}>
       <div className={styles.title}>대화 목록</div>
       <div className={styles.content}>
-        {histories?.map((history, idx) => (
+        {histories?.map((history) => (
           <ChatHistoryItem
-            key={idx}
+            key={history.userId}
             history={history}
             setIsRightVisible={setIsRightVisible}
+            setRecipient={setRecipient}
           />
         ))}
       </div>

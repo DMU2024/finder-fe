@@ -161,11 +161,10 @@ function ItemList() {
             <Button
               style={{ marginTop: "auto" }}
               onClick={() => {
-                navigate({
-                  pathname: "/chat",
-                  search: createSearchParams({
-                    recipient: `${selectedMarker?.userId}`
-                  }).toString()
+                navigate("/chat", {
+                  state: {
+                    targetId: `${selectedMarker?.userId}`
+                  }
                 });
               }}
             >

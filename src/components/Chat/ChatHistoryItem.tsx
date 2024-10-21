@@ -1,7 +1,12 @@
 import { Image, makeStyles, tokens } from "@fluentui/react-components";
+
 import { ChatHistory } from "../../apis/chat";
-import useChatStore from "../../stores/chat";
-import { backgroundColor, secondaryColor, skeletonColor } from "../../styles/color";
+import { getUser, User } from "../../apis/user";
+import {
+  backgroundColor,
+  secondaryColor,
+  skeletonColor
+} from "../../styles/color";
 
 const useStyles = makeStyles({
   root: {
@@ -36,20 +41,22 @@ const useStyles = makeStyles({
 });
 
 interface Props {
+  setRecipient: (user: User | undefined) => void;
   history: ChatHistory;
   setIsRightVisible: (isVisible: boolean) => void;
 }
 
-function ChatHistoryItem({ history, setIsRightVisible }: Props) {
+function ChatHistoryItem({ setRecipient, history, setIsRightVisible }: Props) {
   const styles = useStyles();
-  const { setRecipient } = useChatStore();
 
   return (
     <div
       className={styles.root}
       onClick={() => {
-        setRecipient(history);
-        setIsRightVisible(true);
+        getUser(history.userId).then((res) => {
+          setRecipient(res);
+          setIsRightVisible(true);
+        });
       }}
     >
       <Image
