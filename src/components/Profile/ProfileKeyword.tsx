@@ -9,26 +9,46 @@ import {
 } from "../../apis/keyword";
 import useAuthStore from "../../stores/auth";
 import { mainColor, skeletonColor } from "../../styles/color";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     flex: 1,
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    [`@media (max-width: ${mobileWidth})`]: {
+      height: "70vh"
+    }
   },
   title: {
     color: tokens.colorNeutralForeground1,
     fontWeight: "bold",
     fontSize: "24px",
-    marginBottom: "10px"
+    marginBottom: "10px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      fontSize: "20px",
+      paddingLeft: "6vw"
+    }
   },
   subTitle: {
     color: tokens.colorNeutralForeground2,
-    marginBottom: "30px"
+    marginBottom: "30px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      fontSize: "12px",
+      marginBottom: "10px",
+      paddingLeft: "6vw"
+    }
   },
   keywordSubmit: {
     width: "500px",
-    marginBottom: "30px"
+    marginBottom: "30px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      width: "100vw",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: "0px"
+    }
   },
   placeholder: {
     width: "400px",
@@ -37,7 +57,11 @@ const useStyles = makeStyles({
     border: skeletonColor,
     borderRadius: "15px",
     fontSize: "16px",
-    backgroundColor: tokens.colorNeutralBackground1Hover
+    backgroundColor: tokens.colorNeutralBackground1Hover,
+    [`@media (max-width: ${mobileWidth})`]: {
+      width: "70vw",
+      height: "45px",
+    }
   },
   button: {
     padding: "8px 10px",
@@ -46,7 +70,19 @@ const useStyles = makeStyles({
     color: mainColor,
     marginLeft: "20px",
     border: "none",
-    background: "none"
+    background: "none",
+    [`@media (max-width: ${mobileWidth})`]: {
+      marginLeft: "0px",
+    }
+  },
+  keywordContainer: {
+    [`@media (max-width: ${mobileWidth})`]: {
+      width: "100vw",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center"
+    }
   },
   keywordList: {
     display: "flex",
@@ -57,7 +93,13 @@ const useStyles = makeStyles({
     height: "50px",
     marginBottom: "18px",
     borderRadius: "15px",
-    backgroundColor: tokens.colorNeutralBackground1Hover
+    backgroundColor: tokens.colorNeutralBackground1Hover,
+    [`@media (max-width: ${mobileWidth})`]: {
+      width: "90vw",
+      height: "45px",
+      marginBottom: "0px",
+      marginTop: "15px"
+    }
   },
   keywordDetail: {
     display: "flex",
@@ -75,7 +117,7 @@ const useStyles = makeStyles({
   },
   delete: {
     marginRight: "20px",
-    cursor: "pointer" // 추가: 커서 포인터로 변경
+    cursor: "pointer"
   }
 });
 
@@ -148,21 +190,25 @@ function ProfileKeyword() {
         {error && (
           <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
         )}
-        <div>
-          {keywords.map((keyword) => (
-            <div key={keyword.id} className={styles.keywordList}>
-              <div className={styles.keywordDetail}>
-                <div className={styles.circle} />
-                <div className={styles.keywordName}>{keyword.keyword}</div>
+        <div className={styles.keywordContainer}>
+          {keywords.length === 0 ? (
+            <div>키워드가 등록되지 않았습니다.</div>
+          ) : (
+            keywords.map((keyword) => (
+              <div key={keyword.id} className={styles.keywordList}>
+                <div className={styles.keywordDetail}>
+                  <div className={styles.circle} />
+                  <div className={styles.keywordName}>{keyword.keyword}</div>
+                </div>
+                <div
+                  className={styles.delete}
+                  onClick={() => handleDeleteKeyword(keyword.id)}
+                >
+                  삭제
+                </div>
               </div>
-              <div
-                className={styles.delete}
-                onClick={() => handleDeleteKeyword(keyword.id)}
-              >
-                삭제
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>

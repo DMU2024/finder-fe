@@ -3,19 +3,27 @@ import { GlobeLocationRegular } from "@fluentui/react-icons";
 
 import PlaceListItem from "./PlaceListItem";
 import useGlobalStore from "../../stores/global";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    gap: "20px"
+    gap: "20px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      height: "40vh"
+    }
   },
   title: {
     color: tokens.colorNeutralForeground1,
     fontWeight: "bold",
     fontSize: "24px",
-    marginBottom: "10px"
+    marginBottom: "10px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      fontSize: "20px",
+      paddingLeft: "6vw"
+    }
   },
   empty: {
     flex: 1,

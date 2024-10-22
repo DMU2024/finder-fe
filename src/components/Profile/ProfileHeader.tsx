@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 import { User } from "../../apis/user";
 import { mainColor } from "../../styles/color";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -18,27 +19,49 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
-    top: "-32px"
+    top: "-32px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      flexDirection: "column",
+      top: "auto",
+    }
   },
   profile: {
     flex: 1,
-    marginLeft: "36px"
+    marginLeft: "36px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      marginLeft: "0px",
+      marginTop: "10px"
+    }
   },
   profile_01: {
     flex: 1,
     display: "flex",
     justifyContent: "space-between",
-    marginBottom: "20px"
+    marginBottom: "20px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      justifyContent: "center",
+      flexDirection: "column",
+    }
   },
   nickname: {
     color: tokens.colorNeutralForeground1,
     fontWeight: "bold",
     fontSize: "32px",
-    marginBottom: "12px"
+    marginBottom: "12px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      textAlign: "center",
+      fontSize: "24px",
+      marginBottom: "4px"
+    }
   },
   id: {
     color: mainColor,
-    fontSize: "16px"
+    fontSize: "16px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      textAlign: "center",
+      marginBottom: "20px",
+      fontSize: "12px"
+    }
   },
   achieveButton: {
     marginBottom: "12px",
@@ -55,6 +78,12 @@ const useStyles = makeStyles({
     },
     "&:active": {
       backgroundColor: tokens.colorBrandBackgroundPressed
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
+      padding: "10px 15px",
+      fontSize: "12px",
+      marginLeft: "0px",
+      marginBottom: "0px",
     }
   },
   profileChangeButton: {
@@ -73,6 +102,25 @@ const useStyles = makeStyles({
     },
     "&:active": {
       backgroundColor: tokens.colorBrandBackgroundPressed
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
+      padding: "10px 15px",
+      fontSize: "12px",
+      marginLeft: "0px",
+      marginBottom: "0px",
+    }
+  },
+  progressBar: {
+    [`@media (max-width: ${mobileWidth})`]: {
+      display: "none"
+    }
+  },
+  image: {
+    width: "220px",
+    height: "220px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      width: "148px",
+      height: "148px",
     }
   }
 });
@@ -96,13 +144,14 @@ function ProfileHeader({
         fit="cover"
         shape="circular"
         src={user ? user.profileImage : "/profileIMGimsi.png"}
-        style={{ width: "220px", height: "220px" }}
+        className={styles.image}
       />
 
       <div className={styles.profile}>
         <div className={styles.profile_01}>
           <div>
-            <div className={styles.nickname}>{user?.username}</div>
+            {/* <div className={styles.nickname}>{user?.username}</div> */}
+            <div className={styles.nickname}> 닉네임 </div>
             <div className={styles.id}>{`@${user?.userId}`}</div>
           </div>
           <div>
@@ -123,7 +172,7 @@ function ProfileHeader({
           </div>
         </div>
         <div>
-          <Field validationState="none">
+          <Field validationState="none" className={styles.progressBar}>
             <ProgressBar {...progressBarProps} thickness="large" value={0.3} />
           </Field>
         </div>

@@ -4,6 +4,7 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 import { BookMark } from "../../apis/bookmark";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -14,10 +15,19 @@ const useStyles = makeStyles({
     borderRadius: "30px",
     padding: "20px 44px 20px 44px",
     backgroundColor: tokens.colorNeutralBackground1Hover,
-    cursor: "pointer"
+    cursor: "pointer",
+    [`@media (max-width: ${mobileWidth})`]: {
+      backgroundColor: "none",
+      padding: "0px 0px 0px 0px",
+      width: "80vw",
+      height: "45px"
+    }
   },
   imageContainer: {
-    marginRight: "20px"
+    marginRight: "20px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      display: "none"
+    }
   },
   textContainer: {
     flex: 1,
@@ -29,13 +39,18 @@ const useStyles = makeStyles({
     fontSize: "20px",
     fontWeight: "bold",
     color: tokens.colorNeutralForeground1,
-    marginBottom: "10px"
+    marginBottom: "10px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      fontSize: "16px",
+    }
   },
   placeDetail: {
     fontSize: "14px",
-    color: tokens.colorNeutralForeground3
-  }
-});
+    color: tokens.colorNeutralForeground3,
+    [`@media (max-width: ${mobileWidth})`]: {
+      fontSize: "12px",
+    }
+}});
 
 interface PlaceListProps {
   img?: string;

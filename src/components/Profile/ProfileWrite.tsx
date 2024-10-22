@@ -9,6 +9,7 @@ import {
 } from "@fluentui/react-table";
 
 import { mainColor, skeletonColor } from "../../styles/color";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -18,7 +19,10 @@ const useStyles = makeStyles({
     // alignItems: "center",
     width: "56vw",
     height: "540px",
-    backgroundColor: tokens.colorNeutralBackground1
+    backgroundColor: tokens.colorNeutralBackground1,
+    [`@media (max-width: ${mobileWidth})`]: {
+      height: "40vh"
+    }
   },
   title: {
     color: skeletonColor,

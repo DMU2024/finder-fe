@@ -6,13 +6,19 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 import { postRevokeKakaoScopes, postUnlink } from "../../../apis/user";
 import useAuthStore from "../../../stores/auth";
 import { skeletonColor } from "../../../styles/color";
+import { mobileWidth } from "../../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    marginLeft: "64px"
+    marginLeft: "64px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      height: "40vh",
+      marginLeft: "0px",
+      paddingTop: "30px"
+    }
   },
   title: {
     color: tokens.colorNeutralForeground1,
