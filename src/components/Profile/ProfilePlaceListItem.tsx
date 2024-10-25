@@ -1,5 +1,5 @@
 import { tokens, makeStyles, Image } from "@fluentui/react-components";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { BookMark } from "../../apis/bookmark";
 import useMainStore from "../../stores/main";
@@ -41,23 +41,24 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForeground1,
     marginBottom: "10px",
     [`@media (max-width: ${mobileWidth})`]: {
-      fontSize: "16px",
+      fontSize: "16px"
     }
   },
   placeDetail: {
     fontSize: "14px",
     color: tokens.colorNeutralForeground3,
     [`@media (max-width: ${mobileWidth})`]: {
-      fontSize: "12px",
+      fontSize: "12px"
     }
-}});
+  }
+});
 
 interface PlaceListProps {
   img?: string;
   bookmark?: BookMark;
 }
 
-function PlaceListItem({ img, bookmark }: PlaceListProps) {
+function ProfilePlaceListItem({ img, bookmark }: PlaceListProps) {
   const styles = useStyles();
   const navigate = useNavigate();
   const { setSelectedMarker, setShowLostGoods } = useMainStore();
@@ -70,11 +71,10 @@ function PlaceListItem({ img, bookmark }: PlaceListProps) {
       setLatitude(bookmark.lat);
       setLongitude(bookmark.lng);
       setZoomLevel(3);
-      navigate({
-        pathname: "/",
-        search: createSearchParams({
-          place: bookmark.location
-        }).toString()
+      navigate("/", {
+        state: {
+          target: bookmark.location
+        }
       });
     }
   };
@@ -101,4 +101,4 @@ function PlaceListItem({ img, bookmark }: PlaceListProps) {
   );
 }
 
-export default PlaceListItem;
+export default ProfilePlaceListItem;

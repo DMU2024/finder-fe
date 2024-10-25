@@ -3,7 +3,7 @@ import { Button, Card, Switch, makeStyles } from "@fluentui/react-components";
 import { LocationRegular } from "@fluentui/react-icons";
 import { useEffect, useRef } from "react";
 import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import KakaoMapPopup from "./KakaoMapPopup";
 import { getCoord2Address } from "../../apis/kakaoMap";
@@ -12,8 +12,12 @@ import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
+import {
+  contentMargin,
+  headerHeight,
+  headerMobileHeight
+} from "../../styles/margin";
 import { mobileWidth } from "../../styles/size";
-import { contentMargin, headerHeight, headerMobileHeight } from "../../styles/margin";
 
 const useStyle = makeStyles({
   root: {
@@ -97,8 +101,7 @@ interface Props {
 
 function KakaoMap({ handleBookmark }: Props) {
   const styles = useStyle();
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
   const {
     latitude,
@@ -157,6 +160,19 @@ function KakaoMap({ handleBookmark }: Props) {
         getMarkerByCoords(swLat, swLng, neLat, neLng, showLostGoods).then(
           (data) => {
             setMarkerList(data);
+            if (location.state) {
+              const { target } = location.state;
+
+              if (target) {
+                const targetMarker = data.find(
+                  (marker) => marker._id === target
+                );
+                if (targetMarker) {
+                  setSelectedMarker(targetMarker);
+                }
+              }
+              window.history.replaceState({}, document.title);
+            }
           }
         );
       }
@@ -176,20 +192,6 @@ function KakaoMap({ handleBookmark }: Props) {
       setClickedInfo(undefined);
     }
   }, [selectedMarker]);
-
-  useEffect(() => {
-    const place = searchParams.get("place");
-
-    if (place) {
-      markerList.map((marker) => {
-        if (marker._id === place) {
-          setSelectedMarker(marker);
-          navigate("/");
-          return;
-        }
-      });
-    }
-  }, [markerList]);
 
   return (
     <div className={styles.root}>

@@ -1,6 +1,6 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 
-import PlaceListItem from "../PlaceListItem";
+import PlaceListItem from "../ProfilePlaceListItem";
 
 const useStyles = makeStyles({
   root: {

@@ -1,7 +1,7 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 import { GlobeLocationRegular } from "@fluentui/react-icons";
 
-import PlaceListItem from "./PlaceListItem";
+import ProfilePlaceListItem from "./ProfilePlaceListItem";
 import useGlobalStore from "../../stores/global";
 import { mobileWidth } from "../../styles/size";
 
@@ -47,7 +47,7 @@ function ProfilePlace({ img }: ProfilePlaceProps) {
       <div className={styles.title}>장소 바로가기</div>
       {bookmarkMap.size > 0 ? (
         Array.from(bookmarkMap.values()).map((bookmark) => (
-          <PlaceListItem
+          <ProfilePlaceListItem
             key={bookmark.id}
             bookmark={bookmark}
             img={img || "/profilePlaceIcon.png"}
