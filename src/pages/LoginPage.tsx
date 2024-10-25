@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
     height: `calc(100vh - ${headerHeight})`,
     [`@media (max-width: ${mobileWidth})`]: {
-      height: `calc(100vh - ${headerMobileHeight})`,
+      height: `calc(100vh - ${headerMobileHeight})`
     }
   },
   container: {
@@ -64,7 +64,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     color: mainColor,
     width: "auto",
-    marginBottom: "10px",
+    marginBottom: "10px"
   },
   loginText: {
     fontSize: "42px",
@@ -73,7 +73,7 @@ const useStyles = makeStyles({
     width: "auto",
     marginBottom: "30px",
     [`@media (max-width: ${mobileWidth})`]: {
-      fontSize: "36px",
+      fontSize: "36px"
     }
   },
   detailText: {
@@ -87,16 +87,15 @@ const useStyles = makeStyles({
     fontSize: "12px",
     fontWeight: "bold",
     color: tokens.colorNeutralBackground3Pressed,
-    width: "auto",
+    width: "auto"
   },
   image: {
     cursor: "pointer",
-    filter: "grayscale(100%)",
     width: "40%",
     marginTop: "20px",
     marginBottom: "10px",
     [`@media (max-width: ${mobileWidth})`]: {
-      width: "70%",
+      width: "70%"
     }
   }
 });
@@ -105,7 +104,7 @@ function LoginPage() {
   const styles = useStyles();
   const navigate = useNavigate();
   const { setUserId } = useAuthStore();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
   const scope = searchParams.get("scope");
 
@@ -133,25 +132,26 @@ function LoginPage() {
 
   return (
     <div className={styles.root}>
-
       <div className={styles.container}>
-        <div className={styles.leftContainer}>
-
-        </div>
+        <div className={styles.leftContainer}></div>
         <div className={styles.rightContainer}>
           <div className={styles.logo}> Finder </div>
           <div className={styles.loginText}> Login </div>
-          <div className={styles.detailText}> 아이디와 비밀번호 없이 로그인해보세요. </div>
+          <div className={styles.detailText}>
+            아이디와 비밀번호 없이 로그인해보세요.
+          </div>
 
           <img
-            src="/kakaoLogin.png"
             className={styles.image}
+            src="/kakaoLogin.png"
             onClick={() => {
               kakaoLogin();
             }}
           />
 
-          <div className={styles.detailTextStylePlus}> 채팅, 마이페이지 기능을 이용하기 위해서는 로그인이 필요합니다. </div>
+          <div className={styles.detailTextStylePlus}>
+            채팅, 마이페이지 기능을 이용하기 위해서는 로그인이 필요합니다.
+          </div>
         </div>
       </div>
     </div>
