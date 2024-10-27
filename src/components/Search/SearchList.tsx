@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 
 import SearchListItem from "./SearchListItem";
 import { searchLostFound } from "../../apis/lostfound";
+import useDebounce from "../../hooks/useDebounce";
 import useIntersect from "../../hooks/useIntersect";
 import useSearchStore from "../../stores/search";
 import { mobileWidth } from "../../styles/size";
@@ -63,10 +64,18 @@ const useStyles = makeStyles({
 function SearchList() {
   const styles = useStyles();
 
-  const { query, items, setItems, page, setPage } = useSearchStore();
+  const { query, items, setItems, page, setPage, scrollTop, setScrollTop } =
+    useSearchStore();
   const [isEndOfPage, setIsEndOfPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const didMount = useRef(false);
+
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  const debounce = useDebounce();
+  const saveScroll = debounce(() => {
+    setScrollTop(rootRef.current?.scrollTop ?? scrollTop);
+  }, 50);
 
   const getItems = () => {
     setIsLoading(true);
@@ -96,6 +105,12 @@ function SearchList() {
   });
 
   useEffect(() => {
+    if (rootRef.current) {
+      rootRef.current.scrollTo({ top: scrollTop });
+    }
+  }, []);
+
+  useEffect(() => {
     if (didMount.current) {
       setItems([]);
       setPage(0);
@@ -106,7 +121,7 @@ function SearchList() {
   }, [query]);
 
   return (
-    <div className={styles.root}>
+    <div ref={rootRef} className={styles.root} onScroll={saveScroll}>
       <Table>
         <TableHeader className={styles.tableHeader}>
           <TableRow>

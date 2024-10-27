@@ -9,6 +9,8 @@ interface Search {
   setItems: (items: LostFound[]) => void;
   page: number;
   setPage: (page: number) => void;
+  scrollTop: number;
+  setScrollTop: (pos: number) => void;
 }
 
 const useSearchStore = create<Search>((set) => ({
@@ -23,6 +25,10 @@ const useSearchStore = create<Search>((set) => ({
   page: 0,
   setPage: (page) => {
     set({ page: page });
+  },
+  scrollTop: 0,
+  setScrollTop: (pos) => {
+    set({ scrollTop: pos });
   }
 }));
 
