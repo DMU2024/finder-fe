@@ -9,10 +9,10 @@ import {
   tokens
 } from "@fluentui/react-components";
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import SearchListItem from "./SearchListItem";
-import { searchLostFound, getLostFound } from "../../apis/lostfound";
+import { searchLostFound } from "../../apis/lostfound";
 import useIntersect from "../../hooks/useIntersect";
 import useSearchStore from "../../stores/search";
 import { mobileWidth } from "../../styles/size";
@@ -66,12 +66,11 @@ function SearchList() {
   const { query, items, setItems, page, setPage } = useSearchStore();
   const [isEndOfPage, setIsEndOfPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const didMount = useRef(false);
 
   const getItems = () => {
     setIsLoading(true);
-    const task = query ? searchLostFound(query, page) : getLostFound(page);
-
-    task
+    searchLostFound(query, page)
       .then((data) => {
         if (data.length > 0) {
           setItems([...items, ...data]);
@@ -97,9 +96,13 @@ function SearchList() {
   });
 
   useEffect(() => {
-    setItems([]);
-    setPage(0);
-    setIsEndOfPage(false);
+    if (didMount.current) {
+      setItems([]);
+      setPage(0);
+      setIsEndOfPage(false);
+    } else {
+      didMount.current = true;
+    }
   }, [query]);
 
   return (

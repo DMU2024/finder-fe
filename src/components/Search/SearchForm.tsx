@@ -1,6 +1,10 @@
 import { SearchBox, makeStyles } from "@fluentui/react-components";
-import { SearchRegular, FilterRegular } from "@fluentui/react-icons"; // 필터 아이콘 추가
-import { useEffect, useState } from "react";
+import {
+  SearchRegular,
+  FilterRegular,
+  SendRegular
+} from "@fluentui/react-icons"; // 필터 아이콘 추가
+import { useState } from "react";
 
 import useSearchStore from "../../stores/search";
 import { mainColor } from "../../styles/color";
@@ -60,15 +64,8 @@ const useStyles = makeStyles({
 
 function SearchForm() {
   const styles = useStyles();
-  const { setQuery } = useSearchStore();
-  const [debouncedQuery, setDebouncedQuery] = useState<string | undefined>();
-
-  useEffect(() => {
-    const delayDebounceTimer = setTimeout(() => {
-      setQuery(debouncedQuery);
-    }, 500);
-    return () => clearTimeout(delayDebounceTimer);
-  }, [debouncedQuery]);
+  const { query, setQuery } = useSearchStore();
+  const [searchText, setSearchText] = useState(query);
 
   return (
     <div className={styles.root}>
@@ -83,13 +80,29 @@ function SearchForm() {
         <SearchBox
           appearance="underline"
           className={styles.searchBox}
-          defaultValue={debouncedQuery}
+          contentAfter={
+            <SendRegular
+              style={{
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                setQuery(searchText);
+              }}
+            />
+          }
           placeholder="Search for..."
+          value={searchText}
           onChange={(event, data) => {
-            if (event.nativeEvent instanceof MouseEvent) {
-              setQuery(undefined);
+            // X 버튼 눌러서 검색어 초기화 된 경우
+            if (event.nativeEvent instanceof PointerEvent) {
+              setQuery(data.value);
             } else {
-              setDebouncedQuery(data.value);
+              setSearchText(data.value);
+            }
+          }}
+          onKeyDown={(event) => {
+            if (event.key == "Enter") {
+              setQuery(searchText);
             }
           }}
         />

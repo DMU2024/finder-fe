@@ -31,21 +31,13 @@ interface LostFoundDetail {
   uniq: string;
 }
 
-const getLostFound = async (page: number) => {
-  const { data } = await Instance.get<LostFound[]>("/api/lostfound", {
-    params: { page: page }
-  });
-
-  return data;
-};
-
 const getLostFoundDetail = async (id: string) => {
   const { data } = await Instance.get<LostFoundDetail>(`/api/lostfound/${id}`);
 
   return data;
 };
 
-const searchLostFound = async (query: string, page: number) => {
+const searchLostFound = async (query: string | undefined, page: number) => {
   const { data } = await Instance.get<LostFound[]>("/api/lostfound/search", {
     params: {
       keyword: query,
@@ -68,4 +60,4 @@ const placeLostFound = async (query: string, page: number) => {
 };
 
 export type { LostFound, LostFoundDetail };
-export { getLostFound, getLostFoundDetail, searchLostFound, placeLostFound };
+export { getLostFoundDetail, searchLostFound, placeLostFound };

@@ -3,8 +3,8 @@ import { create } from "zustand";
 import { LostFound } from "../apis/lostfound";
 
 interface Search {
-  query: string | undefined;
-  setQuery: (q: string | undefined) => void;
+  query: string;
+  setQuery: (q: string) => void;
   items: LostFound[];
   setItems: (items: LostFound[]) => void;
   page: number;
@@ -12,7 +12,7 @@ interface Search {
 }
 
 const useSearchStore = create<Search>((set) => ({
-  query: undefined,
+  query: "",
   setQuery: (q) => {
     set({ query: q });
   },
