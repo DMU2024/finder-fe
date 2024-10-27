@@ -96,9 +96,8 @@ function SearchForm() {
             // X 버튼 눌러서 검색어 초기화 된 경우
             if (event.nativeEvent instanceof PointerEvent) {
               setQuery(data.value);
-            } else {
-              setSearchText(data.value);
             }
+            setSearchText(data.value);
           }}
           onKeyDown={(event) => {
             if (event.key == "Enter") {
