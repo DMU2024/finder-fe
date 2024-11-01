@@ -6,6 +6,7 @@ import {
 } from "@fluentui/react-icons"; // 필터 아이콘 추가
 import { useState } from "react";
 
+import SearchFilter from "./SearchFilter";
 import useSearchStore from "../../stores/search";
 import { mainColor } from "../../styles/color";
 import { mobileWidth } from "../../styles/size";
@@ -64,7 +65,8 @@ const useStyles = makeStyles({
 
 function SearchForm() {
   const styles = useStyles();
-  const { query, setQuery } = useSearchStore();
+  const { query, setQuery, isFilterEnabled, setIsFilterEnabled } =
+    useSearchStore();
   const [searchText, setSearchText] = useState(query);
 
   return (
@@ -76,7 +78,12 @@ function SearchForm() {
         </div>
       </div>
       <div className={styles.searchContainer}>
-        <FilterRegular className={styles.filterIcon} />
+        <FilterRegular
+          className={styles.filterIcon}
+          onClick={() => {
+            setIsFilterEnabled(!isFilterEnabled);
+          }}
+        />
         <SearchBox
           appearance="underline"
           className={styles.searchBox}
@@ -106,6 +113,7 @@ function SearchForm() {
           }}
         />
       </div>
+      {isFilterEnabled && <SearchFilter />}
     </div>
   );
 }

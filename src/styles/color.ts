@@ -20,7 +20,7 @@ const brandColor = {
   130: mainColor,
   140: mainColor,
   150: mainColor,
-  160: mainColor
+  160: "#D9D9D9"
 };
 
 export {
