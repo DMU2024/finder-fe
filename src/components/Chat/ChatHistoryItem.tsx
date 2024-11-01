@@ -41,22 +41,30 @@ const useStyles = makeStyles({
 });
 
 interface Props {
+  recipient: User | undefined;
   setRecipient: (user: User | undefined) => void;
   history: ChatHistory;
   setIsRightVisible: (isVisible: boolean) => void;
 }
 
-function ChatHistoryItem({ setRecipient, history, setIsRightVisible }: Props) {
+function ChatHistoryItem({
+  recipient,
+  setRecipient,
+  history,
+  setIsRightVisible
+}: Props) {
   const styles = useStyles();
 
   return (
     <div
       className={styles.root}
       onClick={() => {
-        getUser(history.userId).then((res) => {
-          setRecipient(res);
-          setIsRightVisible(true);
-        });
+        if (recipient?.userId !== history.userId) {
+          getUser(history.userId).then((res) => {
+            setRecipient(res);
+            setIsRightVisible(true);
+          });
+        }
       }}
     >
       <Image

@@ -2,7 +2,7 @@ import { makeStyles } from "@fluentui/react-components";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import useWebSocket, { ReadyState } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 
 import {
   Chat,
@@ -167,6 +167,7 @@ function ChatPage() {
         <div className={styles.left}>
           <ChatHistoryList
             histories={histories}
+            recipient={recipient}
             setIsRightVisible={setIsRightVisible}
             setRecipient={setRecipient}
           />

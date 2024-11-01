@@ -37,12 +37,14 @@ const useStyles = makeStyles({
 });
 
 interface ChatHistoryListProps {
+  recipient: User | undefined;
   setRecipient: (user: User | undefined) => void;
   histories: ChatHistory[] | undefined;
   setIsRightVisible: (isVisible: boolean) => void;
 }
 
 function ChatHistoryList({
+  recipient,
   setRecipient,
   histories,
   setIsRightVisible
@@ -57,6 +59,7 @@ function ChatHistoryList({
           <ChatHistoryItem
             key={history.userId}
             history={history}
+            recipient={recipient}
             setIsRightVisible={setIsRightVisible}
             setRecipient={setRecipient}
           />
