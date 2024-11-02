@@ -1,10 +1,10 @@
 import { create } from "zustand";
 
-import { LostFound } from "../apis/lostfound";
+import { LostFound, LostFoundQuery } from "../apis/lostfound";
 
 interface Search {
-  query: string;
-  setQuery: (q: string) => void;
+  query: LostFoundQuery | undefined;
+  setQuery: (query: LostFoundQuery | undefined) => void;
   items: LostFound[];
   setItems: (items: LostFound[]) => void;
   page: number;
@@ -13,20 +13,12 @@ interface Search {
   setScrollTop: (pos: number) => void;
   isFilterEnabled: boolean;
   setIsFilterEnabled: (value: boolean) => void;
-  filterColor: string;
-  setFilterColor: (color: string) => void;
-  filterCategory: string;
-  setFilterCategory: (category: string) => void;
-  filterStartDate: Date | undefined;
-  setFilterStartDate: (date: Date | undefined) => void;
-  filterEndDate: Date | undefined;
-  setFilterEndDate: (date: Date | undefined) => void;
 }
 
 const useSearchStore = create<Search>((set) => ({
-  query: "",
-  setQuery: (q) => {
-    set({ query: q });
+  query: undefined,
+  setQuery: (query) => {
+    set({ query: query });
   },
   items: [],
   setItems: (items) => {
@@ -43,22 +35,6 @@ const useSearchStore = create<Search>((set) => ({
   isFilterEnabled: false,
   setIsFilterEnabled: (value) => {
     set({ isFilterEnabled: value });
-  },
-  filterColor: "",
-  setFilterColor: (color) => {
-    set({ filterColor: color });
-  },
-  filterCategory: "",
-  setFilterCategory: (category) => {
-    set({ filterCategory: category });
-  },
-  filterStartDate: undefined,
-  setFilterStartDate: (date) => {
-    set({ filterStartDate: date });
-  },
-  filterEndDate: undefined,
-  setFilterEndDate: (date) => {
-    set({ filterEndDate: date });
   }
 }));
 

@@ -1,4 +1,5 @@
 import { Instance } from "../utils/axios";
+import { formatDate } from "../utils/format";
 
 interface LostFound {
   _id: string;
@@ -31,16 +32,32 @@ interface LostFoundDetail {
   uniq: string;
 }
 
+interface LostFoundQuery {
+  keyword?: string | undefined;
+  color?: string | undefined;
+  category?: string | undefined;
+  startYmd?: Date | undefined;
+  endYmd?: Date | undefined;
+}
+
 const getLostFoundDetail = async (id: string) => {
   const { data } = await Instance.get<LostFoundDetail>(`/api/lostfound/${id}`);
 
   return data;
 };
 
-const searchLostFound = async (query: string | undefined, page: number) => {
+const searchLostFound = async (
+  query: LostFoundQuery | undefined,
+  page: number
+) => {
+  const startYmdFmt = formatDate(query?.startYmd);
+  const endYmdFmt = formatDate(query?.endYmd);
+
   const { data } = await Instance.get<LostFound[]>("/api/lostfound/search", {
     params: {
-      keyword: query,
+      ...query,
+      startYmd: startYmdFmt ? startYmdFmt : undefined,
+      endYmd: endYmdFmt ? endYmdFmt : undefined,
       page: page
     }
   });
@@ -59,5 +76,5 @@ const placeLostFound = async (query: string, page: number) => {
   return data;
 };
 
-export type { LostFound, LostFoundDetail };
+export type { LostFoundQuery, LostFound, LostFoundDetail };
 export { getLostFoundDetail, searchLostFound, placeLostFound };

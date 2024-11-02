@@ -1,29 +1,22 @@
-import {
-  Card,
-  Dropdown,
-  Input,
-  makeStyles,
-  Option,
-  tokens
-} from "@fluentui/react-components";
+import { Card, makeStyles, tokens } from "@fluentui/react-components";
 import { DatePicker } from "@fluentui/react-datepicker-compat";
 import { DismissRegular } from "@fluentui/react-icons";
 
-import {
-  colorOption,
-  localizedStrings,
-  onFormatDate
-} from "./SearchFilterOption";
+import SearchFilterDialog from "./SearchFilterDialog";
+import { localizedStrings } from "./SearchFilterOption";
 import useSearchStore from "../../stores/search";
 import { mobileWidth } from "../../styles/size";
+import { formatDate } from "../../utils/format";
 
 const useStyles = makeStyles({
   root: {
+    flex: 1,
     borderRadius: "16px",
     padding: "24px",
     [`@media (max-width: ${mobileWidth})`]: {
       width: "90vw",
-      margin: "0 20px 0 20px"
+      margin: "0 20px 0 20px",
+      padding: "16px"
     }
   },
   filterElement: {
@@ -32,13 +25,21 @@ const useStyles = makeStyles({
     gap: "12px"
   },
   filterTitle: {
-    minWidth: "max-content"
+    minWidth: "max-content",
+    [`@media (max-width: ${mobileWidth})`]: {
+      fontSize: "12px"
+    }
   },
   filterColor: {
-    width: "12px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      fontSize: "10px"
+    }
+  },
+  filterColorHex: {
+    width: "12px ",
     height: "12px",
+    display: "inline-block",
     border: `2px solid ${tokens.colorNeutralBackground3}`,
-    borderRadius: "32px",
     padding: "2px"
   },
   filterInput: {
@@ -46,15 +47,27 @@ const useStyles = makeStyles({
     height: "48px",
     border: "1px solid #D9D9D9",
     borderRadius: "4px",
-    padding: "8px",
+    padding: "0px",
     boxSizing: "border-box",
     fontSize: "14px",
     outline: "none",
-    minWidth: "0px"
+    minWidth: "0px",
+    [`@media (max-width: ${mobileWidth})`]: {
+      fontSize: "10px"
+    },
+    "& > button": {
+      [`@media (max-width: ${mobileWidth})`]: {
+        fontSize: "10px"
+      }
+    }
   },
   filterDismiss: {
     marginRight: "10px",
-    cursor: "pointer"
+    cursor: "pointer",
+    [`@media (max-width: ${mobileWidth})`]: {
+      width: "10px",
+      height: "10px"
+    }
   },
   filterReset: {
     minWidth: "max-content",
@@ -67,44 +80,35 @@ const useStyles = makeStyles({
 function SearchFilter() {
   const styles = useStyles();
 
-  const {
-    filterColor,
-    setFilterColor,
-    filterCategory,
-    setFilterCategory,
-    filterStartDate,
-    setFilterStartDate,
-    filterEndDate,
-    setFilterEndDate
-  } = useSearchStore();
+  const { query, setQuery } = useSearchStore();
 
   return (
     <Card className={styles.root}>
       <div className={styles.filterElement}>
         <span className={styles.filterTitle}>물건색상</span>
-        <Dropdown
-          clearable
-          className={styles.filterInput}
-          selectedOptions={[filterColor]}
-          value={filterColor}
-          onOptionSelect={(_, data) => {
-            setFilterColor(data.optionValue ?? "");
+        <SearchFilterDialog
+          option="color"
+          styleProps={{
+            color: styles.filterColor,
+            colorHex: styles.filterColorHex,
+            input: styles.filterInput,
+            dismiss: styles.filterDismiss
           }}
-        >
-          {Object.entries(colorOption).map(([color, hex]) => (
-            <Option key={color} text={color}>
-              <span
-                className={styles.filterColor}
-                style={{ backgroundColor: hex }}
-              />
-              <span>{color}</span>
-            </Option>
-          ))}
-        </Dropdown>
+          title="색상 선택"
+        />
       </div>
       <div className={styles.filterElement}>
         <span className={styles.filterTitle}>카테고리</span>
-        <Input className={styles.filterInput} value={filterCategory} />
+        <SearchFilterDialog
+          option="category"
+          styleProps={{
+            color: styles.filterColor,
+            colorHex: styles.filterColorHex,
+            input: styles.filterInput,
+            dismiss: styles.filterDismiss
+          }}
+          title="카테고리 선택"
+        />
       </div>
       <div className={styles.filterElement}>
         <span className={styles.filterTitle}>등록날짜</span>
@@ -113,16 +117,25 @@ function SearchFilter() {
           contentAfter={
             <DismissRegular
               className={styles.filterDismiss}
-              onClick={() => setFilterStartDate(undefined)}
+              onClick={() => setQuery({ ...query, startYmd: undefined })}
             />
           }
-          formatDate={onFormatDate}
+          formatDate={formatDate}
           maxDate={new Date()}
           placeholder="시작날짜"
           showMonthPickerAsOverlay={true}
           strings={localizedStrings}
-          value={filterStartDate}
-          onSelectDate={setFilterStartDate as (date?: Date | null) => void}
+          value={query?.startYmd ?? null}
+          onSelectDate={(date) => {
+            if (date) {
+              const isInvalid = query?.endYmd && query.endYmd < date;
+              setQuery({
+                ...query,
+                startYmd: date,
+                endYmd: isInvalid ? date : query?.endYmd
+              });
+            }
+          }}
         />
         <span>-</span>
         <DatePicker
@@ -130,28 +143,34 @@ function SearchFilter() {
           contentAfter={
             <DismissRegular
               className={styles.filterDismiss}
-              onClick={() => setFilterEndDate(undefined)}
+              onClick={() => setQuery({ ...query, endYmd: undefined })}
             />
           }
-          formatDate={onFormatDate}
+          formatDate={formatDate}
           maxDate={new Date()}
           placeholder="종료날짜"
           showMonthPickerAsOverlay={true}
           strings={localizedStrings}
-          value={filterEndDate}
-          onSelectDate={setFilterEndDate as (date?: Date | null) => void}
+          value={query?.endYmd ?? null}
+          onSelectDate={(date) => {
+            if (date) {
+              const isInvalid = query?.startYmd && query.startYmd > date;
+              setQuery({
+                ...query,
+                startYmd: isInvalid ? date : query?.startYmd,
+                endYmd: date
+              });
+            }
+          }}
         />
       </div>
       <div
         className={styles.filterReset}
         onClick={() => {
-          setFilterColor("");
-          setFilterCategory("");
-          setFilterStartDate(undefined);
-          setFilterEndDate(undefined);
+          setQuery({ keyword: query?.keyword });
         }}
       >
-        모두 초기화
+        필터 초기화
       </div>
     </Card>
   );

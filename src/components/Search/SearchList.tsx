@@ -8,11 +8,9 @@ import {
   Spinner,
   tokens
 } from "@fluentui/react-components";
-import { AxiosError } from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import SearchListItem from "./SearchListItem";
-import { searchLostFound } from "../../apis/lostfound";
 import useDebounce from "../../hooks/useDebounce";
 import useIntersect from "../../hooks/useIntersect";
 import useSearchStore from "../../stores/search";
@@ -61,14 +59,16 @@ const useStyles = makeStyles({
   }
 });
 
-function SearchList() {
+interface Props {
+  isEndOfPage: boolean;
+  isLoading: boolean;
+  getItems: () => void;
+}
+
+function SearchList({ isEndOfPage, isLoading, getItems }: Props) {
   const styles = useStyles();
 
-  const { query, items, setItems, page, setPage, scrollTop, setScrollTop } =
-    useSearchStore();
-  const [isEndOfPage, setIsEndOfPage] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const didMount = useRef(false);
+  const { items, scrollTop, setScrollTop } = useSearchStore();
 
   const rootRef = useRef<HTMLDivElement | null>(null);
 
@@ -76,26 +76,6 @@ function SearchList() {
   const saveScroll = debounce(() => {
     setScrollTop(rootRef.current?.scrollTop ?? scrollTop);
   }, 50);
-
-  const getItems = () => {
-    setIsLoading(true);
-    searchLostFound(query, page)
-      .then((data) => {
-        if (data.length > 0) {
-          setItems([...items, ...data]);
-          setPage(page + 1);
-        } else {
-          setIsEndOfPage(true);
-        }
-      })
-      .catch((e: AxiosError) => {
-        console.error(e);
-        setIsEndOfPage(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
 
   const scrollRef = useIntersect((entry, observer) => {
     observer.unobserve(entry.target);
@@ -109,16 +89,6 @@ function SearchList() {
       rootRef.current.scrollTo({ top: scrollTop });
     }
   }, []);
-
-  useEffect(() => {
-    if (didMount.current) {
-      setItems([]);
-      setPage(0);
-      setIsEndOfPage(false);
-    } else {
-      didMount.current = true;
-    }
-  }, [query]);
 
   return (
     <div ref={rootRef} className={styles.root} onScroll={saveScroll}>

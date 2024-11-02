@@ -67,7 +67,7 @@ function SearchForm() {
   const styles = useStyles();
   const { query, setQuery, isFilterEnabled, setIsFilterEnabled } =
     useSearchStore();
-  const [searchText, setSearchText] = useState(query);
+  const [searchText, setSearchText] = useState(query?.keyword ?? "");
 
   return (
     <div className={styles.root}>
@@ -93,7 +93,7 @@ function SearchForm() {
                 cursor: "pointer"
               }}
               onClick={() => {
-                setQuery(searchText);
+                setQuery({ ...query, keyword: searchText });
               }}
             />
           }
@@ -102,13 +102,13 @@ function SearchForm() {
           onChange={(event, data) => {
             // X 버튼 눌러서 검색어 초기화 된 경우
             if (event.nativeEvent instanceof PointerEvent) {
-              setQuery(data.value);
+              setQuery({ ...query, keyword: data.value });
             }
             setSearchText(data.value);
           }}
           onKeyDown={(event) => {
             if (event.key == "Enter") {
-              setQuery(searchText);
+              setQuery({ ...query, keyword: searchText });
             }
           }}
         />
