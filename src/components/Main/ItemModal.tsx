@@ -1,5 +1,4 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
-import { useState } from "react";
 
 import ItemList from "./ItemList";
 import MarkerList from "./MarkerList";
@@ -56,8 +55,7 @@ interface Props {
 
 function ItemModal({ handleBookmark }: Props) {
   const styles = useStyles();
-  const { selectedMarker } = useMainStore();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { selectedMarker, isModalOpen, setIsModalOpen } = useMainStore();
 
   return (
     <>
