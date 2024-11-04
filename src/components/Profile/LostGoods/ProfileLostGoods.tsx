@@ -63,7 +63,7 @@ function ProfileLostGoods() {
 
   const { userId } = useAuthStore();
   const { setSelectedMarker, setShowLostGoods } = useMainStore();
-  const { setLatitude, setLongitude, setZoomLevel } = usePositionStore();
+  const { setLatitude, setLongitude } = usePositionStore();
 
   const [lostGoods, setLostGoods] = useState<Marker[]>([]);
 
@@ -72,7 +72,6 @@ function ProfileLostGoods() {
     setShowLostGoods(true);
     setLatitude(lostGoods.lat);
     setLongitude(lostGoods.lng);
-    setZoomLevel(3);
     navigate("/", {
       state: {
         target: lostGoods._id

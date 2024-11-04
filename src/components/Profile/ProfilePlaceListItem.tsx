@@ -62,7 +62,7 @@ function ProfilePlaceListItem({ img, bookmark }: PlaceListProps) {
   const styles = useStyles();
   const navigate = useNavigate();
   const { setSelectedMarker, setShowLostGoods } = useMainStore();
-  const { setLatitude, setLongitude, setZoomLevel } = usePositionStore();
+  const { setLatitude, setLongitude } = usePositionStore();
 
   const handlePlaceClick = () => {
     if (bookmark) {
@@ -70,7 +70,6 @@ function ProfilePlaceListItem({ img, bookmark }: PlaceListProps) {
       setShowLostGoods(false);
       setLatitude(bookmark.lat);
       setLongitude(bookmark.lng);
-      setZoomLevel(3);
       navigate("/", {
         state: {
           target: bookmark.location
