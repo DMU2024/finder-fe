@@ -12,11 +12,7 @@ import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
-import {
-  contentMargin,
-  headerHeight,
-  headerMobileHeight
-} from "../../styles/margin";
+import { contentMargin, headerHeight, headerMobileHeight } from "../../styles/margin";
 import { mobileWidth } from "../../styles/size";
 
 const useStyle = makeStyles({
@@ -136,12 +132,7 @@ function KakaoMap({ handleBookmark }: Props) {
 
       if (bounds) {
         const [sw, ne] = [bounds.getSouthWest(), bounds.getNorthEast()];
-        const [swLat, swLng, neLat, neLng] = [
-          sw.getLat(),
-          sw.getLng(),
-          ne.getLat(),
-          ne.getLng()
-        ];
+        const [swLat, swLng, neLat, neLng] = [sw.getLat(), sw.getLng(), ne.getLat(), ne.getLng()];
 
         if (selectedMarker) {
           const { lat, lng } = selectedMarker;
@@ -157,24 +148,20 @@ function KakaoMap({ handleBookmark }: Props) {
           }
         }
 
-        getMarkerByCoords(swLat, swLng, neLat, neLng, showLostGoods).then(
-          (data) => {
-            setMarkerList(data);
-            if (location.state) {
-              const { target } = location.state;
+        getMarkerByCoords(swLat, swLng, neLat, neLng, showLostGoods).then((data) => {
+          setMarkerList(data);
+          if (location.state) {
+            const { target } = location.state;
 
-              if (target) {
-                const targetMarker = data.find(
-                  (marker) => marker._id === target
-                );
-                if (targetMarker) {
-                  setSelectedMarker(targetMarker);
-                }
+            if (target) {
+              const targetMarker = data.find((marker) => marker._id === target);
+              if (targetMarker) {
+                setSelectedMarker(targetMarker);
               }
-              window.history.replaceState({}, document.title);
+              location.state = null;
             }
           }
-        );
+        });
       }
     }
   }, [latitude, longitude, zoomLevel, showLostGoods, mapRef.current]);
