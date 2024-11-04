@@ -115,9 +115,7 @@ function AchievePage() {
 
   return (
     <div className={styles.root}>
-      <div className={styles.InfoContainer}>
-        <ProfileInfo />
-      </div>
+      <div className={styles.InfoContainer}>{/* <ProfileInfo /> */}</div>
       <div className={styles.backgroundBox}>
         <div className={styles.contentDetail}>
           <div className={styles.right}>
@@ -135,41 +133,18 @@ function AchievePage() {
             </div>
           </div>
 
-          <Image
-            alt="지도 이미지"
-            src="/map.png"
-            style={{ width: "70%", height: "auto" }}
-          />
+          <Image alt="지도 이미지" src="/map.png" style={{ width: "70%", height: "auto" }} />
 
-          <Icon
-            className={styles.overlayIcon01}
-            iconName="Location"
-            onClick={openModal}
-          />
+          <Icon className={styles.overlayIcon01} iconName="Location" onClick={openModal} />
 
-          <Icon
-            className={styles.overlayIcon02}
-            iconName="Location"
-            onClick={openModal}
-          />
+          <Icon className={styles.overlayIcon02} iconName="Location" onClick={openModal} />
 
-          <Icon
-            className={styles.overlayIcon03}
-            iconName="Location"
-            onClick={openModal}
-          />
+          <Icon className={styles.overlayIcon03} iconName="Location" onClick={openModal} />
 
-          <Icon
-            className={styles.overlayIcon04}
-            iconName="Location"
-            onClick={openModal}
-          />
+          <Icon className={styles.overlayIcon04} iconName="Location" onClick={openModal} />
         </div>
 
-        <Dialog
-          open={isModalOpen}
-          onOpenChange={(e, data) => setModalOpen(data.open)}
-        >
+        <Dialog open={isModalOpen} onOpenChange={(e, data) => setModalOpen(data.open)}>
           <DialogSurface>
             <DialogTitle>업적 이름</DialogTitle>
             <DialogContent>

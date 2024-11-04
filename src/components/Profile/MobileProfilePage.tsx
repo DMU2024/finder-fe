@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
 import { makeStyles } from "@fluentui/react-components";
+import { useEffect, useState } from "react";
 
+import ProfileLostGoods from "./LostGoods/ProfileLostGoods";
 import ProfileKeyword from "./ProfileKeyword";
 import ProfilePlace from "./ProfilePlace";
-import ProfileWrite from "./ProfileWrite";
-
-import useAuthStore from "../../stores/auth";
 import { getKeywords, Keyword } from "../../apis/keyword";
+import useAuthStore from "../../stores/auth";
 import { mainColor } from "../../styles/color";
 
 const useStyles = makeStyles({
@@ -15,7 +14,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     width: "100vw",
     height: "40vh",
-    alignItems: "flex-start",
+    alignItems: "flex-start"
   },
   text: {
     paddingLeft: "30px",
@@ -23,7 +22,7 @@ const useStyles = makeStyles({
     marginBottom: "10px",
     fontSize: "20px",
     fontWeight: "bold",
-    cursor: "pointer",
+    cursor: "pointer"
   },
   keywordList: {
     display: "flex",
@@ -35,7 +34,7 @@ const useStyles = makeStyles({
   content: {
     width: "100%",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column"
   },
   content02: {
     width: "100vw",
@@ -48,7 +47,7 @@ const useStyles = makeStyles({
     cursor: "pointer",
     fontSize: "16px",
     fontWeight: "bold"
-  },
+  }
 });
 
 function MobileProfilePage() {
@@ -79,13 +78,24 @@ function MobileProfilePage() {
   return (
     <div className={styles.root}>
       <div style={{ display: "flex", width: "100%" }}>
-        {isContent && <div onClick={handleClose} className={styles.close}> ✕ </div>}
+        {isContent && (
+          <div className={styles.close} onClick={handleClose}>
+            ✕
+          </div>
+        )}
       </div>
       <div className={isContent ? styles.content02 : styles.content}>
         {!isContent && (
           <>
-            <div className={styles.text} onClick={() => handleComponentChange(<ProfileWrite />)}> 내가 쓴 글 (수정) </div>
-            <div className={styles.text} onClick={() => handleComponentChange(<ProfileKeyword />)}> 내 키워드 </div>
+            <div
+              className={styles.text}
+              onClick={() => handleComponentChange(<ProfileLostGoods />)}
+            >
+              내가 쓴 글 (수정)
+            </div>
+            <div className={styles.text} onClick={() => handleComponentChange(<ProfileKeyword />)}>
+              내 키워드
+            </div>
             <div className={styles.keywordList}>
               {keywords.length > 0 ? (
                 keywords.map((keyword, index) => (
@@ -98,7 +108,9 @@ function MobileProfilePage() {
                 <div>키워드가 등록되지 않았습니다.</div>
               )}
             </div>
-            <div className={styles.text} onClick={() => handleComponentChange(<ProfilePlace />)}> 즐겨찾기 목록 </div>
+            <div className={styles.text} onClick={() => handleComponentChange(<ProfilePlace />)}>
+              즐겨찾기 목록
+            </div>
           </>
         )}
         {isContent && activeComponent}

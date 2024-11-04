@@ -7,7 +7,6 @@ import {
   ProgressBar,
   ProgressBarProps
 } from "@fluentui/react-components";
-import { useNavigate } from "react-router-dom";
 
 import { User } from "../../apis/user";
 import { mainColor } from "../../styles/color";
@@ -22,7 +21,7 @@ const useStyles = makeStyles({
     top: "-32px",
     [`@media (max-width: ${mobileWidth})`]: {
       flexDirection: "column",
-      top: "auto",
+      top: "auto"
     }
   },
   profile: {
@@ -40,7 +39,7 @@ const useStyles = makeStyles({
     marginBottom: "20px",
     [`@media (max-width: ${mobileWidth})`]: {
       justifyContent: "center",
-      flexDirection: "column",
+      flexDirection: "column"
     }
   },
   nickname: {
@@ -83,7 +82,7 @@ const useStyles = makeStyles({
       padding: "10px 15px",
       fontSize: "12px",
       marginLeft: "0px",
-      marginBottom: "0px",
+      marginBottom: "0px"
     }
   },
   profileChangeButton: {
@@ -107,7 +106,7 @@ const useStyles = makeStyles({
       padding: "10px 15px",
       fontSize: "12px",
       marginLeft: "0px",
-      marginBottom: "0px",
+      marginBottom: "0px"
     }
   },
   progressBar: {
@@ -120,59 +119,60 @@ const useStyles = makeStyles({
     height: "220px",
     [`@media (max-width: ${mobileWidth})`]: {
       width: "148px",
-      height: "148px",
+      height: "148px"
     }
   }
 });
 
 interface ProfileProps extends Partial<ProgressBarProps> {
-  handleEditMode?: () => void;
+  isMobileMode: boolean;
+  toggleEditMode: () => void;
+  toggleLostGoodsMode: () => void;
   user?: User;
 }
 
 function ProfileHeader({
-  handleEditMode,
+  isMobileMode,
+  toggleEditMode,
+  toggleLostGoodsMode,
   user,
   ...progressBarProps
 }: ProfileProps) {
   const styles = useStyles();
-  const navigate = useNavigate();
 
   return (
     <div className={styles.root}>
       <Image
+        className={styles.image}
         fit="cover"
         shape="circular"
         src={user ? user.profileImage : "/profileIMGimsi.png"}
-        className={styles.image}
       />
 
       <div className={styles.profile}>
         <div className={styles.profile_01}>
           <div>
-            {/* <div className={styles.nickname}>{user?.username}</div> */}
-            <div className={styles.nickname}> 닉네임 </div>
+            <div className={styles.nickname}>{user?.username}</div>
+            {/* <div className={styles.nickname}>닉네임</div> */}
             <div className={styles.id}>{`@${user?.userId}`}</div>
           </div>
           <div>
-            {/* <DefaultButton
-              className={styles.achieveButton}
-              text="업적 확인"
-              onClick={() => navigate("/profile/achieve")}
-            /> */}
+            {!isMobileMode && (
+              <DefaultButton
+                className={styles.achieveButton}
+                text="내가 쓴 글"
+                onClick={toggleLostGoodsMode}
+              />
+            )}
             <DefaultButton
               className={styles.profileChangeButton}
               text="프로필 설정"
-              onClick={() => {
-                if (handleEditMode) {
-                  handleEditMode();
-                }
-              }}
+              onClick={toggleEditMode}
             />
           </div>
         </div>
         <div>
-          <Field validationState="none" className={styles.progressBar}>
+          <Field className={styles.progressBar} validationState="none">
             <ProgressBar {...progressBarProps} thickness="large" value={0.3} />
           </Field>
         </div>

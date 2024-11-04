@@ -1,9 +1,5 @@
-import {
-  Instance,
-  KAKAO_AUTH,
-  KAKAO_CALLBACK,
-  KAKAO_CLIENTID
-} from "../utils/axios";
+import { Marker } from "./marker";
+import { Instance, KAKAO_AUTH, KAKAO_CALLBACK, KAKAO_CLIENTID } from "../utils/axios";
 
 interface User {
   userId: number;
@@ -32,19 +28,22 @@ const getUser = async (userId: number) => {
   return data;
 };
 
+const getUserLostGoods = async (userId: number) => {
+  const { data } = await Instance.get<Marker[]>(`/api/users/${userId}/lostgoods`);
+
+  return data;
+};
+
 const getKakaoScopes = async (userId: number) => {
-  const { data } = await Instance.get<KakaoScopeInfo>(
-    `/api/users/scopes/${userId}`
-  );
+  const { data } = await Instance.get<KakaoScopeInfo>(`/api/users/scopes/${userId}`);
 
   return data;
 };
 
 const postRevokeKakaoScopes = async (userId: number, scopes: string[]) => {
-  const { data } = await Instance.post<KakaoScopeInfo>(
-    `/api/users/scopes/${userId}`,
-    { scopes: scopes.join(",") }
-  );
+  const { data } = await Instance.post<KakaoScopeInfo>(`/api/users/scopes/${userId}`, {
+    scopes: scopes.join(",")
+  });
 
   return data;
 };
@@ -86,6 +85,7 @@ const postUnlink = async (userId: number) => {
 export type { User, KakaoScopeInfo, KakaoScope };
 export {
   getUser,
+  getUserLostGoods,
   getKakaoScopes,
   postRevokeKakaoScopes,
   getLoginURI,

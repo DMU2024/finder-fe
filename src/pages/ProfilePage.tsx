@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { BookMark, getBookMark } from "../apis/bookmark";
 import { getKakaoScopes, getUser, User } from "../apis/user";
 import ProfileDetailEdit from "../components/Profile/Edit/ProfileDetailEdit";
+import ProfileLostGoods from "../components/Profile/LostGoods/ProfileLostGoods";
 import MobileProfilePage from "../components/Profile/MobileProfilePage";
 import ProfileHeader from "../components/Profile/ProfileHeader";
 import ProfileKeyword from "../components/Profile/ProfileKeyword";
 import ProfilePlace from "../components/Profile/ProfilePlace";
-import ProfileWrite from "../components/Profile/ProfileWrite";
 import useAuthStore from "../stores/auth";
 import useGlobalStore from "../stores/global";
 import { headerMobileHeight } from "../styles/margin";
@@ -67,7 +67,8 @@ const useStyles = makeStyles({
 function ProfilePage() {
   const styles = useStyles();
   const [isEditMode, setIsEditMode] = useState(false);
-  const [ismobileMode, setmobileMode] = useState(false);
+  const [isLostGoodsMode, setIsLostGoodsMode] = useState(false);
+  const [isMobileMode, setmobileMode] = useState(false);
   const [user, setUser] = useState<User>();
   const [isMessageAgreed, setIsMessageAgreed] = useState(false);
   const { setBookmarkMap } = useGlobalStore();
@@ -94,8 +95,12 @@ function ProfilePage() {
     }
   }, []);
 
-  const handleEditMode = () => {
+  const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
+  };
+
+  const toggleLostGoodsMode = () => {
+    setIsLostGoodsMode(!isLostGoodsMode);
   };
 
   useEffect(() => {
@@ -115,38 +120,53 @@ function ProfilePage() {
     };
   }, []);
 
+  const renderContent = () => {
+    if (isMobileMode) {
+      return (
+        <div className={styles.mobileContent}>
+          {isEditMode ? (
+            <ProfileDetailEdit isMessageAgreed={isMessageAgreed} />
+          ) : (
+            <MobileProfilePage />
+          )}
+        </div>
+      );
+    } else {
+      if (isEditMode) {
+        return (
+          <div className={styles.content}>
+            <ProfileDetailEdit isMessageAgreed={isMessageAgreed} />
+          </div>
+        );
+      } else if (isLostGoodsMode) {
+        return (
+          <div className={styles.content}>
+            <ProfileLostGoods />
+          </div>
+        );
+      } else
+        return (
+          <div className={styles.content}>
+            <div className={styles.left}>
+              <ProfileKeyword />
+            </div>
+            <div className={styles.right}>
+              <ProfilePlace />
+            </div>
+          </div>
+        );
+    }
+  };
+
   return (
     <div className={styles.root}>
-      <ProfileHeader handleEditMode={handleEditMode} user={user} />
-
-      <div className={ismobileMode ? styles.mobileContent : styles.content}>
-        {ismobileMode ? (
-          <>
-            {isEditMode ? (
-              <ProfileDetailEdit isMessageAgreed={isMessageAgreed} />
-            ) : (
-              <MobileProfilePage />
-            )}
-          </>
-        ) : (
-          <>
-            {isEditMode ? (
-              <div style={{ flex: 1 }}>
-                <ProfileDetailEdit isMessageAgreed={isMessageAgreed} />
-              </div>
-            ) : (
-              <>
-                <div className={styles.left}>
-                  <ProfileKeyword />
-                </div>
-                <div className={styles.right}>
-                  <ProfilePlace />
-                </div>
-              </>
-            )}
-          </>
-        )}
-      </div>
+      <ProfileHeader
+        isMobileMode={isMobileMode}
+        toggleEditMode={toggleEditMode}
+        toggleLostGoodsMode={toggleLostGoodsMode}
+        user={user}
+      />
+      {renderContent()}
     </div>
   );
 }
