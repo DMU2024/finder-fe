@@ -13,10 +13,8 @@ const useStyles = makeStyles({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    marginLeft: "64px",
     [`@media (max-width: ${mobileWidth})`]: {
       height: "40vh",
-      marginLeft: "0px",
       paddingTop: "30px"
     }
   },

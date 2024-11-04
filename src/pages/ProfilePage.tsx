@@ -1,20 +1,18 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { BookMark, getBookMark } from "../apis/bookmark";
 import { getKakaoScopes, getUser, User } from "../apis/user";
 import ProfileDetailEdit from "../components/Profile/Edit/ProfileDetailEdit";
-import ProfilePlaceEdit from "../components/Profile/Edit/ProfilePlaceEdit";
+import MobileProfilePage from "../components/Profile/MobileProfilePage";
 import ProfileHeader from "../components/Profile/ProfileHeader";
 import ProfileKeyword from "../components/Profile/ProfileKeyword";
 import ProfilePlace from "../components/Profile/ProfilePlace";
-import MobileProfilePage from "../components/Profile/MobileProfilePage";
 import ProfileWrite from "../components/Profile/ProfileWrite";
-import { mobileWidth } from "../styles/size";
-import { headerMobileHeight } from "../styles/margin";
 import useAuthStore from "../stores/auth";
 import useGlobalStore from "../stores/global";
+import { headerMobileHeight } from "../styles/margin";
+import { mobileWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -36,32 +34,32 @@ const useStyles = makeStyles({
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: tokens.colorNeutralBackground2,
-      boxShadow: "none",
+      boxShadow: "none"
     }
   },
   content: {
     flex: 1,
     display: "flex",
     [`@media (max-width: ${mobileWidth})`]: {
-      display: "none",
+      display: "none"
     }
   },
   left: {
     width: "55%",
     [`@media (max-width: ${mobileWidth})`]: {
-      width: "100%",
+      width: "100%"
     }
   },
   right: {
     width: "45%",
     [`@media (max-width: ${mobileWidth})`]: {
-      width: "100%",
+      width: "100%"
     }
   },
   mobileContent: {
     display: "none",
     [`@media (max-width: ${mobileWidth})`]: {
-      display: "block",
+      display: "block"
     }
   }
 });
@@ -108,16 +106,14 @@ function ProfilePage() {
         setmobileMode(false);
       }
     };
-  
-    window.addEventListener('resize', handleResize);
-    
+
+    window.addEventListener("resize", handleResize);
     handleResize();
-  
+
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
-
 
   return (
     <div className={styles.root}>
@@ -134,16 +130,20 @@ function ProfilePage() {
           </>
         ) : (
           <>
-            <div className={isEditMode ? styles.right : styles.left}>
-              {isEditMode ? <ProfilePlaceEdit /> : <ProfileKeyword />}
-            </div>
-            <div className={isEditMode ? styles.left : styles.right}>
-              {isEditMode ? (
+            {isEditMode ? (
+              <div style={{ flex: 1 }}>
                 <ProfileDetailEdit isMessageAgreed={isMessageAgreed} />
-              ) : (
-                <ProfilePlace />
-              )}
-            </div>
+              </div>
+            ) : (
+              <>
+                <div className={styles.left}>
+                  <ProfileKeyword />
+                </div>
+                <div className={styles.right}>
+                  <ProfilePlace />
+                </div>
+              </>
+            )}
           </>
         )}
       </div>
