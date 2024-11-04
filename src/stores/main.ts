@@ -12,12 +12,6 @@ interface Main {
   setPlaceItemList: (items: LostFound[]) => void;
   showLostGoods: boolean;
   setShowLostGoods: (value: boolean) => void;
-  page: number;
-  setPage: (page: number) => void;
-  scrollTop: number;
-  setScrollTop: (pos: number) => void;
-  isModalOpen: boolean;
-  setIsModalOpen: (value: boolean) => void;
 }
 
 const useMainStore = create<Main>((set) => ({
@@ -36,18 +30,6 @@ const useMainStore = create<Main>((set) => ({
   showLostGoods: false,
   setShowLostGoods: (value) => {
     set({ showLostGoods: value });
-  },
-  page: 0,
-  setPage: (page) => {
-    set({ page: page });
-  },
-  scrollTop: 0,
-  setScrollTop: (pos) => {
-    set({ scrollTop: pos });
-  },
-  isModalOpen: false,
-  setIsModalOpen: (value) => {
-    set({ isModalOpen: value });
   }
 }));
 

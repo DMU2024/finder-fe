@@ -9,12 +9,11 @@ import {
 } from "@fluentui/react-components";
 import { BookExclamationMarkRegular } from "@fluentui/react-icons";
 import { AxiosError } from "axios";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 import Item from "./Item";
 import { placeLostFound } from "../../apis/lostfound";
-import useDebounce from "../../hooks/useDebounce";
 import useIntersect from "../../hooks/useIntersect";
 import useAuthStore from "../../stores/auth";
 import useMainStore from "../../stores/main";
@@ -112,7 +111,6 @@ const useStyles = makeStyles({
 function ItemList() {
   const styles = useStyles();
   const navigate = useNavigate();
-  const didMount = useRef(false);
 
   const {
     selectedMarker,
@@ -122,17 +120,9 @@ function ItemList() {
     setPlaceItemList
   } = useMainStore();
 
-  const { page, setPage, scrollTop, setScrollTop } = useMainStore();
-
-  const listRef = useRef<HTMLDivElement | null>(null);
-
-  const debounce = useDebounce();
-  const saveScroll = debounce(() => {
-    setScrollTop(listRef.current?.scrollTop ?? scrollTop);
-  }, 50);
-
   const { userId } = useAuthStore();
 
+  const [page, setPage] = useState<number>(0);
   const [isEndOfPage, setIsEndOfPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -245,19 +235,9 @@ function ItemList() {
   });
 
   useEffect(() => {
-    if (listRef.current) {
-      listRef.current.scrollTo({ top: scrollTop });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (didMount.current) {
-      setPlaceItemList([]);
-      setPage(0);
-      setIsEndOfPage(false);
-    } else {
-      didMount.current = true;
-    }
+    setPlaceItemList([]);
+    setPage(0);
+    setIsEndOfPage(false);
   }, [selectedMarker]);
 
   return (
@@ -276,9 +256,7 @@ function ItemList() {
           {`다른 ${showLostGoods ? "분실물" : "장소"}보기`}
         </div>
       </div>
-      <Card ref={listRef} className={styles.list} onScroll={saveScroll}>
-        {renderList()}
-      </Card>
+      <Card className={styles.list}>{renderList()}</Card>
     </div>
   );
 }
