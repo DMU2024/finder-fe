@@ -20,7 +20,7 @@ import {
   headerHeight,
   headerMobileHeight
 } from "../styles/margin";
-import { sideBarWidth, mobileWidth } from "../styles/size";
+import { sideBarWidth, mobileWidth, tabletWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -32,10 +32,12 @@ const useStyles = makeStyles({
     boxShadow: Depths.depth16,
     position: "fixed",
     zIndex: 2,
+    [`@media (max-width: ${tabletWidth})`]: {
+      justifyContent: "space-between"
+    },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100vw",
       height: headerMobileHeight,
-      justifyContent: "space-between"
     }
   },
   title: {
