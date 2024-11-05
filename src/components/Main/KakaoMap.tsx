@@ -13,7 +13,7 @@ import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight, headerMobileHeight } from "../../styles/margin";
-import { mobileWidth } from "../../styles/size";
+import { mobileWidth, tabletWidth } from "../../styles/size";
 
 const useStyle = makeStyles({
   root: {
@@ -22,6 +22,11 @@ const useStyle = makeStyles({
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
     gap: "15px",
     [`@media (max-width: ${mobileWidth})`]: {
+      height: `calc(100vh - ${headerHeight})`,
+      padding: 0,
+      zIndex: 0
+    },
+    [`@media (max-width: ${tabletWidth})`]: {
       height: `calc(100vh - ${headerMobileHeight})`,
       padding: 0,
       zIndex: 0
@@ -32,7 +37,7 @@ const useStyle = makeStyles({
     alignItems: "flex-end",
     marginTop: "68px",
     marginLeft: "8px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
     }
   },
@@ -52,7 +57,7 @@ const useStyle = makeStyles({
     flexDirection: "column",
     alignItems: "flex-end",
     marginLeft: "auto",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
     }
   },
@@ -67,7 +72,7 @@ const useStyle = makeStyles({
     padding: 0,
     borderRadius: "20px",
     boxShadow: Depths.depth16,
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       borderRadius: 0,
       boxShadow: "none",
       zIndex: 0
@@ -78,13 +83,26 @@ const useStyle = makeStyles({
     top: "14px",
     right: "14px",
     zIndex: 1,
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       top: "8px"
+    }
+  },
+  control02: {
+    display: "none",
+    [`@media (max-width: ${tabletWidth})`]: {
+      display: "block",
+      position: "absolute",
+      top: "45px",
+      right: "14px",
+      zIndex: 1,
     }
   },
   cardMap: {
     width: "100%",
     height: "100%",
+    [`@media (max-width: ${tabletWidth})`]: {
+      height: `calc(100vh - ${headerHeight})`
+    },
     [`@media (max-width: ${mobileWidth})`]: {
       height: `calc(100vh - ${headerMobileHeight})`
     }
@@ -188,7 +206,7 @@ function KakaoMap({ handleBookmark }: Props) {
         <div className={styles.titleInfo}>
           <Switch
             checked={showLostGoods}
-            label={"분실물 보기"}
+            label={showLostGoods ? "습득물 보기" : "분실물 보기"}
             style={{ fontWeight: "bold" }}
             onChange={(_, { checked }) => {
               setMarkerList([]);
@@ -281,6 +299,17 @@ function KakaoMap({ handleBookmark }: Props) {
           }}
         >
           현재 위치로
+        </Button>
+        <Button
+          onClick={() => {
+            setMarkerList([]);
+            setSelectedMarker(undefined);
+            setShowLostGoods(!showLostGoods);
+          }}
+          shape="circular"
+          className={styles.control02}
+        >
+          {showLostGoods ? "습득물 보기" : "분실물 보기"}
         </Button>
       </Card>
     </div>

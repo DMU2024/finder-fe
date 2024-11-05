@@ -7,13 +7,16 @@ import useGlobalStore from "../../stores/global";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
-import { mobileWidth } from "../../styles/size";
+import { mobileWidth, tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    [`@media (max-width: ${tabletWidth})`]: {
+      height: `calc(100vh - ${headerHeight})`,
+    },
     [`@media (max-width: ${mobileWidth})`]: {
       height: "auto",
     },
@@ -21,13 +24,25 @@ const useStyles = makeStyles({
   title: {
     marginLeft: "8px",
     fontSize: "20px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    [`@media (max-width: ${tabletWidth})`]: {
+      display: "none"
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
+      display: "block",
+    },
   },
   subtitle: {
     marginLeft: "8px",
     color: mainColor,
     fontSize: "14px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    [`@media (max-width: ${tabletWidth})`]: {
+      display: "none"
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
+      display: "block"
+    },
   },
   list: {
     height: "100%",
@@ -38,8 +53,12 @@ const useStyles = makeStyles({
         // "::-webkit-scrollbar": {
     //   display: "none"
     // }
+    [`@media (max-width: ${tabletWidth})`]: {
+      marginTop: "0px",
+      borderRadius: "0px",
+    },
     [`@media (max-width: ${mobileWidth})`]: {
-      height: "70vh",
+      height: "75vh",
       borderRadius: 0,
       boxShadow: "none"
     },

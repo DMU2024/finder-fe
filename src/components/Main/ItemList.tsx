@@ -19,36 +19,76 @@ import useAuthStore from "../../stores/auth";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
-import { mobileWidth } from "../../styles/size";
+import { mobileWidth, tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    [`@media (max-width: ${tabletWidth})`]: {
+      height: `calc(100vh - ${headerHeight})`,
+    },
     [`@media (max-width: ${mobileWidth})`]: {
       height: "auto"
     }
   },
   title: {
-    display: "flex"
+    display: "flex",
+    [`@media (max-width: ${tabletWidth})`]: {
+      display: "none"
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
+      display: "block",
+    },
   },
   titleText: {
     marginLeft: "8px",
     fontSize: "20px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    [`@media (max-width: ${tabletWidth})`]: {
+      display: "none"
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
+      display: "block"
+    },
   },
   titleBack: {
+    display: "inline-block",
     marginLeft: "auto",
     fontSize: "14px",
     fontWeight: "bold",
-    cursor: "pointer"
+    color: mainColor,
+    cursor: "pointer",
+    padding: "8px 16px",
+    backgroundColor: tokens.colorNeutralBackground1,
+    border: "none",
+    borderRadius: "15px",
+    textAlign: "center",
+    transition: "background-color 0.3s",
+    boxShadow: tokens.shadow2,
+    [`@media (max-width: ${tabletWidth})`]: {
+      display: "none",
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
+      display: "block",
+      marginTop: "10px"
+    },
+    '&:hover': {
+      backgroundColor: tokens.colorNeutralBackground1Hover,
+    },
   },
   subtitle: {
     marginLeft: "8px",
     color: mainColor,
     fontSize: "14px",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    [`@media (max-width: ${tabletWidth})`]: {
+      display: "none"
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
+      display: "block"
+    },
   },
   list: {
     height: "100%",
@@ -56,14 +96,18 @@ const useStyles = makeStyles({
     borderRadius: "20px",
     boxShadow: Depths.depth16,
     overflow: "auto",
-    // "::-webkit-scrollbar": {
+        // "::-webkit-scrollbar": {
     //   display: "none"
     // }
+    [`@media (max-width: ${tabletWidth})`]: {
+      marginTop: "0px",
+      borderRadius: "0px",
+    },
     [`@media (max-width: ${mobileWidth})`]: {
-      height: "70vh", // 모바일에서 높이 축소
-      borderRadius: 0, // 모서리 둥글기 제거
+      height: "60vh",
+      borderRadius: 0,
       boxShadow: "none"
-    }
+    },
   },
   empty: {
     flex: 1,
@@ -74,9 +118,16 @@ const useStyles = makeStyles({
     gap: "16px"
   },
   contentImage: {
-    width: "200px",
-    height: "200px",
-    backgroundColor: tokens.colorNeutralBackground3
+    width: "150px",
+    height: "150px",
+    backgroundColor: tokens.colorNeutralBackground3,
+    marginTop: "120px",
+    [`@media (max-width: ${tabletWidth})`]: {
+      marginTop: "160px",
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
+      marginTop: "auto",
+    },
   },
   contentTexts: {
     marginTop: "32px",
@@ -87,17 +138,18 @@ const useStyles = makeStyles({
     alignItems: "center"
   },
   contentMain: {
-    fontSize: "48px",
-    lineHeight: "48px",
+    fontSize: "32px",
+    lineHeight: "36px",
     color: tokens.colorNeutralForeground2
   },
   contentSub: {
-    fontSize: "24px",
-    lineHeight: "24px",
+    fontSize: "20px",
+    lineHeight: "20px",
     color: mainColor
   },
   contentInfo: {
-    fontSize: "20px",
+    fontSize: "16px",
+    lineHeight: "10px",
     color: tokens.colorNeutralStroke1
   },
   spinner: {
@@ -140,7 +192,7 @@ function ItemList() {
           <Image
             className={styles.contentImage}
             fit="contain"
-            src="./logo192.png"
+            src="./img105.png"
           />
           <div className={styles.contentTexts}>
             <div className={styles.contentMain}>{selectedMarker?.name}</div>
@@ -256,7 +308,7 @@ function ItemList() {
           {`다른 ${showLostGoods ? "분실물" : "장소"}보기`}
         </div>
       </div>
-      <Card className={styles.list}>{renderList()}</Card>
+      <Card className={`${styles.list}`}>{renderList()}</Card>
     </div>
   );
 }

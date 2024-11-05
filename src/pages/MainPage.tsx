@@ -17,7 +17,7 @@ import useAuthStore from "../stores/auth";
 import useGlobalStore from "../stores/global";
 import useMainStore from "../stores/main";
 import usePositionStore from "../stores/position";
-import { mobileWidth } from "../styles/size";
+import { mobileWidth, tabletWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -30,18 +30,29 @@ const useStyles = makeStyles({
   content: {
     display: "flex",
     gap: "32px",
+    [`@media (max-width: ${tabletWidth})`]: {
+      gap: "0px",
+    },
     [`@media (max-width: ${mobileWidth})`]: {
       display: "block"
     }
   },
   left: {
-    width: "40%",
+    width: "35%",
+    [`@media (max-width: ${tabletWidth})`]: {
+      width: "33%",
+    },
     [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
   right: {
-    width: "60%",
+    width: "65%",
+    [`@media (max-width: ${tabletWidth})`]: {
+      width: "67%",
+      height: "100vh",
+      position: "relative"
+    },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
       height: "100vh",

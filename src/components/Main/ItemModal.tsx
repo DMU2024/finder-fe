@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     bottom: 0,
     left: 0,
     width: "100%",
-    height: "80vh",
+    height: "82vh",
     backgroundColor: tokens.colorNeutralBackground1,
     zIndex: 1,
     overflowY: "auto",
