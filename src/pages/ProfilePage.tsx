@@ -66,13 +66,17 @@ const useStyles = makeStyles({
 
 function ProfilePage() {
   const styles = useStyles();
+
   const [isEditMode, setIsEditMode] = useState(false);
   const [isLostGoodsMode, setIsLostGoodsMode] = useState(false);
   const [isMobileMode, setmobileMode] = useState(false);
+
   const [user, setUser] = useState<User>();
   const [isMessageAgreed, setIsMessageAgreed] = useState(false);
+
   const { setBookmarkMap } = useGlobalStore();
   const { userId } = useAuthStore();
+
   const numericMobileWidth = parseInt(mobileWidth, 10);
 
   useEffect(() => {
@@ -125,7 +129,10 @@ function ProfilePage() {
       return (
         <div className={styles.mobileContent}>
           {isEditMode ? (
-            <ProfileDetailEdit isMessageAgreed={isMessageAgreed} />
+            <ProfileDetailEdit
+              isMessageAgreed={isMessageAgreed}
+              notifyOnlyBookmarked={user?.notifyOnlyBookmarked ?? false}
+            />
           ) : (
             <MobileProfilePage />
           )}
@@ -135,7 +142,10 @@ function ProfilePage() {
       if (isEditMode) {
         return (
           <div className={styles.content}>
-            <ProfileDetailEdit isMessageAgreed={isMessageAgreed} />
+            <ProfileDetailEdit
+              isMessageAgreed={isMessageAgreed}
+              notifyOnlyBookmarked={user?.notifyOnlyBookmarked ?? false}
+            />
           </div>
         );
       } else if (isLostGoodsMode) {

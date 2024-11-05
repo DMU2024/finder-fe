@@ -6,6 +6,7 @@ interface User {
   username: string;
   profileImage: string;
   thumbnailImage: string;
+  notifyOnlyBookmarked: boolean;
 }
 
 interface KakaoScopeInfo {
@@ -24,6 +25,14 @@ interface KakaoScope {
 
 const getUser = async (userId: number) => {
   const { data } = await Instance.get<User>(`/api/users/${userId}`);
+
+  return data;
+};
+
+const postUserSetting = async (userId: number, notifyOnlyBookmarked: boolean) => {
+  const { data } = await Instance.post<User>(`/api/users/${userId}`, {
+    notifyOnlyBookmarked: notifyOnlyBookmarked
+  });
 
   return data;
 };
@@ -85,6 +94,7 @@ const postUnlink = async (userId: number) => {
 export type { User, KakaoScopeInfo, KakaoScope };
 export {
   getUser,
+  postUserSetting,
   getUserLostGoods,
   getKakaoScopes,
   postRevokeKakaoScopes,
