@@ -11,14 +11,20 @@ import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
 import useWriteStore from "../../stores/write";
 import { mainColor, skeletonColor } from "../../styles/color";
-import { mobileWidth } from "../../styles/size";
+import { mobileWidth, tabletWidth } from "../../styles/size";
 import Category from "../Category/CategoryList";
 
 const useStyles = makeStyles({
   root: {
     flex: 1,
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    [`@media (max-width: ${tabletWidth})`]: {
+      marginTop: "100px"
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
+      marginTop: "auto"
+    }
   },
   title: {
     color: mainColor,

@@ -1,7 +1,7 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 
 import LostList from "../components/Write/LostList";
-import { mobileWidth } from "../styles/size";
+import { mobileWidth, tabletWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -16,6 +16,9 @@ const useStyles = makeStyles({
   content: {
     display: "flex",
     width: "50vw",
+    [`@media (max-width: ${tabletWidth})`]: {
+      width: "80vw"
+    },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "90vw",
       marginTop: "5vh",

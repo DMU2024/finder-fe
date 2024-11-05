@@ -6,11 +6,12 @@ import Modal from "react-modal";
 import { categories, CategoryData, Subcategory } from "./CategoryData";
 import useWriteStore from "../../stores/write";
 import { mainColor, skeletonColor } from "../../styles/color";
+import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   title: {
     marginLeft: "40px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       marginLeft: "20px",
       fontSize: "24px"
     },
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
     borderRadius: "20px",
     transition: "width 0.3s",
     overflowY: "auto",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       width: "80vw",
       maxHeight: "75vh",
       top: "50%",
@@ -37,7 +38,7 @@ const useStyles = makeStyles({
   },
   modalContentSmall: {
     width: "80vw",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       transition: "width 0.3s",
     }
   },
@@ -54,7 +55,7 @@ const useStyles = makeStyles({
     display: "grid",
     gridTemplateColumns: "repeat(5, 1fr)",
     gridGap: "40px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       gridTemplateColumns: "repeat(4, 1fr)",
       gridGap: "10px",
       padding: "0px 10px 10px 10px",
@@ -79,7 +80,7 @@ const useStyles = makeStyles({
     fontSize: "46px",
     marginBottom: "16px",
     color: mainColor,
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "32px",
       marginBottom: "10px",
     },
@@ -100,7 +101,7 @@ const useStyles = makeStyles({
     outline: "none",
     transition: "background-color 0.3s, color 0.3s",
     margin: "40px 10px 0 10px",
-    "@media (max-width: 390px)": {
+    [`@media (max-width: ${mobileWidth})`]: {
       padding: "8px 16px",
       fontSize: "12px",
       marginTop: "20px",
