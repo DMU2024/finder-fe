@@ -12,7 +12,7 @@ import {
   headerMobileHeight,
   contentMobileMargin
 } from "../styles/margin";
-import { mobileWidth } from "../styles/size";
+import { mobileWidth, tabletWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -21,6 +21,11 @@ const useStyles = makeStyles({
     flexDirection: "column",
     gap: "16px",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    [`@media (max-width: ${tabletWidth})`]: {
+      position: "fixed",
+      bottom: 0,
+      width: "100%",
+    },
     [`@media (max-width: ${mobileWidth})`]: {
       height: `calc(100vh - ${headerMobileHeight} - ${contentMobileMargin})`
     }

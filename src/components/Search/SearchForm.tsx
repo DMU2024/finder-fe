@@ -9,13 +9,13 @@ import { useState } from "react";
 import SearchFilter from "./SearchFilter";
 import useSearchStore from "../../stores/search";
 import { mainColor } from "../../styles/color";
-import { mobileWidth } from "../../styles/size";
+import { mobileWidth, tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    gap: "12px"
+    gap: "12px",
   },
   searchHeader: {
     display: "flex",
@@ -41,6 +41,7 @@ const useStyles = makeStyles({
     borderRadius: "8px",
     padding: "8px",
     outline: "none",
+    maxWidth: "83vw",
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
       minHeight: "32px"
@@ -51,7 +52,11 @@ const useStyles = makeStyles({
     color: mainColor,
     cursor: "pointer",
     marginRight: "10px",
+    [`@media (max-width: ${tabletWidth})`]: {
+      marginLeft: "18px"
+    },
     [`@media (max-width: ${mobileWidth})`]: {
+      marginLeft: "auto",
       fontSize: "1.5em"
     }
   },
@@ -73,7 +78,7 @@ function SearchForm() {
     <div className={styles.root}>
       <div className={styles.searchHeader}>
         <div>
-          <SearchRegular style={{ color: mainColor, fontSize: "2em" }} />
+          <SearchRegular style={{ color: mainColor, fontSize: "2em", marginLeft: "14px" }} />
           <span className={styles.title}>검색</span>
         </div>
       </div>

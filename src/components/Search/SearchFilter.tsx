@@ -5,7 +5,7 @@ import { DismissRegular } from "@fluentui/react-icons";
 import SearchFilterDialog from "./SearchFilterDialog";
 import { localizedStrings } from "./SearchFilterOption";
 import useSearchStore from "../../stores/search";
-import { mobileWidth } from "../../styles/size";
+import { mobileWidth, tabletWidth } from "../../styles/size";
 import { formatDate } from "../../utils/format";
 
 const useStyles = makeStyles({
@@ -13,8 +13,13 @@ const useStyles = makeStyles({
     flex: 1,
     borderRadius: "16px",
     padding: "24px",
+    [`@media (max-width: ${tabletWidth})`]: {
+      width: "88%",
+      padding: "16px",
+      marginLeft: "18px"
+    },
     [`@media (max-width: ${mobileWidth})`]: {
-      width: "90vw",
+      width: "90%",
       margin: "0 20px 0 20px",
       padding: "16px"
     }

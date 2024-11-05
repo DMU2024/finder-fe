@@ -14,7 +14,7 @@ import SearchListItem from "./SearchListItem";
 import useDebounce from "../../hooks/useDebounce";
 import useIntersect from "../../hooks/useIntersect";
 import useSearchStore from "../../stores/search";
-import { mobileWidth } from "../../styles/size";
+import { tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -23,23 +23,23 @@ const useStyles = makeStyles({
   tableHeader: {
     backgroundColor: tokens.colorNeutralBackground1,
     fontSize: "12px !important",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
     }
   },
   tableBody: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "block"
     }
   },
   tableRow: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "block",
       marginBottom: "16px"
     }
   },
   tableCell: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "block",
       padding: "8px 0",
       textAlign: "left",

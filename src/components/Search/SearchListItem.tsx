@@ -9,11 +9,11 @@ import { useNavigate } from "react-router-dom";
 
 import { LostFound } from "../../apis/lostfound";
 import { mainColor, skeletonColor, secondaryColor } from "../../styles/color";
-import { mobileWidth } from "../../styles/size";
+import { mobileWidth, tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   tableRow: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       height: "auto",
       display: "flex",
       flexDirection: "row",
@@ -21,13 +21,13 @@ const useStyles = makeStyles({
     }
   },
   tableCell: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
     }
   },
   tableCell02: {
     display: "none",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     }
   },
   imageContainer: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "flex",
       width: "12vh",
       height: "12vh",
@@ -56,28 +56,28 @@ const useStyles = makeStyles({
     width: "14vh",
     height: "14vh",
     marginRight: "16px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       width: "11vh",
       height: "11vh",
       marginRight: "0"
     }
   },
   title: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       color: skeletonColor,
       fontSize: "16px",
       fontWeight: "bold"
     }
   },
   categoryTitle: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       color: mainColor,
       fontSize: "12px",
       fontWeight: "bold"
     }
   },
   subTitle: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       color: secondaryColor,
       fontSize: "12px",
       fontWeight: "bold"
