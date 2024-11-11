@@ -118,10 +118,11 @@ const useStyles = makeStyles({
     gap: "16px"
   },
   contentImage: {
-    width: "150px",
-    height: "150px",
+    width: "170px",
+    height: "170px",
+    marginTop: "40px",
     backgroundColor: tokens.colorNeutralBackground3,
-    marginTop: "120px",
+    borderRadius: "30px",
     [`@media (max-width: ${tabletWidth})`]: {
       marginTop: "160px",
     },
@@ -135,22 +136,30 @@ const useStyles = makeStyles({
     flexDirection: "column",
     gap: "24px",
     fontWeight: "bold",
-    alignItems: "center"
+    alignItems: "flex-start"
   },
   contentMain: {
-    fontSize: "32px",
+    fontSize: "24px",
     lineHeight: "36px",
     color: tokens.colorNeutralForeground2
   },
   contentSub: {
-    fontSize: "20px",
-    lineHeight: "20px",
+    fontSize: "16px",
+    lineHeight: "10px",
     color: mainColor
   },
   contentInfo: {
     fontSize: "16px",
     lineHeight: "10px",
     color: tokens.colorNeutralStroke1
+  },
+  contentInfo02: {
+    width: "25vw",
+    height: "160px",
+    backgroundColor: tokens.colorNeutralBackground1Hover,
+    borderRadius: "30px 30px 30px 30px",
+    padding: "24px",
+    color: tokens.colorNeutralForeground3Hover
   },
   spinner: {
     margin: "16px",
@@ -199,19 +208,19 @@ function ItemList() {
             <div className={styles.contentSub}>
               {`분실일자: ${selectedMarker?.date}`}
             </div>
-            <div
-              className={styles.contentInfo}
-            >{`물품분류: ${selectedMarker?.category}`}</div>
-            <div
-              className={styles.contentInfo}
-            >{`분실장소: ${selectedMarker?.address}`}</div>
-            <div
-              className={styles.contentInfo}
-            >{`내용: ${selectedMarker?.info}`}</div>
+            <div className={styles.contentInfo}>
+                {`물품분류: ${selectedMarker?.category}`}
+            </div>
+            <div className={styles.contentInfo}>
+              {`분실장소: ${selectedMarker?.address}`}
+            </div>
+            <div className={styles.contentInfo02}>
+              {`내용: ${selectedMarker?.info}`}
+            </div>
           </div>
           {userId !== selectedMarker?.userId && (
             <Button
-              style={{ marginTop: "auto" }}
+              style={{ marginTop: "auto", marginBottom: "10px" }}
               onClick={() => {
                 navigate("/chat", {
                   state: {
