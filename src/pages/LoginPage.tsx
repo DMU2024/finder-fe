@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     }
   },
   container: {
-    width: "60vw",
+    width: "82vw",
     height: "80vh",
     boxShadow: "0 0px 12px rgba(0, 0, 0, 0.1)",
     borderRadius: "30px 30px 0px 0px",
@@ -97,6 +97,13 @@ const useStyles = makeStyles({
     [`@media (max-width: ${mobileWidth})`]: {
       width: "70%"
     }
+  },
+  fullImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    borderRadius: "30px 0px 0px 0px",
+    opacity: "40%"
   }
 });
 
@@ -133,7 +140,9 @@ function LoginPage() {
   return (
     <div className={styles.root}>
       <div className={styles.container}>
-        <div className={styles.leftContainer}></div>
+        <div className={styles.leftContainer}>
+          <img className={styles.fullImage} src="/loginStyleImg.png" />
+        </div>
         <div className={styles.rightContainer}>
           <div className={styles.logo}> Finder </div>
           <div className={styles.loginText}> Login </div>
