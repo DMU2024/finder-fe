@@ -26,7 +26,7 @@ const useStyle = makeStyles({
     gap: "8px"
   },
   itemName: {
-    fontSize: "20px",
+    fontSize: "18px",
     fontWeight: "bold",
     color: tokens.colorNeutralForeground1,
     [`@media (max-width: ${mobileWidth})`]: {
@@ -34,12 +34,20 @@ const useStyle = makeStyles({
     }
   },
   itemDescription: {
-    fontSize: "14px",
+    fontSize: "12px",
+    fontWeight: "bold",
+    color: mainColor,
+    [`@media (max-width: ${mobileWidth})`]: {
+      fontSize: "11px"
+    },
+  },
+  itemDescription02: {
+    fontSize: "12px",
     fontWeight: "bold",
     color: tokens.colorNeutralForeground4,
     [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "11px"
-    }
+    },
   },
   itemDetail: {
     marginLeft: "auto",
@@ -107,12 +115,12 @@ function Item({
           <Image
             fit="contain"
             src={img ? img : "/img105.png"}
-            style={{ width: "112px", height: "112px" }}
+            style={{ width: "112px", height: "112px", marginTop: "5px", borderRadius: "30px", backgroundColor: tokens.colorNeutralBackground1Hover }}
           />
           <div className={styles.itemBox}>
-            <div className={styles.itemName}>{name}</div>
-            <div className={styles.itemDescription}>{address}</div>
             <div className={styles.itemDescription}>{category}</div>
+            <div className={styles.itemName}>{name}</div>
+            <div className={styles.itemDescription02}>{address}</div>
           </div>
           {renderBookmark()}
         </div>
