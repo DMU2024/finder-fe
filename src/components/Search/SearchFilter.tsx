@@ -122,7 +122,10 @@ function SearchFilter() {
           contentAfter={
             <DismissRegular
               className={styles.filterDismiss}
-              onClick={() => setQuery({ ...query, startYmd: undefined })}
+              onClick={(e) => {
+                e.stopPropagation();
+                setQuery({ ...query, startYmd: undefined });
+              }}
             />
           }
           formatDate={formatDate}
@@ -148,7 +151,10 @@ function SearchFilter() {
           contentAfter={
             <DismissRegular
               className={styles.filterDismiss}
-              onClick={() => setQuery({ ...query, endYmd: undefined })}
+              onClick={(e) => {
+                e.stopPropagation();
+                setQuery({ ...query, endYmd: undefined });
+              }}
             />
           }
           formatDate={formatDate}
