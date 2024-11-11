@@ -33,7 +33,7 @@ import { sideBarWidth, mobileWidth, tabletWidth } from "./styles/size";
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    minHeight: "100vh",
+    minHeight: "100dvh",
     backgroundColor: tokens.colorNeutralBackground2,
     overflowX: "hidden"
   },
@@ -43,11 +43,11 @@ const useStyles = makeStyles({
     marginLeft: sideBarWidth,
     [`@media (max-width: ${tabletWidth})`]: {
       height: `calc(100vh - ${headerHeight})`,
+      width: "100%",
+      marginLeft: 0,
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      marginLeft: 0,
       height: `calc(100vh - ${headerMobileHeight})`,
-      width: "100%"
     }
   },
   content: {
