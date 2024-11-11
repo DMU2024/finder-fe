@@ -13,21 +13,12 @@ import { mobileWidth, tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   tableRow: {
-    [`@media (max-width: ${tabletWidth})`]: {
       height: "auto",
       display: "flex",
       flexDirection: "row",
       alignItems: "center"
-    }
   },
   tableCell: {
-    [`@media (max-width: ${tabletWidth})`]: {
-      display: "none"
-    }
-  },
-  tableCell02: {
-    display: "none",
-    [`@media (max-width: ${tabletWidth})`]: {
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
@@ -40,17 +31,14 @@ const useStyles = makeStyles({
         display: "block",
         marginBottom: "4px"
       }
-    }
   },
   imageContainer: {
-    [`@media (max-width: ${tabletWidth})`]: {
       display: "flex",
       width: "12vh",
       height: "12vh",
       alignItems: "center",
       justifyContent: "center",
-      padding: "12px 12px 12px 24px"
-    }
+      padding: "24px 24px 24px 24px"
   },
   image: {
     width: "14vh",
@@ -63,25 +51,19 @@ const useStyles = makeStyles({
     }
   },
   title: {
-    [`@media (max-width: ${tabletWidth})`]: {
       color: skeletonColor,
       fontSize: "16px",
       fontWeight: "bold"
-    }
   },
   categoryTitle: {
-    [`@media (max-width: ${tabletWidth})`]: {
       color: mainColor,
       fontSize: "12px",
       fontWeight: "bold"
-    }
   },
   subTitle: {
-    [`@media (max-width: ${tabletWidth})`]: {
       color: secondaryColor,
       fontSize: "12px",
       fontWeight: "bold"
-    }
   }
 });
 
@@ -112,27 +94,6 @@ function SearchListItem({ item }: Props) {
         />
       </TableCell>
       <TableCell className={styles.tableCell}>
-        <TableCellLayout
-          media={<span className={styles.categoryTitle}>{item.fdPrdtNm}</span>}
-        />
-      </TableCell>
-      <TableCell className={styles.tableCell}>
-        <TableCellLayout
-          media={<span className={styles.title}>{item.depPlace}</span>}
-        />
-      </TableCell>
-      <TableCell className={styles.tableCell}>
-        <TableCellLayout
-          media={<span className={styles.subTitle}>{item.fdYmd}</span>}
-        />
-      </TableCell>
-      <TableCell className={styles.tableCell}>
-        <TableCellLayout
-          media={<span className={styles.subTitle}>{item.prdtClNm}</span>}
-        />
-      </TableCell>
-
-      <TableCell className={styles.tableCell02}>
         <TableCellLayout
           media={<span className={styles.categoryTitle}>{item.prdtClNm}</span>}
         />

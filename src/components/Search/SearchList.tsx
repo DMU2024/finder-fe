@@ -93,15 +93,6 @@ function SearchList({ isEndOfPage, isLoading, getItems }: Props) {
   return (
     <div ref={rootRef} className={styles.root} onScroll={saveScroll}>
       <Table>
-        <TableHeader className={styles.tableHeader}>
-          <TableRow>
-            <TableHeaderCell>사진</TableHeaderCell>
-            <TableHeaderCell>이름</TableHeaderCell>
-            <TableHeaderCell>보관 장소</TableHeaderCell>
-            <TableHeaderCell>보관 날짜</TableHeaderCell>
-            <TableHeaderCell>분류</TableHeaderCell>
-          </TableRow>
-        </TableHeader>
         <TableBody className={styles.tableBody}>
           {items.map((item, idx) => (
             <SearchListItem key={idx} item={item} />
