@@ -30,6 +30,8 @@ interface LostFoundDetail {
   prdtClNm: string;
   tel: string;
   uniq: string;
+  lat: number;
+  lng: number;
 }
 
 interface LostFoundQuery {
@@ -46,10 +48,7 @@ const getLostFoundDetail = async (id: string) => {
   return data;
 };
 
-const searchLostFound = async (
-  query: LostFoundQuery | undefined,
-  page: number
-) => {
+const searchLostFound = async (query: LostFoundQuery | undefined, page: number) => {
   const startYmdFmt = formatDate(query?.startYmd);
   const endYmdFmt = formatDate(query?.endYmd);
 

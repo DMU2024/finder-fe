@@ -1,16 +1,16 @@
 import { Depths } from "@fluentui/react";
+import { Card, Image, SkeletonItem, makeStyles, tokens } from "@fluentui/react-components";
 import {
-  Card,
-  Image,
-  SkeletonItem,
-  makeStyles,
-  tokens
-} from "@fluentui/react-components";
-import { ArrowLeftRegular, ChatArrowBackRegular } from "@fluentui/react-icons";
+  ArchiveArrowBackRegular,
+  ArrowLeftRegular,
+  ChatArrowBackRegular
+} from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { LostFoundDetail, getLostFoundDetail } from "../apis/lostfound";
+import useMainStore from "../stores/main";
+import usePositionStore from "../stores/position";
 import { mainColor } from "../styles/color";
 import { headerHeight } from "../styles/margin";
 import { sideBarWidth, mobileWidth, tabletWidth } from "../styles/size";
@@ -83,7 +83,7 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground3,
     [`@media (max-width: ${tabletWidth})`]: {
       width: "300px",
-      height: "300px",
+      height: "300px"
     },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
@@ -206,10 +206,26 @@ function DetailPage() {
   const styles = useStyles();
 
   const navigate = useNavigate();
+  const { setSelectedMarker, setShowLostGoods } = useMainStore();
+  const { setLatitude, setLongitude } = usePositionStore();
   const { id } = useParams();
 
   const [item, setItem] = useState<LostFoundDetail>();
   const [isLoading, setIsLoading] = useState(true);
+
+  const handlePlaceClick = () => {
+    if (item) {
+      setSelectedMarker(undefined);
+      setShowLostGoods(false);
+      setLatitude(item.lat);
+      setLongitude(item.lng);
+      navigate("/", {
+        state: {
+          target: item.depPlace
+        }
+      });
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -243,22 +259,13 @@ function DetailPage() {
           <div className={styles.contentTopMain}>{item?.fdPrdtNm}</div>
           <div className={styles.contentTopSub}>
             {`보관장소: ${item?.depPlace}`}
+            <ArchiveArrowBackRegular style={{ cursor: "pointer" }} onClick={handlePlaceClick} />
           </div>
-          <div className={styles.contentTopSub}>
-            {`습득일자: ${item?.fdYmd}`}
-          </div>
-          <div
-            className={styles.contentTopInfo}
-          >{`관리번호: ${item?.atcId}`}</div>
-          <div
-            className={styles.contentTopInfo}
-          >{`물품분류: ${item?.prdtClNm}`}</div>
-          <div
-            className={styles.contentTopInfo}
-          >{`습득장소: ${item?.fdPlace}`}</div>
-          <div className={styles.contentTopInfo}>
-            {`상태: ${item?.csteSteNm}`}
-          </div>
+          <div className={styles.contentTopSub}>{`습득일자: ${item?.fdYmd}`}</div>
+          <div className={styles.contentTopInfo}>{`관리번호: ${item?.atcId}`}</div>
+          <div className={styles.contentTopInfo}>{`물품분류: ${item?.prdtClNm}`}</div>
+          <div className={styles.contentTopInfo}>{`습득장소: ${item?.fdPlace}`}</div>
+          <div className={styles.contentTopInfo}>{`상태: ${item?.csteSteNm}`}</div>
         </div>
       );
     }
@@ -273,11 +280,7 @@ function DetailPage() {
       <div className={styles.root}>
         <Card className={styles.content}>
           <div className={styles.contentTop}>
-            <Image
-              className={styles.contentTopImage}
-              fit="contain"
-              src={item?.fdFilePathImg}
-            />
+            <Image className={styles.contentTopImage} fit="contain" src={item?.fdFilePathImg} />
             {renderContent()}
             <a className={styles.contentTopChat} href={`tel:${item?.tel}`}>
               <span>연락하기</span>
@@ -285,9 +288,7 @@ function DetailPage() {
             </a>
           </div>
           <div className={styles.contentBottom}>
-            <div className={styles.contentBottomDetail}>
-              {item?.uniq?.split("내용\r\n\r\n")}
-            </div>
+            <div className={styles.contentBottomDetail}>{item?.uniq?.split("내용\r\n\r\n")}</div>
           </div>
         </Card>
       </div>
