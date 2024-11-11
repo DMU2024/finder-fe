@@ -42,7 +42,9 @@ const useStyles = makeStyles({
     },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100vw",
-      height: `calc( 100vh + 30vh )`
+      height: `calc( 100vh + 30vh )`,
+      position: "absolute",
+      bottom: "auto"
     }
   },
   content: {
@@ -70,7 +72,8 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     [`@media (max-width: ${mobileWidth})`]: {
-      flexDirection: "column"
+      flexDirection: "column",
+      height: "600px"
     }
   },
   contentTopImage: {
