@@ -20,7 +20,7 @@ import {
   headerHeight,
   headerMobileHeight
 } from "../styles/margin";
-import { sideBarWidth, mobileWidth, tabletWidth } from "../styles/size";
+import { sideBarWidth, mobileWidth, tabletWidth, tabletWidth02 } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -33,12 +33,12 @@ const useStyles = makeStyles({
     position: "fixed",
     zIndex: 2,
     [`@media (max-width: ${tabletWidth})`]: {
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      width: "100vw"
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      width: "100vw",
-      height: headerMobileHeight,
-    }
+      height: headerMobileHeight
+    },
   },
   title: {
     marginLeft: contentMargin,
@@ -53,7 +53,7 @@ const useStyles = makeStyles({
   titleIcon: {
     color: backgroundColor,
     fontSize: "20px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
     }
   },
@@ -61,7 +61,7 @@ const useStyles = makeStyles({
     color: mainColor,
     fontSize: "32px",
     fontWeight: "bold",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       fontSize: "20px"
     }
   },
@@ -71,7 +71,7 @@ const useStyles = makeStyles({
     marginLeft: "auto",
     marginRight: contentMargin,
     gap: "32px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
     }
   },
@@ -88,7 +88,7 @@ const useStyles = makeStyles({
     fontSize: "28px",
     marginTop: "8px",
     marginRight: `calc(${contentMobileMargin} - 16px)`,
-    "@media (min-width: 481px)": {
+    [`@media (min-width: ${tabletWidth02})`]: {
       display: "none"
     }
   }

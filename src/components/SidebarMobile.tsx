@@ -12,7 +12,7 @@ import { getUser, postLogout, User } from "../apis/user";
 import useAuthStore from "../stores/auth";
 import useOptionStore from "../stores/option";
 import { mainColor } from "../styles/color";
-import { mobileWidth02 } from "../styles/size";
+import { mobileWidth02, tabletWidth02 } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -27,19 +27,19 @@ const useStyles = makeStyles({
     boxShadow: "0 0 10px rgba(0,0,0,0.2)",
     transition: "transform 0.3s ease-in-out",
     zIndex: 2,
-    [`@media (min-width: ${mobileWidth02})`]: {
+    [`@media (min-width: ${tabletWidth02})`]: {
       display: "none"
     }
   },
   open: {
     transform: "translateX(0)",
-    [`@media (min-width: ${mobileWidth02})`]: {
+    [`@media (min-width: ${tabletWidth02})`]: {
       display: "none"
     }
   },
   closed: {
     transform: "translateX(100%)",
-    [`@media (min-width: ${mobileWidth02})`]: {
+    [`@media (min-width: ${tabletWidth02})`]: {
       display: "none"
     }
   },
@@ -51,7 +51,7 @@ const useStyles = makeStyles({
     height: "100vh",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 0,
-    [`@media (min-width: ${mobileWidth02})`]: {
+    [`@media (min-width: ${tabletWidth02})`]: {
       display: "none"
     }
   },
