@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import useMainStore from "../../stores/main";
 import usePositionStore from "../../stores/position";
+import useWriteStore from "../../stores/write";
 import { mainColor } from "../../styles/color";
 import { mobileWidth } from "../../styles/size";
 
@@ -38,6 +39,8 @@ function KakaoMapPopup({ handleBookmark, isBookmarked }: Props) {
 
   const { clickedInfo } = usePositionStore();
   const { selectedMarker, showLostGoods } = useMainStore();
+  const { setLostPlace, setLostLat, setLostLng } = useWriteStore();
+
   const info = selectedMarker || clickedInfo;
 
   const renderBookmark = () => {
@@ -64,10 +67,7 @@ function KakaoMapPopup({ handleBookmark, isBookmarked }: Props) {
   return (
     <>
       {info && (
-        <CustomOverlayMap
-          position={{ lat: info.lat, lng: info.lng }}
-          yAnchor={-0.2}
-        >
+        <CustomOverlayMap position={{ lat: info.lat, lng: info.lng }} yAnchor={-0.2}>
           <div
             className={styles.popup}
             onMouseDown={(event) => {
@@ -90,9 +90,7 @@ function KakaoMapPopup({ handleBookmark, isBookmarked }: Props) {
                 <div>{info.name ? info.name : info.address}</div>
                 {renderBookmark()}
               </div>
-              {info.name && (
-                <div style={{ color: mainColor }}>{info.address}</div>
-              )}
+              {info.name && <div style={{ color: mainColor }}>{info.address}</div>}
             </Card>
             {!("_id" in info) && (
               <Card
@@ -103,6 +101,9 @@ function KakaoMapPopup({ handleBookmark, isBookmarked }: Props) {
                   cursor: "pointer"
                 }}
                 onClick={() => {
+                  setLostPlace(info.name ? info.name : info.address);
+                  setLostLat(info.lat);
+                  setLostLng(info.lng);
                   navigate("/write");
                 }}
               >

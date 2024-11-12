@@ -161,7 +161,7 @@ function KakaoMap({ handleBookmark }: Props) {
 
         if (clickedInfo) {
           const { lat, lng } = clickedInfo;
-          if (!bounds.contain(new kakao.maps.LatLng(lat, lng))) {
+          if (!bounds.contain(new kakao.maps.LatLng(lat, lng)) || !showLostGoods) {
             setClickedInfo(undefined);
           }
         }
@@ -206,7 +206,7 @@ function KakaoMap({ handleBookmark }: Props) {
         <div className={styles.titleInfo}>
           <Switch
             checked={showLostGoods}
-            label={showLostGoods ? "습득물 보기" : "분실물 보기"}
+            label={showLostGoods ? "분실물 보기" : "습득물 보기"}
             style={{ fontWeight: "bold" }}
             onChange={(_, { checked }) => {
               setMarkerList([]);

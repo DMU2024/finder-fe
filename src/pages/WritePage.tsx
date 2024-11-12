@@ -1,6 +1,6 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 
-import LostList from "../components/Write/LostList";
+import WriteLostGoodsForm from "../components/Write/WriteLostGoodsForm";
 import { mobileWidth, tabletWidth } from "../styles/size";
 
 const useStyles = makeStyles({
@@ -10,8 +10,8 @@ const useStyles = makeStyles({
     alignItems: "center",
     width: "100%",
     [`@media (max-width: ${mobileWidth})`]: {
-      height: `calc( 100vh + 10vh )`,
-    },
+      height: `calc( 100vh + 10vh )`
+    }
   },
   content: {
     display: "flex",
@@ -21,8 +21,8 @@ const useStyles = makeStyles({
     },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "90vw",
-      marginTop: "5vh",
-    },
+      marginTop: "5vh"
+    }
   },
   submitButtonContainer: {
     marginTop: "20px",
@@ -54,7 +54,7 @@ function WritePage() {
   return (
     <div className={styles.root}>
       <div className={styles.content}>
-        <LostList />
+        <WriteLostGoodsForm />
       </div>
     </div>
   );

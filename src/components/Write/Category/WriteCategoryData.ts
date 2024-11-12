@@ -16,11 +16,7 @@ export interface CategoryData {
 export const categories: CategoryData[] = [
   {
     name: "가방",
-    subcategories: [
-      { name: "여성용가방" },
-      { name: "남성용가방" },
-      { name: "기타가방" }
-    ],
+    subcategories: [{ name: "여성용가방" }, { name: "남성용가방" }, { name: "기타가방" }],
     icon: { iconName: "Toolbox" }
   },
   {
@@ -78,12 +74,7 @@ export const categories: CategoryData[] = [
   },
   {
     name: "유가증권",
-    subcategories: [
-      { name: "어음" },
-      { name: "상품권" },
-      { name: "채권" },
-      { name: "기타" }
-    ],
+    subcategories: [{ name: "어음" }, { name: "상품권" }, { name: "채권" }, { name: "기타" }],
     icon: { iconName: "Financial" }
   },
   {
@@ -122,21 +113,12 @@ export const categories: CategoryData[] = [
   },
   {
     name: "지갑",
-    subcategories: [
-      { name: "여성용 지갑" },
-      { name: "남성용 지갑" },
-      { name: "기타 지갑" }
-    ],
+    subcategories: [{ name: "여성용 지갑" }, { name: "남성용 지갑" }, { name: "기타 지갑" }],
     icon: { iconName: "DocumentSet" }
   },
   {
     name: "증명서",
-    subcategories: [
-      { name: "신분증" },
-      { name: "면허증" },
-      { name: "여권" },
-      { name: "기타" }
-    ],
+    subcategories: [{ name: "신분증" }, { name: "면허증" }, { name: "여권" }, { name: "기타" }],
     icon: { iconName: "Certificate" }
   },
   {
@@ -151,21 +133,12 @@ export const categories: CategoryData[] = [
   },
   {
     name: "카드",
-    subcategories: [
-      { name: "신용(체크)카드" },
-      { name: "일반카드" },
-      { name: "기타카드" }
-    ],
+    subcategories: [{ name: "신용(체크)카드" }, { name: "일반카드" }, { name: "기타카드" }],
     icon: { iconName: "ContactCard" }
   },
   {
     name: "현금",
-    subcategories: [
-      { name: "현금" },
-      { name: "수표" },
-      { name: "외화" },
-      { name: "기타" }
-    ],
+    subcategories: [{ name: "현금" }, { name: "수표" }, { name: "외화" }, { name: "기타" }],
     icon: { iconName: "Money" }
   },
   {

@@ -3,10 +3,10 @@ import { makeStyles } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 
-import { categories, CategoryData, Subcategory } from "./CategoryData";
-import useWriteStore from "../../stores/write";
-import { mainColor, skeletonColor } from "../../styles/color";
-import { mobileWidth } from "../../styles/size";
+import { categories, CategoryData, Subcategory } from "./WriteCategoryData";
+import useWriteStore from "../../../stores/write";
+import { skeletonColor, mainColor } from "../../../styles/color";
+import { mobileWidth } from "../../../styles/size";
 
 const useStyles = makeStyles({
   title: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     [`@media (max-width: ${mobileWidth})`]: {
       marginLeft: "20px",
       fontSize: "24px"
-    },
+    }
   },
   modalContent: {
     position: "absolute",
@@ -33,13 +33,13 @@ const useStyles = makeStyles({
     [`@media (max-width: ${mobileWidth})`]: {
       width: "80vw",
       maxHeight: "75vh",
-      top: "50%",
-    },
+      top: "50%"
+    }
   },
   modalContentSmall: {
     width: "80vw",
     [`@media (max-width: ${mobileWidth})`]: {
-      transition: "width 0.3s",
+      transition: "width 0.3s"
     }
   },
   modalOverlay: {
@@ -58,8 +58,8 @@ const useStyles = makeStyles({
     [`@media (max-width: ${mobileWidth})`]: {
       gridTemplateColumns: "repeat(4, 1fr)",
       gridGap: "10px",
-      padding: "0px 10px 10px 10px",
-    },
+      padding: "0px 10px 10px 10px"
+    }
   },
   gridItem: {
     display: "flex",
@@ -74,7 +74,7 @@ const useStyles = makeStyles({
     outline: "none",
     fontSize: "16px",
     color: skeletonColor,
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   icon: {
     fontSize: "46px",
@@ -82,13 +82,13 @@ const useStyles = makeStyles({
     color: mainColor,
     [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "32px",
-      marginBottom: "10px",
-    },
+      marginBottom: "10px"
+    }
   },
   buttonContainer: {
     display: "flex",
     justifyContent: "flex-end",
-    marginTop: "20px",
+    marginTop: "20px"
   },
   button: {
     backgroundColor: "transparent",
@@ -106,7 +106,7 @@ const useStyles = makeStyles({
       fontSize: "12px",
       marginTop: "20px",
       color: skeletonColor
-    },
+    }
   },
   subcategoryList: {
     listStyle: "none",
@@ -129,14 +129,15 @@ const useStyles = makeStyles({
 
 Modal.setAppElement("#root");
 
-function Category() {
+function WriteCategory() {
   const styles = useStyles();
 
   const {
     selectedCategory,
     selectedSubcategory,
     setSelectedCategory,
-    setSelectedSubcategory
+    setSelectedSubcategory,
+    setLostName
   } = useWriteStore();
 
   const [category, setCategory] = useState<CategoryData | null>(null);
@@ -157,6 +158,7 @@ function Category() {
   const handleSubcategorySelect = (subcategory: Subcategory) => {
     setSelectedCategory(category?.name);
     setSelectedSubcategory(subcategory.name);
+    setLostName(subcategory.name);
     closeModal();
   };
 
@@ -181,9 +183,7 @@ function Category() {
         overlayClassName={styles.modalOverlay}
         onRequestClose={closeModal}
       >
-        <h1 className={styles.title}>
-          {category ? `${category.name}의` : ""} 카테고리 선택
-        </h1>
+        <h1 className={styles.title}>{category ? `${category.name}의` : ""} 카테고리 선택</h1>
         {!category ? (
           <div className={styles.gridContainer}>
             {categories.map(function (category, index) {
@@ -193,10 +193,7 @@ function Category() {
                   className={styles.gridItem}
                   onClick={() => handleCategorySelect(category)}
                 >
-                  <Icon
-                    className={styles.icon}
-                    iconName={category.icon.iconName}
-                  />
+                  <Icon className={styles.icon} iconName={category.icon.iconName} />
                   {category.name}
                 </div>
               );
@@ -239,4 +236,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default WriteCategory;

@@ -1,18 +1,18 @@
 import { DefaultButton } from "@fluentui/react";
-import { makeStyles, tokens } from "@fluentui/react-components";
-import { useRef, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Input, makeStyles, tokens } from "@fluentui/react-components";
+import { DatePicker } from "@fluentui/react-datepicker-compat";
+import { DismissRegular } from "@fluentui/react-icons";
 
-import { postMarker } from "../../apis/marker";
+import WriteCategory from "./Category/WriteCategory";
+import WritePlaceDialog from "./WritePlaceSelectDialog";
+import { Marker, postMarker } from "../../apis/marker";
+import useMarkerRedirect from "../../hooks/useMarkerRedirect";
 import useAuthStore from "../../stores/auth";
-import useMainStore from "../../stores/main";
-import usePositionStore from "../../stores/position";
 import useWriteStore from "../../stores/write";
 import { mainColor, skeletonColor } from "../../styles/color";
 import { mobileWidth, tabletWidth } from "../../styles/size";
-import Category from "../Category/CategoryList";
+import { formatDate } from "../../utils/format";
+import { localizedStrings } from "../Search/SearchFilterOption";
 
 const useStyles = makeStyles({
   root: {
@@ -60,7 +60,6 @@ const useStyles = makeStyles({
     width: "100%",
     height: "46px",
     border: "1px solid #D9D9D9",
-    padding: "8px",
     boxSizing: "border-box",
     fontSize: "14px",
     outline: "none",
@@ -72,7 +71,6 @@ const useStyles = makeStyles({
     width: "100%",
     height: "140px",
     border: "1px solid #D9D9D9",
-    padding: "8px",
     boxSizing: "border-box",
     fontSize: "14px",
     outline: "none",
@@ -106,35 +104,29 @@ const useStyles = makeStyles({
   }
 });
 
-function LostList() {
+function WriteLostGoodsForm() {
   const styles = useStyles();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const redirect = useMarkerRedirect();
 
   const {
     selectedCategory,
     selectedSubcategory,
+    lostName,
+    lostDate,
+    lostPlace,
+    lostLat,
+    lostLng,
+    lostInfo,
     setSelectedCategory,
-    setSelectedSubcategory
+    setSelectedSubcategory,
+    setLostName,
+    setLostDate,
+    setLostPlace,
+    setLostLat,
+    setLostLng,
+    setLostInfo
   } = useWriteStore();
 
-  const nameRef = useRef<HTMLInputElement | null>(null);
-  const addrRef = useRef<HTMLInputElement | null>(null);
-  const infoRef = useRef<HTMLInputElement | null>(null);
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-
-  const {
-    address,
-    latitude,
-    longitude,
-    clickedInfo,
-    setLatitude,
-    setLongitude,
-    setZoomLevel,
-    setClickedInfo
-  } = usePositionStore();
-
-  const { setShowLostGoods } = useMainStore();
   const { userId } = useAuthStore();
 
   const renderTitle = () => {
@@ -164,17 +156,27 @@ function LostList() {
       <div className={styles.title}>
         {renderTitle()}
         <div>
-          <Category />
+          <WriteCategory />
         </div>
       </div>
       <div className={styles.listMargin}>
         <a className={styles.subTitle}>분실물 이름</a>
         <div className={styles.listContainer}>
-          <input
-            ref={nameRef}
+          <Input
             className={styles.input}
-            defaultValue={selectedSubcategory ? selectedSubcategory : ""}
+            contentAfter={
+              <DismissRegular
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setLostName("");
+                }}
+              />
+            }
             type="text"
+            value={lostName}
+            onChange={(_, data) => {
+              setLostName(data.value);
+            }}
           />
         </div>
       </div>
@@ -182,33 +184,47 @@ function LostList() {
         <a className={styles.subTitle}>분실 날짜</a>
         <div className={styles.listContainer}>
           <DatePicker
+            readOnly
             className={styles.input}
-            dateFormat="yyyy-MM-dd"
-            placeholderText="날짜 선택"
-            selected={startDate}
-            wrapperClassName={styles.datePicker}
-            onChange={(date: Date | null) => setStartDate(date)}
+            contentAfter={
+              <DismissRegular
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLostDate(undefined);
+                }}
+              />
+            }
+            formatDate={formatDate}
+            maxDate={new Date()}
+            placeholder="시작날짜"
+            showMonthPickerAsOverlay={true}
+            strings={localizedStrings}
+            value={lostDate ?? null}
+            onSelectDate={(date) => {
+              if (date) {
+                setLostDate(date);
+              }
+            }}
           />
         </div>
       </div>
       <div className={styles.listMargin}>
         <a className={styles.subTitle}>분실 장소</a>
         <div className={styles.listContainer}>
-          <input
-            ref={addrRef}
-            className={styles.input}
-            defaultValue={clickedInfo?.address ? clickedInfo.address : address}
-            type="text"
-            onClick={() => {
-              navigate("/");
-            }}
-          />
+          <WritePlaceDialog styleProps={{ input: styles.input }} title="장소 선택" />
         </div>
       </div>
       <div className={styles.listMargin}>
         <a className={styles.subTitle}>추가 설명</a>
         <div className={styles.listContainer}>
-          <input ref={infoRef} className={styles.addInput} type="text" />
+          <Input
+            className={styles.addInput}
+            type="text"
+            value={lostInfo}
+            onChange={(_, data) => {
+              setLostInfo(data.value);
+            }}
+          />
         </div>
       </div>
       <div className={styles.submitButtonContainer}>
@@ -216,31 +232,28 @@ function LostList() {
           className={styles.submitButton}
           text="등록"
           onClick={() => {
-            postMarker({
+            const marker: Marker = {
               _id: "",
-              name: `${nameRef.current?.value}`,
-              date: `${startDate?.toISOString().split("T")[0]}`,
-              address: `${addrRef.current?.value}`,
+              name: lostName,
+              date: formatDate(lostDate),
+              address: lostPlace,
               category: `${selectedCategory} > ${selectedSubcategory}`,
-              info: `${infoRef.current?.value}`,
-              lat: clickedInfo?.lat ? clickedInfo.lat : latitude,
-              lng: clickedInfo?.lng ? clickedInfo.lng : longitude,
+              info: lostInfo,
+              lat: lostLat,
+              lng: lostLng,
               userId: userId
-            }).then((data) => {
-              // write
+            };
+
+            postMarker(marker).then((data) => {
               setSelectedCategory(undefined);
               setSelectedSubcategory(undefined);
-
-              // position
-              setLatitude(data.lat);
-              setLongitude(data.lng);
-              setZoomLevel(3);
-              setClickedInfo(undefined);
-
-              // main
-              setShowLostGoods(true);
-
-              navigate("/", { state: location.pathname });
+              setLostName("");
+              setLostDate(undefined);
+              setLostPlace("");
+              setLostLat(0);
+              setLostLng(0);
+              setLostInfo("");
+              redirect(true, data.lat, data.lng, data._id);
             });
           }}
         />
@@ -249,4 +262,4 @@ function LostList() {
   );
 }
 
-export default LostList;
+export default WriteLostGoodsForm;
