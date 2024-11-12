@@ -1,6 +1,10 @@
 import { Depths } from "@fluentui/react";
 import { Card, Image, SkeletonItem, makeStyles, tokens } from "@fluentui/react-components";
-import { ArchiveArrowBackRegular, ChatArrowBackRegular } from "@fluentui/react-icons";
+import {
+  ArchiveArrowBackRegular,
+  ChatArrowBackRegular,
+  GlobeArrowForwardRegular
+} from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -195,6 +199,13 @@ function DetailPage() {
     }
   };
 
+  const handleAtcIdClick = () => {
+    if (item) {
+      const uri = `https://www.lost112.go.kr/find/findDetail.do?ATC_ID=${item.atcId}&FD_SN=${item.fdSn}`;
+      window.open(uri, "_self");
+    }
+  };
+
   useEffect(() => {
     if (id) {
       setIsLoading(true);
@@ -230,7 +241,10 @@ function DetailPage() {
             <ArchiveArrowBackRegular style={{ cursor: "pointer" }} onClick={handlePlaceClick} />
           </div>
           <div className={styles.contentTopSub}>{`습득일자: ${item?.fdYmd}`}</div>
-          <div className={styles.contentTopInfo}>{`관리번호: ${item?.atcId}`}</div>
+          <div className={styles.contentTopInfo}>
+            {`관리번호: ${item?.atcId}-${item?.fdSn}`}
+            <GlobeArrowForwardRegular style={{ cursor: "pointer" }} onClick={handleAtcIdClick} />
+          </div>
           <div className={styles.contentTopInfo}>{`물품분류: ${item?.prdtClNm}`}</div>
           <div className={styles.contentTopInfo}>{`습득장소: ${item?.fdPlace}`}</div>
           <div className={styles.contentTopInfo}>{`상태: ${item?.csteSteNm}`}</div>
@@ -251,7 +265,7 @@ function DetailPage() {
           </a>
         </div>
         <div className={styles.contentBottom}>
-          <div className={styles.contentBottomDetail}>{item?.uniq?.split("내용\r\n\r\n")}</div>
+          <div className={styles.contentBottomDetail}>{item?.uniq}</div>
         </div>
       </Card>
     </div>
