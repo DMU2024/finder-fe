@@ -4,7 +4,7 @@ import { EditRegular } from "@fluentui/react-icons";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { mainColor } from "../styles/color";
-import { sideBarWidth, mobileWidth } from "../styles/size";
+import { sideBarWidth, tabletWidth } from "../styles/size";
 
 const useStyle = makeStyles({
   writeButton: {
@@ -19,9 +19,9 @@ const useStyle = makeStyles({
     ":hover": {
       backgroundColor: mainColor
     },
-    [`@media (max-width: ${mobileWidth})`]: {
-      display: "none",
-    },
+    [`@media (max-width: ${tabletWidth})`]: {
+      display: "none"
+    }
   },
   writeIcon: {
     color: "white",
