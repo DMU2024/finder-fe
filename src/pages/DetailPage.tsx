@@ -1,35 +1,15 @@
 import { Depths } from "@fluentui/react";
 import { Card, Image, SkeletonItem, makeStyles, tokens } from "@fluentui/react-components";
-import {
-  ArchiveArrowBackRegular,
-  ArrowLeftRegular,
-  ChatArrowBackRegular
-} from "@fluentui/react-icons";
+import { ArchiveArrowBackRegular, ChatArrowBackRegular } from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { LostFoundDetail, getLostFoundDetail } from "../apis/lostfound";
-import useMainStore from "../stores/main";
-import usePositionStore from "../stores/position";
+import useMarkerRedirect from "../hooks/useMarkerRedirect";
 import { mainColor } from "../styles/color";
-import { headerHeight } from "../styles/margin";
-import { sideBarWidth, mobileWidth, tabletWidth } from "../styles/size";
+import { mobileWidth, tabletWidth } from "../styles/size";
 
 const useStyles = makeStyles({
-  back: {
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-    position: "absolute",
-    top: `calc(${headerHeight} + 24px)`,
-    left: `calc(${sideBarWidth} + 48px)`,
-    fontSize: "20px",
-    fontWeight: "bold",
-    cursor: "pointer",
-    [`@media (max-width: ${mobileWidth})`]: {
-      display: "none"
-    }
-  },
   root: {
     flex: 1,
     display: "flex",
@@ -52,7 +32,6 @@ const useStyles = makeStyles({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    marginTop: "58px",
     padding: 0,
     borderRadius: "20px 20px 0 0",
     boxShadow: Depths.depth16,
@@ -64,7 +43,6 @@ const useStyles = makeStyles({
       width: "100%",
       height: "100vh",
       borderRadius: "0 0 0 0",
-      marginTop: "0px",
       marginLeft: "0px"
     }
   },
@@ -205,9 +183,7 @@ const useStyles = makeStyles({
 function DetailPage() {
   const styles = useStyles();
 
-  const navigate = useNavigate();
-  const { setSelectedMarker, setShowLostGoods } = useMainStore();
-  const { setLatitude, setLongitude } = usePositionStore();
+  const redirect = useMarkerRedirect();
   const { id } = useParams();
 
   const [item, setItem] = useState<LostFoundDetail>();
@@ -215,15 +191,7 @@ function DetailPage() {
 
   const handlePlaceClick = () => {
     if (item) {
-      setSelectedMarker(undefined);
-      setShowLostGoods(false);
-      setLatitude(item.lat);
-      setLongitude(item.lng);
-      navigate("/", {
-        state: {
-          target: item.depPlace
-        }
-      });
+      redirect(false, item.lat, item.lng, item.depPlace);
     }
   };
 
@@ -272,27 +240,21 @@ function DetailPage() {
   };
 
   return (
-    <>
-      <div className={styles.back} onClick={() => navigate(-1)}>
-        <ArrowLeftRegular color={mainColor} />
-        <span>습득물 찾기</span>
-      </div>
-      <div className={styles.root}>
-        <Card className={styles.content}>
-          <div className={styles.contentTop}>
-            <Image className={styles.contentTopImage} fit="contain" src={item?.fdFilePathImg} />
-            {renderContent()}
-            <a className={styles.contentTopChat} href={`tel:${item?.tel}`}>
-              <span>연락하기</span>
-              <ChatArrowBackRegular fontSize="14px" />
-            </a>
-          </div>
-          <div className={styles.contentBottom}>
-            <div className={styles.contentBottomDetail}>{item?.uniq?.split("내용\r\n\r\n")}</div>
-          </div>
-        </Card>
-      </div>
-    </>
+    <div className={styles.root}>
+      <Card className={styles.content}>
+        <div className={styles.contentTop}>
+          <Image className={styles.contentTopImage} fit="contain" src={item?.fdFilePathImg} />
+          {renderContent()}
+          <a className={styles.contentTopChat} href={`tel:${item?.tel}`}>
+            <span>연락하기</span>
+            <ChatArrowBackRegular fontSize="14px" />
+          </a>
+        </div>
+        <div className={styles.contentBottom}>
+          <div className={styles.contentBottomDetail}>{item?.uniq?.split("내용\r\n\r\n")}</div>
+        </div>
+      </Card>
+    </div>
   );
 }
 

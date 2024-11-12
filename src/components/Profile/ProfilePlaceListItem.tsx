@@ -1,9 +1,7 @@
 import { tokens, makeStyles, Image } from "@fluentui/react-components";
-import { useNavigate } from "react-router-dom";
 
 import { BookMark } from "../../apis/bookmark";
-import useMainStore from "../../stores/main";
-import usePositionStore from "../../stores/position";
+import useMarkerRedirect from "../../hooks/useMarkerRedirect";
 import { mobileWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
@@ -60,21 +58,11 @@ interface PlaceListProps {
 
 function ProfilePlaceListItem({ img, bookmark }: PlaceListProps) {
   const styles = useStyles();
-  const navigate = useNavigate();
-  const { setSelectedMarker, setShowLostGoods } = useMainStore();
-  const { setLatitude, setLongitude } = usePositionStore();
+  const redirect = useMarkerRedirect();
 
   const handlePlaceClick = () => {
     if (bookmark) {
-      setSelectedMarker(undefined);
-      setShowLostGoods(false);
-      setLatitude(bookmark.lat);
-      setLongitude(bookmark.lng);
-      navigate("/", {
-        state: {
-          target: bookmark.location
-        }
-      });
+      redirect(false, bookmark.lat, bookmark.lng, bookmark.location);
     }
   };
 
