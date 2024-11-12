@@ -94,7 +94,7 @@ const useStyle = makeStyles({
       position: "absolute",
       top: "45px",
       right: "14px",
-      zIndex: 1,
+      zIndex: 1
     }
   },
   cardMap: {
@@ -267,6 +267,10 @@ function KakaoMap({ handleBookmark }: Props) {
               <MapMarker
                 key={marker._id}
                 clickable={true}
+                image={{
+                  src: showLostGoods ? "/lostgoodsMarker.png" : "/lostfoundMarker.png",
+                  size: { width: 36, height: 36 }
+                }}
                 position={{ lat: marker.lat, lng: marker.lng }}
                 onClick={() => {
                   if (marker._id !== selectedMarker?._id) {
@@ -301,13 +305,13 @@ function KakaoMap({ handleBookmark }: Props) {
           현재 위치로
         </Button>
         <Button
+          className={styles.control02}
+          shape="circular"
           onClick={() => {
             setMarkerList([]);
             setSelectedMarker(undefined);
             setShowLostGoods(!showLostGoods);
           }}
-          shape="circular"
-          className={styles.control02}
         >
           {showLostGoods ? "습득물 보기" : "분실물 보기"}
         </Button>
