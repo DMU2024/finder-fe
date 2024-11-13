@@ -238,7 +238,10 @@ function DetailPage() {
           <div className={styles.contentTopMain}>{item?.fdPrdtNm}</div>
           <div className={styles.contentTopSub}>
             {`보관장소: ${item?.depPlace}`}
-            <ArchiveArrowBackRegular style={{ cursor: "pointer" }} onClick={handlePlaceClick} />
+            <ArchiveArrowBackRegular
+              style={{ cursor: "pointer", display: item?.lat || item?.lng ? "" : "none" }}
+              onClick={handlePlaceClick}
+            />
           </div>
           <div className={styles.contentTopSub}>{`습득일자: ${item?.fdYmd}`}</div>
           <div className={styles.contentTopInfo}>
