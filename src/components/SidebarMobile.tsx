@@ -125,6 +125,9 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
       case "/profile":
         setSelectedTab("tab4");
         break;
+      case "/write":
+        setSelectedTab("tab5");
+        break;
       default:
         setSelectedTab("");
         break;
@@ -192,6 +195,16 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
               }}
             >
               마이페이지
+            </Tab>
+            <Tab
+              className={`${styles.tab} ${selectedTab === "tab5" ? selectedTab : ""}`} // className 수정
+              value="tab5"
+              onClick={() => {
+                navigate("/write");
+                setIsOpen(false);
+              }}
+            >
+              새 글 쓰기
             </Tab>
           </TabList>
         </div>
