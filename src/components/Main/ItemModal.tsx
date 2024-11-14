@@ -46,7 +46,7 @@ const useStyles = makeStyles({
     cursor: "pointer",
     fontSize: "24px",
     fontWeight: "bold",
-    color: "#333"
+    color: tokens.colorNeutralForeground1
   }
 });
 
@@ -65,7 +65,7 @@ function ItemModal({ handleBookmark }: Props) {
         className={styles.modalTrigger}
         onClick={() => setIsModalOpen(!isModalOpen)}
       >
-        {selectedMarker ? "Item 목록 보기" : "Marker 목록 보기"}
+        목록 보기
       </div>
 
       <div

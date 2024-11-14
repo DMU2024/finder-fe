@@ -30,7 +30,8 @@ const useStyles = makeStyles({
       height: `calc(100vh - ${headerHeight})`,
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      height: "auto"
+      height: "auto",
+      marginTop: "10px"
     }
   },
   title: {
@@ -106,7 +107,8 @@ const useStyles = makeStyles({
     [`@media (max-width: ${mobileWidth})`]: {
       height: "60vh",
       borderRadius: 0,
-      boxShadow: "none"
+      boxShadow: "none",
+      marginTop: "10px"
     },
   },
   empty: {

@@ -19,6 +19,7 @@ const useStyles = makeStyles({
     },
     [`@media (max-width: ${mobileWidth})`]: {
       height: "auto",
+      marginTop: "10px"
     },
   },
   title: {
@@ -60,7 +61,8 @@ const useStyles = makeStyles({
     [`@media (max-width: ${mobileWidth})`]: {
       height: "75vh",
       borderRadius: 0,
-      boxShadow: "none"
+      boxShadow: "none",
+      marginTop: "10px"
     },
   },
   empty: {
