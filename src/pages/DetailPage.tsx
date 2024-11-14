@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     boxShadow: Depths.depth16,
     [`@media (max-width: ${tabletWidth})`]: {
       width: "90%",
-      marginLeft: "15px"
+      marginLeft: "5%"
     },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
@@ -59,9 +59,10 @@ const useStyles = makeStyles({
     }
   },
   contentTopImage: {
-    width: "400px",
-    height: "400px",
+    width: "330px",
+    height: "330px",
     marginLeft: "64px",
+    marginTop: "40px",
     backgroundColor: tokens.colorNeutralBackground3,
     [`@media (max-width: ${tabletWidth})`]: {
       width: "300px",
@@ -71,6 +72,7 @@ const useStyles = makeStyles({
       width: "100%",
       height: "400px",
       marginLeft: "0px",
+      marginTop: "0px",
       backgroundColor: tokens.colorNeutralBackground3
     }
   },
@@ -102,20 +104,23 @@ const useStyles = makeStyles({
     }
   },
   contentTopMain: {
-    fontSize: "48px",
-    lineHeight: "48px",
+    fontSize: "32px",
+    lineHeight: "32px",
+    paddingTop: "10px",
     color: tokens.colorNeutralForeground2,
     [`@media (max-width: ${tabletWidth})`]: {
       fontSize: "32px",
-      fontWeight: "bold"
+      fontWeight: "bold",
+      paddingTop: "30px",
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      fontSize: "20px"
+      fontSize: "20px",
+      paddingTop: "0px",
     }
   },
   contentTopSub: {
-    fontSize: "24px",
-    lineHeight: "24px",
+    fontSize: "20px",
+    lineHeight: "20px",
     color: mainColor,
     [`@media (max-width: ${tabletWidth})`]: {
       fontSize: "20px",
@@ -127,7 +132,7 @@ const useStyles = makeStyles({
     }
   },
   contentTopInfo: {
-    fontSize: "20px",
+    fontSize: "16px",
     color: tokens.colorNeutralStroke1,
     [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "14px",
@@ -152,22 +157,28 @@ const useStyles = makeStyles({
     }
   },
   contentBottom: {
-    width: "100%",
-    height: "100%",
+    width: "85%",
+    height: "90vh",
     borderRadius: "20px",
-    marginLeft: "44px",
-    marginRight: "44px",
+    marginLeft: "5%",
+    marginRight: "6%",
     padding: "32px",
     color: tokens.colorNeutralForeground2,
-    backgroundColor: tokens.colorNeutralBackground3,
-    fontSize: "20px",
+    backgroundColor: tokens.colorNeutralBackground1Hover,
+    fontSize: "16px",
     fontWeight: "bold",
     whiteSpace: "pre-line",
+    [`@media (max-width: ${tabletWidth})`]: {
+      marginTop: "20px",
+    },
     [`@media (max-width: ${mobileWidth})`]: {
+      width: "100%",
+      height: "50%",
       display: "flex",
       borderRadius: "0px",
       marginLeft: "0px",
       marginRight: "0px",
+      marginTop: "40px",
       fontSize: "14px",
       color: tokens.colorNeutralForeground2,
       backgroundColor: "none",
