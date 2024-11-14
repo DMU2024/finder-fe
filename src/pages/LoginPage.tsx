@@ -86,7 +86,7 @@ const useStyles = makeStyles({
   detailTextStylePlus: {
     fontSize: "12px",
     fontWeight: "bold",
-    color: tokens.colorNeutralBackground3Pressed,
+    color: tokens.colorNeutralForeground2,
     width: "auto"
   },
   image: {
