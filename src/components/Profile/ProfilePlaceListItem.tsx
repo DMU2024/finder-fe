@@ -2,7 +2,7 @@ import { tokens, makeStyles, Image } from "@fluentui/react-components";
 
 import { BookMark } from "../../apis/bookmark";
 import useMarkerRedirect from "../../hooks/useMarkerRedirect";
-import { mobileWidth } from "../../styles/size";
+import { tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     padding: "20px 44px 20px 44px",
     backgroundColor: tokens.colorNeutralBackground1Hover,
     cursor: "pointer",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       backgroundColor: "none",
       padding: "0px 0px 0px 0px",
       width: "80vw",
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
   imageContainer: {
     marginRight: "20px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
     }
   },
@@ -38,14 +38,14 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     color: tokens.colorNeutralForeground1,
     marginBottom: "10px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       fontSize: "16px"
     }
   },
   placeDetail: {
     fontSize: "14px",
     color: tokens.colorNeutralForeground3,
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       fontSize: "12px"
     }
   }

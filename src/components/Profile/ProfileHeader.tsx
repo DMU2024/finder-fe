@@ -10,7 +10,7 @@ import {
 
 import { User } from "../../apis/user";
 import { mainColor } from "../../styles/color";
-import { mobileWidth } from "../../styles/size";
+import { tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
     position: "relative",
     top: "-32px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       flexDirection: "column",
       top: "auto"
     }
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   profile: {
     flex: 1,
     marginLeft: "36px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       marginLeft: "0px",
       marginTop: "10px"
     }
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-between",
     marginBottom: "20px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       justifyContent: "center",
       flexDirection: "column"
     }
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     fontSize: "32px",
     marginBottom: "12px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       textAlign: "center",
       fontSize: "24px",
       marginBottom: "4px"
@@ -56,7 +56,7 @@ const useStyles = makeStyles({
   id: {
     color: mainColor,
     fontSize: "16px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       textAlign: "center",
       marginBottom: "20px",
       fontSize: "12px"
@@ -78,7 +78,7 @@ const useStyles = makeStyles({
     "&:active": {
       backgroundColor: tokens.colorBrandBackgroundPressed
     },
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       padding: "10px 15px",
       fontSize: "12px",
       marginLeft: "0px",
@@ -102,7 +102,7 @@ const useStyles = makeStyles({
     "&:active": {
       backgroundColor: tokens.colorBrandBackgroundPressed
     },
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       padding: "10px 15px",
       fontSize: "12px",
       marginLeft: "0px",
@@ -110,14 +110,14 @@ const useStyles = makeStyles({
     }
   },
   progressBar: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
     }
   },
   image: {
     width: "220px",
     height: "220px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       width: "148px",
       height: "148px"
     }

@@ -6,14 +6,14 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 import { postRevokeKakaoScopes, postUnlink, postUserSetting } from "../../../apis/user";
 import useAuthStore from "../../../stores/auth";
 import { skeletonColor } from "../../../styles/color";
-import { mobileWidth } from "../../../styles/size";
+import { tabletWidth } from "../../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       height: "40vh",
       paddingTop: "30px"
     }
