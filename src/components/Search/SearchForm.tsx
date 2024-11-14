@@ -42,9 +42,13 @@ const useStyles = makeStyles({
     padding: "8px",
     outline: "none",
     maxWidth: "83vw",
+    [`@media (max-width: ${tabletWidth})`]: {
+      maxWidth: "88vw",
+    },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
-      minHeight: "32px"
+      minHeight: "32px",
+      maxWidth: "83vw"
     }
   },
   filterIcon: {
