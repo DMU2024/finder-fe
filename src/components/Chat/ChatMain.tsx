@@ -10,14 +10,14 @@ import { User } from "../../apis/user";
 import useAuthStore from "../../stores/auth";
 import { mainColor } from "../../styles/color";
 import { headerHeight, contentMargin } from "../../styles/margin";
-import { mobileWidth } from "../../styles/size";
+import { tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       height: `calc(100vh - ${headerHeight})`
     }
   },
@@ -58,7 +58,7 @@ const useStyles = makeStyles({
     maxHeight: "128px",
     boxShadow: Depths.depth16,
     backgroundColor: tokens.colorNeutralBackground1,
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       maxWidth: "64px",
       maxHeight: "64px",
       top: "6px",
@@ -69,7 +69,7 @@ const useStyles = makeStyles({
     marginLeft: "184px",
     fontSize: "18px",
     fontWeight: "bold",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       marginLeft: "102px",
       fontSize: "16px"
     }
