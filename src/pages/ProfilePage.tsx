@@ -12,7 +12,7 @@ import ProfilePlace from "../components/Profile/ProfilePlace";
 import useAuthStore from "../stores/auth";
 import useGlobalStore from "../stores/global";
 import { headerMobileHeight } from "../styles/margin";
-import { mobileWidth } from "../styles/size";
+import { mobileWidth, tabletWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     boxShadow: tokens.shadow16,
     paddingLeft: "120px",
     paddingRight: "120px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       width: "100%",
       height: `calc(100vh - ${headerMobileHeight})`,
       flexDirection: "column",
@@ -40,25 +40,25 @@ const useStyles = makeStyles({
   content: {
     flex: 1,
     display: "flex",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
     }
   },
   left: {
     width: "55%",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       width: "100%"
     }
   },
   right: {
     width: "45%",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       width: "100%"
     }
   },
   mobileContent: {
     display: "none",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "block"
     }
   }
@@ -77,7 +77,7 @@ function ProfilePage() {
   const { setBookmarkMap } = useGlobalStore();
   const { userId } = useAuthStore();
 
-  const numericMobileWidth = parseInt(mobileWidth, 10);
+  const numericMobileWidth = parseInt(tabletWidth, 10);
 
   useEffect(() => {
     if (userId) {

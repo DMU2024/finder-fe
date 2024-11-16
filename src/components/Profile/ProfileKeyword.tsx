@@ -9,14 +9,14 @@ import {
 } from "../../apis/keyword";
 import useAuthStore from "../../stores/auth";
 import { mainColor, skeletonColor } from "../../styles/color";
-import { mobileWidth } from "../../styles/size";
+import { tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       height: "70vh"
     }
   },
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     fontSize: "24px",
     marginBottom: "10px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       fontSize: "20px",
       paddingLeft: "6vw"
     }
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
   subTitle: {
     color: tokens.colorNeutralForeground2,
     marginBottom: "30px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       fontSize: "12px",
       marginBottom: "10px",
       paddingLeft: "6vw"
@@ -42,7 +42,7 @@ const useStyles = makeStyles({
   keywordSubmit: {
     width: "500px",
     marginBottom: "30px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       width: "100vw",
       display: "flex",
       alignItems: "center",
@@ -58,7 +58,7 @@ const useStyles = makeStyles({
     borderRadius: "15px",
     fontSize: "16px",
     backgroundColor: tokens.colorNeutralBackground1Hover,
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       width: "70vw",
       height: "45px",
     }
@@ -71,12 +71,12 @@ const useStyles = makeStyles({
     marginLeft: "20px",
     border: "none",
     background: "none",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       marginLeft: "0px",
     }
   },
   keywordContainer: {
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       width: "100vw",
       display: "flex",
       flexDirection: "column",
@@ -94,7 +94,7 @@ const useStyles = makeStyles({
     marginBottom: "18px",
     borderRadius: "15px",
     backgroundColor: tokens.colorNeutralBackground1Hover,
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       width: "90vw",
       height: "45px",
       marginBottom: "0px",

@@ -3,7 +3,7 @@ import { GlobeLocationRegular } from "@fluentui/react-icons";
 
 import ProfilePlaceListItem from "./ProfilePlaceListItem";
 import useGlobalStore from "../../stores/global";
-import { mobileWidth } from "../../styles/size";
+import { tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: "20px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       height: "40vh"
     }
   },
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     fontSize: "24px",
     marginBottom: "10px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       fontSize: "20px",
       paddingLeft: "6vw"
     }

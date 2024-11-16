@@ -6,7 +6,7 @@ import { ChatHistory } from "../../apis/chat";
 import { User } from "../../apis/user";
 import { mainColor } from "../../styles/color";
 import { headerHeight, contentMargin } from "../../styles/margin";
-import { mobileWidth } from "../../styles/size";
+import { tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     borderRadius: "20px 20px 0 0",
     boxShadow: Depths.depth16,
     backgroundColor: tokens.colorNeutralBackground1,
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       height: `calc(100vh - ${headerHeight} - 20px)`
     }
   },

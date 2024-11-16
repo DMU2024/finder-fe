@@ -16,7 +16,7 @@ import ChatHistoryList from "../components/Chat/ChatHistoryList";
 import ChatMain from "../components/Chat/ChatMain";
 import useAuthStore from "../stores/auth";
 import { headerHeight } from "../styles/margin";
-import { mobileWidth } from "../styles/size";
+import { mobileWidth, tabletWidth } from "../styles/size";
 import { BASE_URL } from "../utils/axios";
 
 const useStyles = makeStyles({
@@ -26,13 +26,13 @@ const useStyles = makeStyles({
   content: {
     display: "flex",
     gap: "32px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       position: "relative"
     }
   },
   left: {
     width: "30%",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "flex",
       flexDirection: "column",
       width: "100%",
@@ -44,13 +44,13 @@ const useStyles = makeStyles({
   },
   right: {
     width: "70%",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
     }
   },
   rightVisible: {
     display: "none",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       display: "block",
       width: "100%",
       height: `calc(100vh - ${headerHeight})`,

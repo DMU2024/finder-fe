@@ -2,7 +2,8 @@ import {
   Image,
   TableCell,
   TableCellLayout,
-  TableRow
+  TableRow,
+  tokens
 } from "@fluentui/react-components";
 import { makeStyles } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +52,7 @@ const useStyles = makeStyles({
     }
   },
   title: {
-      color: skeletonColor,
+      color: tokens.colorNeutralForeground1,
       fontSize: "16px",
       fontWeight: "bold"
   },
