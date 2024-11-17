@@ -38,7 +38,7 @@ const useStyles = makeStyles({
     },
     [`@media (max-width: ${mobileWidth})`]: {
       height: headerMobileHeight
-    },
+    }
   },
   title: {
     marginLeft: contentMargin,
@@ -46,14 +46,15 @@ const useStyles = makeStyles({
     alignItems: "center",
     gap: "15px",
     cursor: "pointer",
-    [`@media (max-width: ${mobileWidth})`]: {
-      marginLeft: `calc(${contentMobileMargin} - 12px)`
+    [`@media (max-width: ${tabletWidth})`]: {
+      marginLeft: `calc(${contentMobileMargin} - 12px)`,
+      gap: "8px"
     }
   },
   titleIcon: {
     color: backgroundColor,
     fontSize: "20px",
-    [`@media (max-width: ${tabletWidth})`]: {
+    [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
     }
   },
@@ -62,6 +63,9 @@ const useStyles = makeStyles({
     fontSize: "32px",
     fontWeight: "bold",
     [`@media (max-width: ${tabletWidth})`]: {
+      fontSize: "24px"
+    },
+    [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "20px"
     }
   },
@@ -143,9 +147,7 @@ function Header() {
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         />
       </div>
-      {isSidebarOpen && (
-        <SidebarMobile isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      )}
+      {isSidebarOpen && <SidebarMobile isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />}
     </div>
   );
 }
