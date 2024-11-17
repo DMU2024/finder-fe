@@ -14,13 +14,11 @@ const useStyles = makeStyles({
     borderRadius: "16px",
     padding: "24px",
     [`@media (max-width: ${tabletWidth})`]: {
-      width: "88%",
-      padding: "16px",
-      marginLeft: "18px"
+      margin: "0 18px",
+      padding: "16px"
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      width: "90%",
-      margin: "0 20px 0 20px",
+      margin: "0 20px",
       padding: "16px"
     }
   },

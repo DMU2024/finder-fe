@@ -1,9 +1,5 @@
 import { SearchBox, makeStyles } from "@fluentui/react-components";
-import {
-  SearchRegular,
-  FilterRegular,
-  SendRegular
-} from "@fluentui/react-icons"; // 필터 아이콘 추가
+import { SearchRegular, FilterRegular, SendRegular } from "@fluentui/react-icons"; // 필터 아이콘 추가
 import { useState } from "react";
 
 import SearchFilter from "./SearchFilter";
@@ -15,7 +11,7 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    gap: "12px",
+    gap: "12px"
   },
   searchHeader: {
     display: "flex",
@@ -36,19 +32,17 @@ const useStyles = makeStyles({
     }
   },
   searchBox: {
-    width: "100%",
+    flex: 1,
+    maxWidth: "unset",
     minHeight: "48px",
     borderRadius: "8px",
     padding: "8px",
     outline: "none",
-    maxWidth: "83vw",
     [`@media (max-width: ${tabletWidth})`]: {
-      maxWidth: "88vw",
+      marginRight: "16px"
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      width: "100%",
-      minHeight: "32px",
-      maxWidth: "83vw"
+      marginRight: "0px"
     }
   },
   filterIcon: {
@@ -74,8 +68,7 @@ const useStyles = makeStyles({
 
 function SearchForm() {
   const styles = useStyles();
-  const { query, setQuery, isFilterEnabled, setIsFilterEnabled } =
-    useSearchStore();
+  const { query, setQuery, isFilterEnabled, setIsFilterEnabled } = useSearchStore();
   const [searchText, setSearchText] = useState(query?.keyword ?? "");
 
   return (
