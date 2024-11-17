@@ -40,8 +40,7 @@ const useStyles = makeStyles({
     borderRadius: "20px 20px 0 0",
     boxShadow: Depths.depth16,
     [`@media (max-width: ${tabletWidth})`]: {
-      width: "90%",
-      marginLeft: "5%"
+      borderRadius: "0"
     },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
@@ -157,11 +156,9 @@ const useStyles = makeStyles({
     }
   },
   contentBottom: {
-    width: "85%",
-    height: "90vh",
+    flex: 1,
     borderRadius: "20px",
-    marginLeft: "5%",
-    marginRight: "6%",
+    margin: "0 32px",
     padding: "32px",
     color: tokens.colorNeutralForeground2,
     backgroundColor: tokens.colorNeutralBackground1Hover,
