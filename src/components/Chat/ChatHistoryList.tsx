@@ -12,13 +12,13 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin} - 32px)`,
+    height: `calc(100dvh - ${headerHeight} - ${contentMargin} - 32px)`,
     padding: "16px",
     borderRadius: "20px 20px 0 0",
     boxShadow: Depths.depth16,
     backgroundColor: tokens.colorNeutralBackground1,
     [`@media (max-width: ${tabletWidth})`]: {
-      height: `calc(100vh - ${headerHeight} - 20px)`
+      height: `calc(100dvh - ${headerHeight} - 20px)`
     }
   },
   title: {

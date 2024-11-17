@@ -1,10 +1,4 @@
-import {
-  makeStyles,
-  Image,
-  Tab,
-  TabList,
-  tokens
-} from "@fluentui/react-components";
+import { makeStyles, Image, Tab, TabList, tokens } from "@fluentui/react-components";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -21,7 +15,7 @@ const useStyles = makeStyles({
     position: "fixed",
     top: 0,
     right: 0,
-    height: "100vh",
+    height: "100dvh",
     width: "70vw",
     backgroundColor: tokens.colorNeutralBackground1,
     boxShadow: "0 0 10px rgba(0,0,0,0.2)",
@@ -48,7 +42,7 @@ const useStyles = makeStyles({
     top: 0,
     left: 0,
     width: "100vw",
-    height: "100vh",
+    height: "100dvh",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 0,
     [`@media (min-width: ${tabletWidth02})`]: {
@@ -145,12 +139,8 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
             style={{ width: "150px", height: "150px" }}
           />
           <div className={styles.subInfoContainer}>
-            <div className={styles.subInfo01}>
-              {user ? user.username : "Guest"}
-            </div>
-            <div className={styles.subInfo02}>
-              {user ? `@${user?.userId}` : ""}
-            </div>
+            <div className={styles.subInfo01}>{user ? user.username : "Guest"}</div>
+            <div className={styles.subInfo02}>{user ? `@${user?.userId}` : ""}</div>
           </div>
         </div>
 
@@ -237,9 +227,7 @@ function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
           </div>
         </div>
       </div>
-      {isOpen && (
-        <div className={styles.overlay} onClick={() => setIsOpen(false)} />
-      )}
+      {isOpen && <div className={styles.overlay} onClick={() => setIsOpen(false)} />}
     </>
   );
 }

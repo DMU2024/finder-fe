@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     width: "100%",
     [`@media (max-width: ${mobileWidth})`]: {
-      height: `calc( 100vh + 10vh )`
+      height: `calc( 100dvh + 10vh )`
     }
   },
   content: {

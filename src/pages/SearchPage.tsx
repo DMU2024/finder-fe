@@ -20,14 +20,14 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     gap: "16px",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    height: `calc(100dvh - ${headerHeight} - ${contentMargin})`,
     [`@media (max-width: ${tabletWidth})`]: {
       position: "fixed",
       bottom: 0,
-      width: "100%",
+      width: "100%"
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      height: `calc(100vh - ${headerMobileHeight} - ${contentMobileMargin})`
+      height: `calc(100dvh - ${headerMobileHeight} - ${contentMobileMargin})`
     }
   }
 });
@@ -74,11 +74,7 @@ function SearchPage() {
   return (
     <div className={styles.root}>
       <SearchForm />
-      <SearchList
-        getItems={getItems}
-        isEndOfPage={isEndOfPage}
-        isLoading={isLoading}
-      />
+      <SearchList getItems={getItems} isEndOfPage={isEndOfPage} isLoading={isLoading} />
     </div>
   );
 }

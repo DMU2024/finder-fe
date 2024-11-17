@@ -4,13 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import useWebSocket from "react-use-websocket";
 
-import {
-  Chat,
-  ChatHistory,
-  createChatRoom,
-  getChatHistories,
-  getMessages
-} from "../apis/chat";
+import { Chat, ChatHistory, createChatRoom, getChatHistories, getMessages } from "../apis/chat";
 import { getUser, User } from "../apis/user";
 import ChatHistoryList from "../components/Chat/ChatHistoryList";
 import ChatMain from "../components/Chat/ChatMain";
@@ -36,7 +30,7 @@ const useStyles = makeStyles({
       display: "flex",
       flexDirection: "column",
       width: "100%",
-      height: `calc(100vh - ${headerHeight})`,
+      height: `calc(100dvh - ${headerHeight})`,
       marginTop: "20px",
       position: "relative",
       zIndex: 1
@@ -53,7 +47,7 @@ const useStyles = makeStyles({
     [`@media (max-width: ${tabletWidth})`]: {
       display: "block",
       width: "100%",
-      height: `calc(100vh - ${headerHeight})`,
+      height: `calc(100dvh - ${headerHeight})`,
       marginTop: "20px",
       position: "absolute",
       zIndex: 3,
@@ -82,8 +76,7 @@ function ChatPage() {
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(wsUrl, {
     shouldReconnect: () => true,
     reconnectAttempts: 5,
-    reconnectInterval: (attemptNumber) =>
-      Math.min(Math.pow(2, attemptNumber) * 1000, 10000)
+    reconnectInterval: (attemptNumber) => Math.min(Math.pow(2, attemptNumber) * 1000, 10000)
   });
 
   // 메시지 목록 갱신
@@ -173,11 +166,7 @@ function ChatPage() {
           />
         </div>
 
-        <div
-          className={
-            isRightVisible ? styles.rightVisible : styles.rightVisible02
-          }
-        >
+        <div className={isRightVisible ? styles.rightVisible : styles.rightVisible02}>
           <ChatMain
             messages={messages}
             recipient={recipient}

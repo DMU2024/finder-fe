@@ -19,15 +19,15 @@ const useStyle = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    height: `calc(100dvh - ${headerHeight} - ${contentMargin})`,
     gap: "15px",
     [`@media (max-width: ${tabletWidth})`]: {
-      height: `calc(100vh - ${headerHeight})`,
+      height: `calc(100dvh - ${headerHeight})`,
       padding: 0,
       zIndex: 0
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      height: `calc(100vh - ${headerMobileHeight})`,
+      height: `calc(100dvh - ${headerMobileHeight})`,
       padding: 0,
       zIndex: 0
     }
@@ -101,10 +101,10 @@ const useStyle = makeStyles({
     width: "100%",
     height: "100%",
     [`@media (max-width: ${tabletWidth})`]: {
-      height: `calc(100vh - ${headerHeight})`
+      height: `calc(100dvh - ${headerHeight})`
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      height: `calc(100vh - ${headerMobileHeight})`
+      height: `calc(100dvh - ${headerMobileHeight})`
     }
   }
 });

@@ -15,9 +15,9 @@ const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    height: `calc(100vh - ${headerHeight})`,
+    height: `calc(100dvh - ${headerHeight})`,
     [`@media (max-width: ${mobileWidth})`]: {
-      height: `calc(100vh - ${headerMobileHeight})`
+      height: `calc(100dvh - ${headerMobileHeight})`
     }
   },
   container: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     bottom: 0,
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100vw",
-      height: "100vh"
+      height: "100dvh"
     }
   },
   leftContainer: {
@@ -56,7 +56,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100vw",
-      height: "100vh"
+      height: "100dvh"
     }
   },
   logo: {
@@ -146,9 +146,7 @@ function LoginPage() {
         <div className={styles.rightContainer}>
           <div className={styles.logo}> Finder </div>
           <div className={styles.loginText}> Login </div>
-          <div className={styles.detailText}>
-            아이디와 비밀번호 없이 로그인해보세요.
-          </div>
+          <div className={styles.detailText}>아이디와 비밀번호 없이 로그인해보세요.</div>
 
           <img
             className={styles.image}

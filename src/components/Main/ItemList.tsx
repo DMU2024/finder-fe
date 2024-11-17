@@ -18,9 +18,9 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    height: `calc(100dvh - ${headerHeight} - ${contentMargin})`,
     [`@media (max-width: ${tabletWidth})`]: {
-      height: `calc(100vh - ${headerHeight})`
+      height: `calc(100dvh - ${headerHeight})`
     },
     [`@media (max-width: ${mobileWidth})`]: {
       height: "auto",

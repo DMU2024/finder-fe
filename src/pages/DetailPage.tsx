@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100vw",
-      height: `calc( 100vh + 30vh )`,
+      height: `calc( 100dvh + 30vh )`,
       position: "absolute",
       bottom: "auto"
     }
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
-      height: "100vh",
+      height: "100dvh",
       borderRadius: "0 0 0 0",
       marginLeft: "0px"
     }
@@ -111,11 +111,11 @@ const useStyles = makeStyles({
     [`@media (max-width: ${tabletWidth})`]: {
       fontSize: "32px",
       fontWeight: "bold",
-      paddingTop: "30px",
+      paddingTop: "30px"
     },
     [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "20px",
-      paddingTop: "0px",
+      paddingTop: "0px"
     }
   },
   contentTopSub: {
@@ -169,7 +169,7 @@ const useStyles = makeStyles({
     fontWeight: "bold",
     whiteSpace: "pre-line",
     [`@media (max-width: ${tabletWidth})`]: {
-      marginTop: "20px",
+      marginTop: "20px"
     },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",

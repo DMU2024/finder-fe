@@ -13,14 +13,14 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    height: `calc(100dvh - ${headerHeight} - ${contentMargin})`,
     [`@media (max-width: ${tabletWidth})`]: {
-      height: `calc(100vh - ${headerHeight})`,
+      height: `calc(100dvh - ${headerHeight})`
     },
     [`@media (max-width: ${mobileWidth})`]: {
       height: "auto",
       marginTop: "10px"
-    },
+    }
   },
   title: {
     marginLeft: "8px",
@@ -30,8 +30,8 @@ const useStyles = makeStyles({
       display: "none"
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      display: "block",
-    },
+      display: "block"
+    }
   },
   subtitle: {
     marginLeft: "8px",
@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     },
     [`@media (max-width: ${mobileWidth})`]: {
       display: "block"
-    },
+    }
   },
   list: {
     height: "100%",
@@ -51,19 +51,19 @@ const useStyles = makeStyles({
     borderRadius: "20px",
     boxShadow: Depths.depth16,
     overflow: "auto",
-        // "::-webkit-scrollbar": {
+    // "::-webkit-scrollbar": {
     //   display: "none"
     // }
     [`@media (max-width: ${tabletWidth})`]: {
       marginTop: "0px",
-      borderRadius: "0px",
+      borderRadius: "0px"
     },
     [`@media (max-width: ${mobileWidth})`]: {
       height: "75vh",
       borderRadius: 0,
       boxShadow: "none",
       marginTop: "10px"
-    },
+    }
   },
   empty: {
     flex: 1,
@@ -110,9 +110,7 @@ function MarkerList({ handleBookmark }: Props) {
   return (
     <div className={styles.root}>
       <div className={styles.subtitle}>현재 지역</div>
-      <div
-        className={styles.title}
-      >{`${showLostGoods ? "분실물 목록" : "습득물 보관장소"}`}</div>
+      <div className={styles.title}>{`${showLostGoods ? "분실물 목록" : "습득물 보관장소"}`}</div>
       <Card className={styles.list}>{renderList()}</Card>
     </div>
   );

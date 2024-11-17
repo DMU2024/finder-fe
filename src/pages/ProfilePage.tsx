@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     paddingRight: "120px",
     [`@media (max-width: ${tabletWidth})`]: {
       width: "100%",
-      height: `calc(100vh - ${headerMobileHeight})`,
+      height: `calc(100dvh - ${headerMobileHeight})`,
       flexDirection: "column",
       borderRadius: "0px 0px 0px 0px",
       paddingLeft: "0px",

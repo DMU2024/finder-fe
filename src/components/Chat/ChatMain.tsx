@@ -16,9 +16,9 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
-    height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
+    height: `calc(100dvh - ${headerHeight} - ${contentMargin})`,
     [`@media (max-width: ${tabletWidth})`]: {
-      height: `calc(100vh - ${headerHeight})`
+      height: `calc(100dvh - ${headerHeight})`
     }
   },
   chatMenu: {
@@ -176,9 +176,7 @@ function ChatMain({
             className={styles.profileImg}
             fit="cover"
             shape="circular"
-            src={
-              recipient?.profileImage ? recipient.profileImage : "/logo192.png"
-            }
+            src={recipient?.profileImage ? recipient.profileImage : "/logo192.png"}
           />
           <div className={styles.profileText}>
             {!recipient

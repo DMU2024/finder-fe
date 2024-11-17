@@ -23,11 +23,7 @@ import SearchPage from "./pages/SearchPage";
 import WritePage from "./pages/WritePage";
 import useOptionStore from "./stores/option";
 import { brandColor } from "./styles/color";
-import {
-  contentMargin,
-  headerHeight,
-  headerMobileHeight
-} from "./styles/margin";
+import { contentMargin, headerHeight, headerMobileHeight } from "./styles/margin";
 import { sideBarWidth, mobileWidth, tabletWidth } from "./styles/size";
 
 const useStyles = makeStyles({
@@ -42,12 +38,12 @@ const useStyles = makeStyles({
     width: `calc(100% - ${sideBarWidth})`,
     marginLeft: sideBarWidth,
     [`@media (max-width: ${tabletWidth})`]: {
-      height: `calc(100vh - ${headerHeight})`,
+      height: `calc(100dvh - ${headerHeight})`,
       width: "100%",
-      marginLeft: 0,
+      marginLeft: 0
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      height: `calc(100vh - ${headerMobileHeight})`,
+      height: `calc(100dvh - ${headerMobileHeight})`
     }
   },
   content: {
@@ -92,18 +88,9 @@ function App() {
                 <Route element={<SearchPage />} path="/search" />
                 <Route element={<DetailPage />} path="/detail/:id" />
                 <Route element={<LoginPage />} path="/login" />
-                <Route
-                  element={<ProtectedRoute element={<WritePage />} />}
-                  path="/write"
-                />
-                <Route
-                  element={<ProtectedRoute element={<ChatPage />} />}
-                  path="/chat"
-                />
-                <Route
-                  element={<ProtectedRoute element={<ProfilePage />} />}
-                  path="/profile"
-                />
+                <Route element={<ProtectedRoute element={<WritePage />} />} path="/write" />
+                <Route element={<ProtectedRoute element={<ChatPage />} />} path="/chat" />
+                <Route element={<ProtectedRoute element={<ProfilePage />} />} path="/profile" />
                 <Route
                   element={<ProtectedRoute element={<AchievePage />} />}
                   path="/profile/achieve"
