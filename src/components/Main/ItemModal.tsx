@@ -33,7 +33,10 @@ const useStyles = makeStyles({
     zIndex: 1,
     transform: "translateY(100%)",
     transition: "transform 0.3s ease",
-    borderRadius: "40px 40px 0px 0px"
+    borderRadius: "40px 40px 0px 0px",
+    [`@media (min-width: ${mobileWidth02})`]: {
+      display: "none"
+    }
   },
   contentVisible: {
     transform: "translateY(0)"
