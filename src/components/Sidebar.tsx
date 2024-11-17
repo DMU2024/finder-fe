@@ -1,23 +1,9 @@
-import {
-  InlineDrawer,
-  Tab,
-  TabList,
-  Toolbar,
-  ToolbarButton,
-  makeStyles,
-  tokens
-} from "@fluentui/react-components";
-import {
-  ChatRegular,
-  HomeRegular,
-  NavigationRegular,
-  PersonInfoRegular,
-  SearchRegular
-} from "@fluentui/react-icons";
+import { InlineDrawer, Tab, TabList, makeStyles, tokens } from "@fluentui/react-components";
+import { ChatRegular, HomeRegular, PersonInfoRegular, SearchRegular } from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { sideBarWidth, mobileWidth, tabletWidth } from "../styles/size";
+import { sideBarWidth, tabletWidth } from "../styles/size";
 
 const useStyle = makeStyles({
   root: {
@@ -32,24 +18,6 @@ const useStyle = makeStyles({
     top: 0,
     [`@media (max-width: ${tabletWidth})`]: {
       display: "none"
-    }
-  },
-  toolbar: {
-    width: "100%",
-    height: "80px",
-    justifyContent: "center",
-    padding: 0
-  },
-  toolbarButton: {
-    maxWidth: "60px",
-    maxHeight: "60px",
-    "&>span": {
-      width: "60px",
-      height: "60px",
-      "&>svg": {
-        width: "30px",
-        height: "30px"
-      }
     }
   },
   tabList: {
@@ -96,18 +64,7 @@ function Sidebar() {
 
   return (
     <InlineDrawer open separator className={styles.root}>
-      <Toolbar className={styles.toolbar}>
-        <ToolbarButton
-          className={styles.toolbarButton}
-          icon={<NavigationRegular />}
-        />
-      </Toolbar>
-      <TabList
-        vertical
-        className={styles.tabList}
-        selectedValue={selectedTab}
-        size="large"
-      >
+      <TabList vertical className={styles.tabList} selectedValue={selectedTab} size="large">
         <Tab
           className={styles.tab}
           icon={<HomeRegular />}
