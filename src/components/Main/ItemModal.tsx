@@ -31,7 +31,6 @@ const useStyles = makeStyles({
     height: "82vh",
     backgroundColor: tokens.colorNeutralBackground1,
     zIndex: 1,
-    overflowY: "auto",
     transform: "translateY(100%)",
     transition: "transform 0.3s ease",
     borderRadius: "40px 40px 0px 0px"
@@ -61,16 +60,11 @@ function ItemModal({ handleBookmark }: Props) {
 
   return (
     <>
-      <div
-        className={styles.modalTrigger}
-        onClick={() => setIsModalOpen(!isModalOpen)}
-      >
+      <div className={styles.modalTrigger} onClick={() => setIsModalOpen(!isModalOpen)}>
         목록 보기
       </div>
 
-      <div
-        className={`${styles.contentContainer} ${isModalOpen ? styles.contentVisible : ""}`}
-      >
+      <div className={`${styles.contentContainer} ${isModalOpen ? styles.contentVisible : ""}`}>
         <div style={{ padding: "16px", position: "relative" }}>
           <div
             className={styles.closeButton}
@@ -81,11 +75,7 @@ function ItemModal({ handleBookmark }: Props) {
           >
             ✕
           </div>
-          {selectedMarker ? (
-            <ItemList />
-          ) : (
-            <MarkerList handleBookmark={handleBookmark} />
-          )}
+          {selectedMarker ? <ItemList /> : <MarkerList handleBookmark={handleBookmark} />}
         </div>
       </div>
     </>

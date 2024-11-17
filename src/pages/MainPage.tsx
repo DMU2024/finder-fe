@@ -2,12 +2,7 @@ import { makeStyles } from "@fluentui/react-components";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  BookMark,
-  deleteBookMark,
-  getBookMark,
-  postBookMark
-} from "../apis/bookmark";
+import { BookMark, deleteBookMark, getBookMark, postBookMark } from "../apis/bookmark";
 import { getCoord2RegionCode } from "../apis/kakaoMap";
 import ItemList from "../components/Main/ItemList";
 import ItemModal from "../components/Main/ItemModal";
@@ -31,7 +26,7 @@ const useStyles = makeStyles({
     display: "flex",
     gap: "32px",
     [`@media (max-width: ${tabletWidth})`]: {
-      gap: "0px",
+      gap: "0px"
     },
     [`@media (max-width: ${mobileWidth})`]: {
       display: "block"
@@ -40,7 +35,7 @@ const useStyles = makeStyles({
   left: {
     width: "35%",
     [`@media (max-width: ${tabletWidth})`]: {
-      width: "33%",
+      width: "33%"
     },
     [`@media (max-width: ${mobileWidth})`]: {
       display: "none"
@@ -50,12 +45,10 @@ const useStyles = makeStyles({
     width: "65%",
     [`@media (max-width: ${tabletWidth})`]: {
       width: "67%",
-      height: "100vh",
       position: "relative"
     },
     [`@media (max-width: ${mobileWidth})`]: {
       width: "100%",
-      height: "100vh",
       position: "relative"
     }
   }
@@ -124,11 +117,7 @@ function MainPage() {
     <div className={styles.root}>
       <div className={styles.content}>
         <div className={styles.left}>
-          {selectedMarker ? (
-            <ItemList />
-          ) : (
-            <MarkerList handleBookmark={handleBookmark} />
-          )}
+          {selectedMarker ? <ItemList /> : <MarkerList handleBookmark={handleBookmark} />}
         </div>
         <div className={styles.right}>
           <KakaoMap handleBookmark={handleBookmark} />

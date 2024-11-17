@@ -39,7 +39,7 @@ const useStyle = makeStyles({
     color: mainColor,
     [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "11px"
-    },
+    }
   },
   itemDescription02: {
     fontSize: "12px",
@@ -47,7 +47,7 @@ const useStyle = makeStyles({
     color: tokens.colorNeutralForeground4,
     [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "11px"
-    },
+    }
   },
   itemDetail: {
     marginLeft: "auto",
@@ -115,7 +115,13 @@ function Item({
           <Image
             fit="contain"
             src={img ? img : "/img105.png"}
-            style={{ width: "112px", height: "112px", marginTop: "5px", borderRadius: "30px", backgroundColor: tokens.colorNeutralBackground1Hover }}
+            style={{
+              width: "112px",
+              height: "112px",
+              marginTop: "5px",
+              borderRadius: "30px",
+              backgroundColor: tokens.colorNeutralBackground1Hover
+            }}
           />
           <div className={styles.itemBox}>
             <div className={styles.itemDescription}>{category}</div>

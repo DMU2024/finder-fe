@@ -1,16 +1,9 @@
 import { Depths } from "@fluentui/react";
-import {
-  Button,
-  Card,
-  Image,
-  Spinner,
-  makeStyles,
-  tokens
-} from "@fluentui/react-components";
+import { Button, Card, Image, Spinner, makeStyles, tokens } from "@fluentui/react-components";
 import { BookExclamationMarkRegular } from "@fluentui/react-icons";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Item from "./Item";
 import { placeLostFound } from "../../apis/lostfound";
@@ -27,7 +20,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
     [`@media (max-width: ${tabletWidth})`]: {
-      height: `calc(100vh - ${headerHeight})`,
+      height: `calc(100vh - ${headerHeight})`
     },
     [`@media (max-width: ${mobileWidth})`]: {
       height: "auto",
@@ -40,8 +33,8 @@ const useStyles = makeStyles({
       display: "none"
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      display: "block",
-    },
+      display: "block"
+    }
   },
   titleText: {
     marginLeft: "8px",
@@ -52,7 +45,7 @@ const useStyles = makeStyles({
     },
     [`@media (max-width: ${mobileWidth})`]: {
       display: "block"
-    },
+    }
   },
   titleBack: {
     display: "inline-block",
@@ -69,15 +62,15 @@ const useStyles = makeStyles({
     transition: "background-color 0.3s",
     boxShadow: tokens.shadow2,
     [`@media (max-width: ${tabletWidth})`]: {
-      display: "none",
+      display: "none"
     },
     [`@media (max-width: ${mobileWidth})`]: {
       display: "block",
       marginTop: "10px"
     },
-    '&:hover': {
-      backgroundColor: tokens.colorNeutralBackground1Hover,
-    },
+    "&:hover": {
+      backgroundColor: tokens.colorNeutralBackground1Hover
+    }
   },
   subtitle: {
     marginLeft: "8px",
@@ -89,7 +82,7 @@ const useStyles = makeStyles({
     },
     [`@media (max-width: ${mobileWidth})`]: {
       display: "block"
-    },
+    }
   },
   list: {
     height: "100%",
@@ -97,19 +90,16 @@ const useStyles = makeStyles({
     borderRadius: "20px",
     boxShadow: Depths.depth16,
     overflow: "auto",
-        // "::-webkit-scrollbar": {
-    //   display: "none"
-    // }
     [`@media (max-width: ${tabletWidth})`]: {
       marginTop: "0px",
-      borderRadius: "0px",
+      borderRadius: "0px"
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      height: "60vh",
+      height: "65vh",
       borderRadius: 0,
       boxShadow: "none",
       marginTop: "10px"
-    },
+    }
   },
   empty: {
     flex: 1,
@@ -126,11 +116,11 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground3,
     borderRadius: "30px",
     [`@media (max-width: ${tabletWidth})`]: {
-      marginTop: "160px",
+      marginTop: "160px"
     },
     [`@media (max-width: ${mobileWidth})`]: {
-      marginTop: "auto",
-    },
+      marginTop: "auto"
+    }
   },
   contentTexts: {
     marginTop: "32px",
@@ -175,13 +165,8 @@ function ItemList() {
   const styles = useStyles();
   const navigate = useNavigate();
 
-  const {
-    selectedMarker,
-    placeItemList,
-    showLostGoods,
-    setSelectedMarker,
-    setPlaceItemList
-  } = useMainStore();
+  const { selectedMarker, placeItemList, showLostGoods, setSelectedMarker, setPlaceItemList } =
+    useMainStore();
 
   const { userId } = useAuthStore();
 
@@ -200,25 +185,13 @@ function ItemList() {
             alignItems: "center"
           }}
         >
-          <Image
-            className={styles.contentImage}
-            fit="contain"
-            src="./img105.png"
-          />
+          <Image className={styles.contentImage} fit="contain" src="./img105.png" />
           <div className={styles.contentTexts}>
             <div className={styles.contentMain}>{selectedMarker?.name}</div>
-            <div className={styles.contentSub}>
-              {`분실일자: ${selectedMarker?.date}`}
-            </div>
-            <div className={styles.contentInfo}>
-                {`물품분류: ${selectedMarker?.category}`}
-            </div>
-            <div className={styles.contentInfo}>
-              {`분실장소: ${selectedMarker?.address}`}
-            </div>
-            <div className={styles.contentInfo02}>
-              {`내용: ${selectedMarker?.info}`}
-            </div>
+            <div className={styles.contentSub}>{`분실일자: ${selectedMarker?.date}`}</div>
+            <div className={styles.contentInfo}>{`물품분류: ${selectedMarker?.category}`}</div>
+            <div className={styles.contentInfo}>{`분실장소: ${selectedMarker?.address}`}</div>
+            <div className={styles.contentInfo02}>{`내용: ${selectedMarker?.info}`}</div>
           </div>
           {userId !== selectedMarker?.userId && (
             <Button
@@ -257,11 +230,7 @@ function ItemList() {
             />
           ))}
           <div ref={scrollRef}>
-            {isLoading ? (
-              <Spinner className={styles.spinner} />
-            ) : (
-              <div style={{ height: "1px" }} />
-            )}
+            {isLoading ? <Spinner className={styles.spinner} /> : <div style={{ height: "1px" }} />}
           </div>
         </>
       );
@@ -305,9 +274,7 @@ function ItemList() {
 
   return (
     <div className={styles.root}>
-      <div className={styles.subtitle}>
-        {`선택한 ${showLostGoods ? "분실물" : "장소"}`}
-      </div>
+      <div className={styles.subtitle}>{`선택한 ${showLostGoods ? "분실물" : "장소"}`}</div>
       <div className={styles.title}>
         <div className={styles.titleText}>{selectedMarker?.name}</div>
         <div

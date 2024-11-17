@@ -21,12 +21,12 @@ const useStyle = makeStyles({
     flexDirection: "column",
     height: `calc(100vh - ${headerHeight} - ${contentMargin})`,
     gap: "15px",
-    [`@media (max-width: ${mobileWidth})`]: {
+    [`@media (max-width: ${tabletWidth})`]: {
       height: `calc(100vh - ${headerHeight})`,
       padding: 0,
       zIndex: 0
     },
-    [`@media (max-width: ${tabletWidth})`]: {
+    [`@media (max-width: ${mobileWidth})`]: {
       height: `calc(100vh - ${headerMobileHeight})`,
       padding: 0,
       zIndex: 0
