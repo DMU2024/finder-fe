@@ -9,7 +9,6 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import SidebarMobile from "./SidebarMobile";
 import { postLogout } from "../apis/user";
 import useAuthStore from "../stores/auth";
 import useOptionStore from "../stores/option";
@@ -20,7 +19,8 @@ import {
   headerHeight,
   headerMobileHeight
 } from "../styles/margin";
-import { sideBarWidth, mobileWidth, tabletWidth, tabletWidth02 } from "../styles/size";
+import { mobileWidth, sideBarWidth, tabletWidth, tabletWidth02 } from "../styles/size";
+import SidebarMobile from "./SidebarMobile";
 
 const useStyles = makeStyles({
   root: {

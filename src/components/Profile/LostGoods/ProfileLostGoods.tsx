@@ -1,10 +1,5 @@
-import { tokens, makeStyles } from "@fluentui/react-components";
-import {
-  TableBody,
-  TableCell,
-  TableCellLayout,
-  TableRow
-} from "@fluentui/react-table";
+import { makeStyles, tokens } from "@fluentui/react-components";
+import { TableCell, TableRow } from "@fluentui/react-table";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +9,7 @@ import useAuthStore from "../../../stores/auth";
 import useMainStore from "../../../stores/main";
 import usePositionStore from "../../../stores/position";
 import { mainColor, secondaryColor, skeletonColor } from "../../../styles/color";
-import { mobileWidth, tabletWidth } from "../../../styles/size";
+import { tabletWidth } from "../../../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -129,11 +124,7 @@ function ProfileLostGoods() {
       <div className={styles.title}>내가 쓴 글</div>
       <div className={styles.tableContainer}>
         {lostGoods.map((row) => (
-          <TableRow
-            key={row._id}
-            onClick={() => handleClick(row)}
-            className={styles.tableRow}
-          >
+          <TableRow key={row._id} onClick={() => handleClick(row)} className={styles.tableRow}>
             <TableCell className={styles.tableCell}>
               <div className={styles.categoryTitle}>{row.category}</div>
               <div className={styles.itemTitle}>{row.name}</div>

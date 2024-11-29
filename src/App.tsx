@@ -1,19 +1,18 @@
 import {
+  createDarkTheme,
+  createLightTheme,
   FluentProvider,
   makeStyles,
-  tokens,
-  createLightTheme,
-  createDarkTheme
+  tokens
 } from "@fluentui/react-components";
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Header from "./components/Header";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
 import SidebarMobile from "./components/SidebarMobile";
 import WriteButton from "./components/WriteButton";
-import AchievePage from "./pages/AchievePage";
 import ChatPage from "./pages/ChatPage";
 import DetailPage from "./pages/DetailPage";
 import LoginPage from "./pages/LoginPage";
@@ -24,7 +23,7 @@ import WritePage from "./pages/WritePage";
 import useOptionStore from "./stores/option";
 import { brandColor } from "./styles/color";
 import { contentMargin, headerHeight, headerMobileHeight } from "./styles/margin";
-import { sideBarWidth, mobileWidth, tabletWidth } from "./styles/size";
+import { mobileWidth, sideBarWidth, tabletWidth } from "./styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -91,10 +90,6 @@ function App() {
                 <Route element={<ProtectedRoute element={<WritePage />} />} path="/write" />
                 <Route element={<ProtectedRoute element={<ChatPage />} />} path="/chat" />
                 <Route element={<ProtectedRoute element={<ProfilePage />} />} path="/profile" />
-                <Route
-                  element={<ProtectedRoute element={<AchievePage />} />}
-                  path="/profile/achieve"
-                />
               </Routes>
             </div>
           </div>

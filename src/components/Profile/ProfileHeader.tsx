@@ -1,11 +1,11 @@
 import { DefaultButton } from "@fluentui/react";
 import {
-  makeStyles,
-  Image,
-  tokens,
   Field,
+  Image,
+  makeStyles,
   ProgressBar,
-  ProgressBarProps
+  ProgressBarProps,
+  tokens
 } from "@fluentui/react-components";
 
 import { User } from "../../apis/user";

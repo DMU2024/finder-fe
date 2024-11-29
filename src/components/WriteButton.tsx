@@ -1,7 +1,7 @@
 import { Depths } from "@fluentui/react";
 import { Button, makeStyles } from "@fluentui/react-components";
 import { EditRegular } from "@fluentui/react-icons";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { mainColor } from "../styles/color";
 import { sideBarWidth, tabletWidth } from "../styles/size";

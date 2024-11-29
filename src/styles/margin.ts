@@ -3,4 +3,4 @@ const headerMobileHeight = "68px";
 const contentMargin = "66px";
 const contentMobileMargin = "40px";
 
-export { headerHeight, contentMargin, headerMobileHeight, contentMobileMargin };
+export { contentMargin, contentMobileMargin, headerHeight, headerMobileHeight };

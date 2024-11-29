@@ -1,12 +1,7 @@
-import { tokens, makeStyles } from "@fluentui/react-components";
+import { makeStyles, tokens } from "@fluentui/react-components";
 import React, { useEffect, useState } from "react";
 
-import {
-  deleteKeyword,
-  getKeywords,
-  Keyword,
-  postKeyword
-} from "../../apis/keyword";
+import { deleteKeyword, getKeywords, Keyword, postKeyword } from "../../apis/keyword";
 import useAuthStore from "../../stores/auth";
 import { mainColor, skeletonColor } from "../../styles/color";
 import { tabletWidth } from "../../styles/size";
@@ -60,7 +55,7 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1Hover,
     [`@media (max-width: ${tabletWidth})`]: {
       width: "70vw",
-      height: "45px",
+      height: "45px"
     }
   },
   button: {
@@ -72,7 +67,7 @@ const useStyles = makeStyles({
     border: "none",
     background: "none",
     [`@media (max-width: ${tabletWidth})`]: {
-      marginLeft: "0px",
+      marginLeft: "0px"
     }
   },
   keywordContainer: {
@@ -187,9 +182,7 @@ function ProfileKeyword() {
             입력
           </button>
         </div>
-        {error && (
-          <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
-        )}
+        {error && <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>}
         <div className={styles.keywordContainer}>
           {keywords.length === 0 ? (
             <div>키워드가 등록되지 않았습니다.</div>
@@ -200,10 +193,7 @@ function ProfileKeyword() {
                   <div className={styles.circle} />
                   <div className={styles.keywordName}>{keyword.keyword}</div>
                 </div>
-                <div
-                  className={styles.delete}
-                  onClick={() => handleDeleteKeyword(keyword.id)}
-                >
+                <div className={styles.delete} onClick={() => handleDeleteKeyword(keyword.id)}>
                   삭제
                 </div>
               </div>

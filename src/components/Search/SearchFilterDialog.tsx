@@ -1,23 +1,23 @@
 import {
-  Dialog,
-  DialogTrigger,
   Button,
-  DialogSurface,
-  DialogBody,
-  DialogTitle,
-  DialogContent,
+  Dialog,
   DialogActions,
+  DialogBody,
+  DialogContent,
+  DialogSurface,
+  DialogTitle,
+  DialogTrigger,
+  Divider,
   Input,
   makeStyles,
-  RadioGroup,
   Radio,
-  Divider
+  RadioGroup
 } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
 import { Fragment, useState } from "react";
 
-import { categoryOption, colorOption } from "./SearchFilterOption";
 import useSearchStore from "../../stores/search";
+import { categoryOption, colorOption } from "./SearchFilterOption";
 
 interface Props {
   title: string;
@@ -62,10 +62,7 @@ function SearchFilterDialog({ title, option, styleProps }: Props) {
                 className={styles.radioItem}
                 label={
                   <>
-                    <span
-                      className={styleProps.colorHex}
-                      style={{ backgroundColor: hex }}
-                    />
+                    <span className={styleProps.colorHex} style={{ backgroundColor: hex }} />
                     <span className={styleProps.color}>{color}</span>
                   </>
                 }
@@ -83,25 +80,19 @@ function SearchFilterDialog({ title, option, styleProps }: Props) {
               setOpen(false);
             }}
           >
-            {Object.entries(categoryOption).map(
-              ([mainCategory, subCategory]) => (
-                <Fragment key={mainCategory}>
+            {Object.entries(categoryOption).map(([mainCategory, subCategory]) => (
+              <Fragment key={mainCategory}>
+                <Radio key={mainCategory} label={mainCategory} value={mainCategory} />
+                {subCategory.map((item) => (
                   <Radio
-                    key={mainCategory}
-                    label={mainCategory}
-                    value={mainCategory}
+                    key={`${mainCategory} > ${item}`}
+                    label={`${mainCategory} > ${item}`}
+                    value={`${mainCategory} > ${item}`}
                   />
-                  {subCategory.map((item) => (
-                    <Radio
-                      key={`${mainCategory} > ${item}`}
-                      label={`${mainCategory} > ${item}`}
-                      value={`${mainCategory} > ${item}`}
-                    />
-                  ))}
-                  <Divider />
-                </Fragment>
-              )
-            )}
+                ))}
+                <Divider />
+              </Fragment>
+            ))}
           </RadioGroup>
         );
     }
@@ -126,16 +117,9 @@ function SearchFilterDialog({ title, option, styleProps }: Props) {
         <Input
           readOnly
           className={styleProps.input}
-          contentAfter={
-            <DismissRegular
-              className={styleProps.dismiss}
-              onClick={handleDismiss}
-            />
-          }
+          contentAfter={<DismissRegular className={styleProps.dismiss} onClick={handleDismiss} />}
           placeholder={title}
-          value={
-            option === "color" ? query?.color ?? "" : query?.category ?? ""
-          }
+          value={option === "color" ? (query?.color ?? "") : (query?.category ?? "")}
         />
       </DialogTrigger>
       <DialogSurface>

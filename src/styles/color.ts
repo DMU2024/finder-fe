@@ -23,10 +23,4 @@ const brandColor = {
   160: "#D9D9D9"
 };
 
-export {
-  mainColor,
-  backgroundColor,
-  skeletonColor,
-  secondaryColor,
-  brandColor
-};
+export { backgroundColor, brandColor, mainColor, secondaryColor, skeletonColor };

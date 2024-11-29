@@ -3,10 +3,10 @@ import { makeStyles } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 
-import { categories, CategoryData, Subcategory } from "./WriteCategoryData";
 import useWriteStore from "../../../stores/write";
-import { skeletonColor, mainColor } from "../../../styles/color";
+import { mainColor, skeletonColor } from "../../../styles/color";
 import { mobileWidth } from "../../../styles/size";
+import { categories, CategoryData, Subcategory } from "./WriteCategoryData";
 
 const useStyles = makeStyles({
   title: {

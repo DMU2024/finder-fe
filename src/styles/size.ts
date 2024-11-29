@@ -4,4 +4,4 @@ const mobileWidth02 = "501px";
 const tabletWidth = "1280px";
 const tabletWidth02 = "1281px";
 
-export { sideBarWidth, mobileWidth, mobileWidth02, tabletWidth, tabletWidth02 };
+export { mobileWidth, mobileWidth02, sideBarWidth, tabletWidth, tabletWidth02 };

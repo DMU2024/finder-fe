@@ -1,11 +1,10 @@
 import { Depths } from "@fluentui/react";
-import { Button, Card, Image, Spinner, makeStyles, tokens } from "@fluentui/react-components";
+import { Button, Card, Image, makeStyles, Spinner, tokens } from "@fluentui/react-components";
 import { BookExclamationMarkRegular } from "@fluentui/react-icons";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Item from "./Item";
 import { placeLostFound } from "../../apis/lostfound";
 import useIntersect from "../../hooks/useIntersect";
 import useAuthStore from "../../stores/auth";
@@ -13,6 +12,7 @@ import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { contentMargin, headerHeight } from "../../styles/margin";
 import { mobileWidth, tabletWidth } from "../../styles/size";
+import Item from "./Item";
 
 const useStyles = makeStyles({
   root: {

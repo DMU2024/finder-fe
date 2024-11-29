@@ -1,45 +1,39 @@
-import {
-  Image,
-  TableCell,
-  TableCellLayout,
-  TableRow,
-  tokens
-} from "@fluentui/react-components";
+import { Image, TableCell, TableCellLayout, TableRow, tokens } from "@fluentui/react-components";
 import { makeStyles } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
 
 import { LostFound } from "../../apis/lostfound";
-import { mainColor, skeletonColor, secondaryColor } from "../../styles/color";
-import { mobileWidth, tabletWidth } from "../../styles/size";
+import { mainColor, secondaryColor } from "../../styles/color";
+import { tabletWidth } from "../../styles/size";
 
 const useStyles = makeStyles({
   tableRow: {
-      height: "auto",
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center"
+    height: "auto",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
   },
   tableCell: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "flex-start",
-      flex: "1 0 auto",
-      height: "auto",
-      padding: "16px 16px 16px 0px",
-      "&::before": {
-        content: "attr(data-label)",
-        fontWeight: "bold",
-        display: "block",
-        marginBottom: "4px"
-      }
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    flex: "1 0 auto",
+    height: "auto",
+    padding: "16px 16px 16px 0px",
+    "&::before": {
+      content: "attr(data-label)",
+      fontWeight: "bold",
+      display: "block",
+      marginBottom: "4px"
+    }
   },
   imageContainer: {
-      display: "flex",
-      width: "12vh",
-      height: "12vh",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "24px 24px 24px 24px"
+    display: "flex",
+    width: "12vh",
+    height: "12vh",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "24px 24px 24px 24px"
   },
   image: {
     width: "14vh",
@@ -52,19 +46,19 @@ const useStyles = makeStyles({
     }
   },
   title: {
-      color: tokens.colorNeutralForeground1,
-      fontSize: "16px",
-      fontWeight: "bold"
+    color: tokens.colorNeutralForeground1,
+    fontSize: "16px",
+    fontWeight: "bold"
   },
   categoryTitle: {
-      color: mainColor,
-      fontSize: "12px",
-      fontWeight: "bold"
+    color: mainColor,
+    fontSize: "12px",
+    fontWeight: "bold"
   },
   subTitle: {
-      color: secondaryColor,
-      fontSize: "12px",
-      fontWeight: "bold"
+    color: secondaryColor,
+    fontSize: "12px",
+    fontWeight: "bold"
   }
 });
 
@@ -85,28 +79,14 @@ function SearchListItem({ item }: Props) {
     >
       <TableCell className={styles.imageContainer}>
         <TableCellLayout
-          media={
-            <Image
-              className={styles.image}
-              fit="contain"
-              src={item.fdFilePathImg}
-            />
-          }
+          media={<Image className={styles.image} fit="contain" src={item.fdFilePathImg} />}
         />
       </TableCell>
       <TableCell className={styles.tableCell}>
-        <TableCellLayout
-          media={<span className={styles.categoryTitle}>{item.prdtClNm}</span>}
-        />
-        <TableCellLayout
-          media={<span className={styles.title}>{item.fdPrdtNm}</span>}
-        />
-        <TableCellLayout
-          media={<span className={styles.subTitle}>{item.depPlace}</span>}
-        />
-        <TableCellLayout
-          media={<span className={styles.subTitle}>{item.fdYmd}</span>}
-        />
+        <TableCellLayout media={<span className={styles.categoryTitle}>{item.prdtClNm}</span>} />
+        <TableCellLayout media={<span className={styles.title}>{item.fdPrdtNm}</span>} />
+        <TableCellLayout media={<span className={styles.subTitle}>{item.depPlace}</span>} />
+        <TableCellLayout media={<span className={styles.subTitle}>{item.fdYmd}</span>} />
       </TableCell>
     </TableRow>
   );

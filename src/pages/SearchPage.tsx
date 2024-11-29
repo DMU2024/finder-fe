@@ -8,9 +8,9 @@ import SearchList from "../components/Search/SearchList";
 import useSearchStore from "../stores/search";
 import {
   contentMargin,
+  contentMobileMargin,
   headerHeight,
-  headerMobileHeight,
-  contentMobileMargin
+  headerMobileHeight
 } from "../styles/margin";
 import { mobileWidth, tabletWidth } from "../styles/size";
 

@@ -12,7 +12,7 @@ import ProfilePlace from "../components/Profile/ProfilePlace";
 import useAuthStore from "../stores/auth";
 import useGlobalStore from "../stores/global";
 import { headerMobileHeight } from "../styles/margin";
-import { mobileWidth, tabletWidth } from "../styles/size";
+import { tabletWidth } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {

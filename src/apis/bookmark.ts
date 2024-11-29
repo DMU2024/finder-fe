@@ -24,12 +24,10 @@ const postBookMark = async (userId: number, location: string) => {
 };
 
 const deleteBookMark = async (bookmarkId: number) => {
-  const { data } = await Instance.delete<number>(
-    `/api/bookmarks/${bookmarkId}`
-  );
+  const { data } = await Instance.delete<number>(`/api/bookmarks/${bookmarkId}`);
 
   return data;
 };
 
 export type { BookMark };
-export { getBookMark, postBookMark, deleteBookMark };
+export { deleteBookMark, getBookMark, postBookMark };

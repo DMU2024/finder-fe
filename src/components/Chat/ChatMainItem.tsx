@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     alignContent: "end",
     color: mainColor,
     [`@media (max-width: ${tabletWidth})`]: {
-      marginRight: "10px",
+      marginRight: "10px"
     }
   },
   othersRoot: { marginRight: "auto" },
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     alignContent: "end",
     color: tokens.colorNeutralStroke1,
     [`@media (max-width: ${tabletWidth})`]: {
-      marginLeft: "10px",
+      marginLeft: "10px"
     }
   }
 });
@@ -54,16 +54,9 @@ function ChatMainItem({ message, timestamp, isMine }: Props) {
   const styles = useStyles();
 
   return (
-    <div
-      className={mergeClasses(
-        styles.root,
-        isMine ? styles.myRoot : styles.othersRoot
-      )}
-    >
+    <div className={mergeClasses(styles.root, isMine ? styles.myRoot : styles.othersRoot)}>
       {isMine && <div className={styles.myChatTime}>{timestamp}</div>}
-      <div className={isMine ? styles.myChat : styles.othersChat}>
-        {message}
-      </div>
+      <div className={isMine ? styles.myChat : styles.othersChat}>{message}</div>
       {!isMine && <div className={styles.othersChatTime}>{timestamp}</div>}
     </div>
   );

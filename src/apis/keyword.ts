@@ -27,4 +27,4 @@ const deleteKeyword = async (keywordId: number) => {
 };
 
 export type { Keyword };
-export { getKeywords, postKeyword, deleteKeyword };
+export { deleteKeyword, getKeywords, postKeyword };

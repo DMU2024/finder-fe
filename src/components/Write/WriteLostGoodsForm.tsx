@@ -3,8 +3,6 @@ import { Input, makeStyles, tokens } from "@fluentui/react-components";
 import { DatePicker } from "@fluentui/react-datepicker-compat";
 import { DismissRegular } from "@fluentui/react-icons";
 
-import WriteCategory from "./Category/WriteCategory";
-import WritePlaceDialog from "./WritePlaceSelectDialog";
 import { Marker, postMarker } from "../../apis/marker";
 import useMarkerRedirect from "../../hooks/useMarkerRedirect";
 import useAuthStore from "../../stores/auth";
@@ -13,6 +11,8 @@ import { mainColor, skeletonColor } from "../../styles/color";
 import { mobileWidth, tabletWidth } from "../../styles/size";
 import { formatDate } from "../../utils/format";
 import { localizedStrings } from "../Search/SearchFilterOption";
+import WriteCategory from "./Category/WriteCategory";
+import WritePlaceDialog from "./WritePlaceSelectDialog";
 
 const useStyles = makeStyles({
   root: {

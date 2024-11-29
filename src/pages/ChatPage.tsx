@@ -10,7 +10,7 @@ import ChatHistoryList from "../components/Chat/ChatHistoryList";
 import ChatMain from "../components/Chat/ChatMain";
 import useAuthStore from "../stores/auth";
 import { headerHeight } from "../styles/margin";
-import { mobileWidth, tabletWidth } from "../styles/size";
+import { tabletWidth } from "../styles/size";
 import { BASE_URL } from "../utils/axios";
 
 const useStyles = makeStyles({

@@ -2,11 +2,7 @@ import { Image, makeStyles, tokens } from "@fluentui/react-components";
 
 import { ChatHistory } from "../../apis/chat";
 import { getUser, User } from "../../apis/user";
-import {
-  backgroundColor,
-  secondaryColor,
-  skeletonColor
-} from "../../styles/color";
+import { backgroundColor, secondaryColor, skeletonColor } from "../../styles/color";
 
 const useStyles = makeStyles({
   root: {
@@ -47,12 +43,7 @@ interface Props {
   setIsRightVisible: (isVisible: boolean) => void;
 }
 
-function ChatHistoryItem({
-  recipient,
-  setRecipient,
-  history,
-  setIsRightVisible
-}: Props) {
+function ChatHistoryItem({ recipient, setRecipient, history, setIsRightVisible }: Props) {
   const styles = useStyles();
 
   return (
@@ -78,9 +69,7 @@ function ChatHistoryItem({
         </div>
         <div className={styles.historyMsg}>{history.message}</div>
       </div>
-      <div className={styles.historyDate}>
-        {history.messageDate.split("T")[0]}
-      </div>
+      <div className={styles.historyDate}>{history.messageDate.split("T")[0]}</div>
     </div>
   );
 }

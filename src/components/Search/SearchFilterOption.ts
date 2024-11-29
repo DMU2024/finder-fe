@@ -1,7 +1,4 @@
-import {
-  CalendarStrings,
-  defaultDatePickerStrings
-} from "@fluentui/react-datepicker-compat";
+import { CalendarStrings, defaultDatePickerStrings } from "@fluentui/react-datepicker-compat";
 
 const colorOption = {
   "레드(빨강)": "#f00",
@@ -66,14 +63,7 @@ const categoryOption = {
   악기: ["건반악기", "관악기", "타악기", "현악기", "기타악기"],
   유가증권: ["어음", "상품권", "채권", "기타"],
   의류: ["여성의류", "남성의류", "아기의류", "모자", "신발", "기타의류"],
-  자동차: [
-    "자동차",
-    "열쇠",
-    "네비게이션",
-    "자동차번호판",
-    "임시번호판",
-    "기타용품"
-  ],
+  자동차: ["자동차", "열쇠", "네비게이션", "자동차번호판", "임시번호판", "기타용품"],
   전자기기: ["태블릿", "스마트워치", "무선이어폰", "카메라", "기타용품"],
   지갑: ["여성용 지갑", "남성용 지갑", "기타 지갑"],
   증명서: ["신분증", "면허증", "여권", "기타"],
@@ -88,20 +78,7 @@ const categoryOption = {
 const localizedStrings: CalendarStrings = {
   ...defaultDatePickerStrings,
   shortDays: ["일", "월", "화", "수", "목", "금", "토"],
-  months: [
-    "1월",
-    "2월",
-    "3월",
-    "4월",
-    "5월",
-    "6월",
-    "7월",
-    "8월",
-    "9월",
-    "10월",
-    "11월",
-    "12월"
-  ],
+  months: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
 
   shortMonths: [
     "1월",
@@ -120,4 +97,4 @@ const localizedStrings: CalendarStrings = {
   goToToday: "오늘 날짜로"
 };
 
-export { colorOption, categoryOption, localizedStrings };
+export { categoryOption, colorOption, localizedStrings };

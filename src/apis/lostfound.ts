@@ -75,5 +75,5 @@ const placeLostFound = async (query: string, page: number) => {
   return data;
 };
 
-export type { LostFoundQuery, LostFound, LostFoundDetail };
-export { getLostFoundDetail, searchLostFound, placeLostFound };
+export type { LostFound, LostFoundDetail, LostFoundQuery };
+export { getLostFoundDetail, placeLostFound, searchLostFound };

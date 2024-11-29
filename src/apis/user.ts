@@ -1,5 +1,5 @@
-import { Marker } from "./marker";
 import { Instance, KAKAO_AUTH, KAKAO_CALLBACK, KAKAO_CLIENTID } from "../utils/axios";
+import { Marker } from "./marker";
 
 interface User {
   userId: number;
@@ -69,7 +69,7 @@ const getLoginURI = () => {
 const postLogin = async (code: string) => {
   const { data } = await Instance.post<User>("/api/auth/login", {
     code: code,
-    isDev: !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+    isDev: import.meta.env.MODE === "development"
   });
 
   return data;
@@ -91,15 +91,15 @@ const postUnlink = async (userId: number) => {
   return data;
 };
 
-export type { User, KakaoScopeInfo, KakaoScope };
+export type { KakaoScope, KakaoScopeInfo, User };
 export {
-  getUser,
-  postUserSetting,
-  getUserLostGoods,
   getKakaoScopes,
-  postRevokeKakaoScopes,
   getLoginURI,
+  getUser,
+  getUserLostGoods,
   postLogin,
   postLogout,
-  postUnlink
+  postRevokeKakaoScopes,
+  postUnlink,
+  postUserSetting
 };

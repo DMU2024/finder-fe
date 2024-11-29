@@ -1,10 +1,10 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 import { useState } from "react";
 
-import ItemList from "./ItemList";
-import MarkerList from "./MarkerList";
 import useMainStore from "../../stores/main";
 import { mobileWidth02 } from "../../styles/size";
+import ItemList from "./ItemList";
+import MarkerList from "./MarkerList";
 
 const useStyles = makeStyles({
   modalTrigger: {

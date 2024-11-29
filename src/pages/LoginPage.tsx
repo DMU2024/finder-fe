@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { getLoginURI, postLogin } from "../apis/user";
 import useAuthStore from "../stores/auth";
 import { mainColor } from "../styles/color";
-import { headerMobileHeight, headerHeight } from "../styles/margin";
+import { headerHeight, headerMobileHeight } from "../styles/margin";
 import { mobileWidth } from "../styles/size";
 
 const useStyles = makeStyles({

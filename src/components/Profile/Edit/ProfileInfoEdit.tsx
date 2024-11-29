@@ -1,12 +1,12 @@
 import { DefaultButton } from "@fluentui/react";
 import {
-  makeStyles,
-  Image,
-  tokens,
   Field,
+  Image,
+  Input,
+  makeStyles,
   ProgressBar,
   ProgressBarProps,
-  Input
+  tokens
 } from "@fluentui/react-components";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
@@ -69,10 +69,7 @@ interface ProfileProps extends Partial<ProgressBarProps> {
   img?: string;
 }
 
-const ProfileInfoEdit: React.FC<ProfileProps> = ({
-  img,
-  ...progressBarProps
-}) => {
+const ProfileInfoEdit: React.FC<ProfileProps> = ({ img, ...progressBarProps }) => {
   const styles = useStyles();
   const navigate = useNavigate();
   const [imageSrc, setImageSrc] = React.useState(img || "/profileIMGimsi.png");

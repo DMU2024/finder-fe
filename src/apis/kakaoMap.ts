@@ -42,4 +42,4 @@ const getCoord2Address = async (latitude: number, longitude: number) => {
 };
 
 export type { Coord2AddressResult };
-export { getCoord2RegionCode, getCoord2Address };
+export { getCoord2Address, getCoord2RegionCode };

@@ -4,13 +4,13 @@ import { AddRegular, SendRegular } from "@fluentui/react-icons";
 import { useEffect, useRef } from "react";
 import ReactTextareaAutosize from "react-textarea-autosize";
 
-import ChatMainItem from "./ChatMainItem";
 import { Chat } from "../../apis/chat";
 import { User } from "../../apis/user";
 import useAuthStore from "../../stores/auth";
 import { mainColor } from "../../styles/color";
-import { headerHeight, contentMargin } from "../../styles/margin";
+import { contentMargin, headerHeight } from "../../styles/margin";
 import { tabletWidth } from "../../styles/size";
+import ChatMainItem from "./ChatMainItem";
 
 const useStyles = makeStyles({
   root: {

@@ -1,4 +1,4 @@
-import { tokens, makeStyles, Image } from "@fluentui/react-components";
+import { Image, makeStyles, tokens } from "@fluentui/react-components";
 
 import { BookMark } from "../../apis/bookmark";
 import useMarkerRedirect from "../../hooks/useMarkerRedirect";

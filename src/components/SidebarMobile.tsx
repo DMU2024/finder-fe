@@ -1,4 +1,4 @@
-import { makeStyles, Image, Tab, TabList, tokens } from "@fluentui/react-components";
+import { Image, makeStyles, Tab, TabList, tokens } from "@fluentui/react-components";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -6,7 +6,7 @@ import { getUser, postLogout, User } from "../apis/user";
 import useAuthStore from "../stores/auth";
 import useOptionStore from "../stores/option";
 import { mainColor } from "../styles/color";
-import { mobileWidth02, tabletWidth02 } from "../styles/size";
+import { tabletWidth02 } from "../styles/size";
 
 const useStyles = makeStyles({
   root: {
@@ -88,7 +88,7 @@ interface MobileProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function SidebarMobile({ isOpen, setIsOpen, img }: MobileProps) {
+function SidebarMobile({ isOpen, setIsOpen }: MobileProps) {
   const styles = useStyles();
   const navigate = useNavigate();
   const location = useLocation();

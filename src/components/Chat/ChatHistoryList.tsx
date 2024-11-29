@@ -1,12 +1,12 @@
 import { Depths } from "@fluentui/react";
 import { makeStyles, tokens } from "@fluentui/react-components";
 
-import ChatHistoryItem from "./ChatHistoryItem";
 import { ChatHistory } from "../../apis/chat";
 import { User } from "../../apis/user";
 import { mainColor } from "../../styles/color";
-import { headerHeight, contentMargin } from "../../styles/margin";
+import { contentMargin, headerHeight } from "../../styles/margin";
 import { tabletWidth } from "../../styles/size";
+import ChatHistoryItem from "./ChatHistoryItem";
 
 const useStyles = makeStyles({
   root: {

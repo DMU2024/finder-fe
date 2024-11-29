@@ -1,20 +1,11 @@
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHeaderCell,
-  TableBody,
-  makeStyles,
-  Spinner,
-  tokens
-} from "@fluentui/react-components";
+import { makeStyles, Spinner, Table, TableBody, tokens } from "@fluentui/react-components";
 import { useEffect, useRef } from "react";
 
-import SearchListItem from "./SearchListItem";
 import useDebounce from "../../hooks/useDebounce";
 import useIntersect from "../../hooks/useIntersect";
 import useSearchStore from "../../stores/search";
 import { tabletWidth } from "../../styles/size";
+import SearchListItem from "./SearchListItem";
 
 const useStyles = makeStyles({
   root: {
@@ -100,11 +91,7 @@ function SearchList({ isEndOfPage, isLoading, getItems }: Props) {
         </TableBody>
       </Table>
       <div ref={scrollRef}>
-        {isLoading ? (
-          <Spinner className={styles.spinner} />
-        ) : (
-          <div style={{ height: "1px" }} />
-        )}
+        {isLoading ? <Spinner className={styles.spinner} /> : <div style={{ height: "1px" }} />}
       </div>
     </div>
   );

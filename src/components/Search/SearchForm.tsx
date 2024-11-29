@@ -1,11 +1,11 @@
-import { SearchBox, makeStyles } from "@fluentui/react-components";
-import { SearchRegular, FilterRegular, SendRegular } from "@fluentui/react-icons"; // 필터 아이콘 추가
+import { makeStyles, SearchBox } from "@fluentui/react-components";
+import { FilterRegular, SearchRegular, SendRegular } from "@fluentui/react-icons"; // 필터 아이콘 추가
 import { useState } from "react";
 
-import SearchFilter from "./SearchFilter";
 import useSearchStore from "../../stores/search";
 import { mainColor } from "../../styles/color";
 import { mobileWidth, tabletWidth } from "../../styles/size";
+import SearchFilter from "./SearchFilter";
 
 const useStyles = makeStyles({
   root: {

@@ -46,5 +46,5 @@ const createChatRoom = async (userId1: number, userId2: number) => {
   return data;
 };
 
-export type { ChatHistory, Chat };
-export { getChatHistories, getMessages, createChatRoom };
+export type { Chat, ChatHistory };
+export { createChatRoom, getChatHistories, getMessages };

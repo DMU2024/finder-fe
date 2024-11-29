@@ -1,5 +1,5 @@
 import { Depths } from "@fluentui/react";
-import { Card, Image, SkeletonItem, makeStyles, tokens } from "@fluentui/react-components";
+import { Card, Image, makeStyles, SkeletonItem, tokens } from "@fluentui/react-components";
 import {
   ArchiveArrowBackRegular,
   ChatArrowBackRegular,
@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { LostFoundDetail, getLostFoundDetail } from "../apis/lostfound";
+import { getLostFoundDetail, LostFoundDetail } from "../apis/lostfound";
 import useMarkerRedirect from "../hooks/useMarkerRedirect";
 import { mainColor } from "../styles/color";
 import { mobileWidth, tabletWidth } from "../styles/size";
