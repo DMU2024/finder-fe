@@ -116,8 +116,14 @@ function LoginPage() {
   const scope = searchParams.get("scope");
 
   const kakaoLogin = () => {
-    const uri = getLoginURI() + (scope ? `&scope=${scope}` : "&prompt=login");
-    window.open(uri, "_self");
+    getLoginURI()
+      .then((res) => {
+        const uri = res + (scope ? `&scope=${scope}` : "&prompt=login");
+        window.open(uri, "_self");
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   useEffect(() => {

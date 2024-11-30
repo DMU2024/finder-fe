@@ -1,4 +1,4 @@
-import { Instance, KAKAO_AUTH, KAKAO_CALLBACK, KAKAO_CLIENTID } from "../utils/axios";
+import { Instance } from "../utils/axios";
 import { Marker } from "./marker";
 
 interface User {
@@ -57,13 +57,14 @@ const postRevokeKakaoScopes = async (userId: number, scopes: string[]) => {
   return data;
 };
 
-const getLoginURI = () => {
-  return (
-    `${KAKAO_AUTH}/oauth/authorize?` +
-    `client_id=${KAKAO_CLIENTID}` +
-    `&redirect_uri=${KAKAO_CALLBACK}` +
-    `&response_type=code`
-  );
+const getLoginURI = async () => {
+  const { data } = await Instance.get<string>("/api/auth/login", {
+    params: {
+      isDev: import.meta.env.MODE === "development"
+    }
+  });
+
+  return data;
 };
 
 const postLogin = async (code: string) => {
