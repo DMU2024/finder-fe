@@ -7,6 +7,7 @@ import { Marker } from "../../apis/marker";
 import useMainStore from "../../stores/main";
 import { mainColor } from "../../styles/color";
 import { mobileWidth } from "../../styles/size";
+import { unescapeHtml } from "../../utils/format";
 
 const useStyle = makeStyles({
   root: {
@@ -23,7 +24,13 @@ const useStyle = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     flex: 1,
-    gap: "8px"
+    gap: "8px",
+    minWidth: 0,
+    "&>*": {
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis"
+    }
   },
   itemName: {
     fontSize: "18px",
@@ -125,7 +132,7 @@ function Item({
           />
           <div className={styles.itemBox}>
             <div className={styles.itemDescription}>{category}</div>
-            <div className={styles.itemName}>{name}</div>
+            <div className={styles.itemName}>{unescapeHtml(name)}</div>
             <div className={styles.itemDescription02}>{address}</div>
           </div>
           {renderBookmark()}

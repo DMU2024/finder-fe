@@ -125,7 +125,7 @@ function ChatPage() {
             }
           })
           .finally(() => {
-            window.history.replaceState({}, document.title);
+            location.state = null;
           });
       }
     }

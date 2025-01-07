@@ -12,6 +12,7 @@ import { getLostFoundDetail, LostFoundDetail } from "../apis/lostfound";
 import useMarkerRedirect from "../hooks/useMarkerRedirect";
 import { mainColor } from "../styles/color";
 import { mobileWidth, tabletWidth } from "../styles/size";
+import { unescapeHtml } from "../utils/format";
 
 const useStyles = makeStyles({
   root: {
@@ -100,6 +101,12 @@ const useStyles = makeStyles({
       marginRight: "20px",
       marginBottom: "12px",
       gap: "20px"
+    },
+    minWidth: 0,
+    "&>*": {
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis"
     }
   },
   contentTopMain: {
@@ -121,13 +128,9 @@ const useStyles = makeStyles({
     fontSize: "20px",
     lineHeight: "20px",
     color: mainColor,
-    [`@media (max-width: ${tabletWidth})`]: {
-      fontSize: "20px",
-      fontWeight: "bold"
-    },
     [`@media (max-width: ${mobileWidth})`]: {
       fontSize: "14px",
-      lineHeight: "0px"
+      lineHeight: "14px"
     }
   },
   contentTopInfo: {
@@ -276,7 +279,7 @@ function DetailPage() {
           </a>
         </div>
         <div className={styles.contentBottom}>
-          <div className={styles.contentBottomDetail}>{item?.uniq}</div>
+          <div className={styles.contentBottomDetail}>{item && unescapeHtml(item.uniq)}</div>
         </div>
       </Card>
     </div>

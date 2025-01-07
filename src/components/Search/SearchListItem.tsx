@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { LostFound } from "../../apis/lostfound";
 import { mainColor, secondaryColor } from "../../styles/color";
 import { tabletWidth } from "../../styles/size";
+import { unescapeHtml } from "../../utils/format";
 
 const useStyles = makeStyles({
   tableRow: {
@@ -84,7 +85,9 @@ function SearchListItem({ item }: Props) {
       </TableCell>
       <TableCell className={styles.tableCell}>
         <TableCellLayout media={<span className={styles.categoryTitle}>{item.prdtClNm}</span>} />
-        <TableCellLayout media={<span className={styles.title}>{item.fdPrdtNm}</span>} />
+        <TableCellLayout
+          media={<span className={styles.title}>{unescapeHtml(item.fdPrdtNm)}</span>}
+        />
         <TableCellLayout media={<span className={styles.subTitle}>{item.depPlace}</span>} />
         <TableCellLayout media={<span className={styles.subTitle}>{item.fdYmd}</span>} />
       </TableCell>

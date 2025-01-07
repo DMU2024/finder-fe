@@ -29,7 +29,13 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     marginLeft: "10px",
-    gap: "4px"
+    gap: "4px",
+    minWidth: 0,
+    "&>*": {
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis"
+    }
   },
   historyName: { fontWeight: "bold", color: skeletonColor },
   historyMsg: { fontWeight: "bold", color: backgroundColor },
