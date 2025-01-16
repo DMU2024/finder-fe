@@ -1,10 +1,4 @@
-import {
-  createDarkTheme,
-  createLightTheme,
-  FluentProvider,
-  makeStyles,
-  tokens
-} from "@fluentui/react-components";
+import { FluentProvider, makeStyles, tokens } from "@fluentui/react-components";
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -21,9 +15,9 @@ import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import WritePage from "./pages/WritePage";
 import useOptionStore from "./stores/option";
-import { brandColor } from "./styles/color";
 import { contentMargin, headerHeight, headerMobileHeight } from "./styles/margin";
 import { mobileWidth, sideBarWidth, tabletWidth } from "./styles/size";
+import { darkTheme, lightTheme } from "./themes";
 
 const useStyles = makeStyles({
   root: {
@@ -63,9 +57,6 @@ const useStyles = makeStyles({
     }
   }
 });
-
-const lightTheme = createLightTheme(brandColor);
-const darkTheme = createDarkTheme(brandColor);
 
 function App() {
   const styles = useStyles();
