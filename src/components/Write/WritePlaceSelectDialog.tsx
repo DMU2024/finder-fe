@@ -17,10 +17,10 @@ import { DismissRegular } from "@fluentui/react-icons";
 import { useEffect, useState } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 
-import { getCoord2Address } from "../../apis/kakaoMap";
-import usePositionStore from "../../stores/position";
-import useWriteStore from "../../stores/write";
-import { mainColor } from "../../styles/color";
+import { getCoord2Address } from "@/apis/kakaoMap";
+import usePositionStore from "@/stores/position";
+import useWriteStore from "@/stores/write";
+import { mainColor } from "@/styles/color";
 
 interface Props {
   title: string;

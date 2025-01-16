@@ -5,15 +5,15 @@ import { useEffect, useRef } from "react";
 import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 import { useLocation } from "react-router-dom";
 
-import { getCoord2Address } from "../../apis/kakaoMap";
-import { getMarkerByCoords } from "../../apis/marker";
-import useGlobalStore from "../../stores/global";
-import useMainStore from "../../stores/main";
-import usePositionStore from "../../stores/position";
-import { mainColor } from "../../styles/color";
-import { contentMargin, headerHeight, headerMobileHeight } from "../../styles/margin";
-import { mobileWidth, tabletWidth } from "../../styles/size";
-import KakaoMapPopup from "./KakaoMapPopup";
+import { getCoord2Address } from "@/apis/kakaoMap";
+import { getMarkerByCoords } from "@/apis/marker";
+import KakaoMapPopup from "@/components/Main/KakaoMapPopup";
+import useGlobalStore from "@/stores/global";
+import useMainStore from "@/stores/main";
+import usePositionStore from "@/stores/position";
+import { mainColor } from "@/styles/color";
+import { contentMargin, headerHeight, headerMobileHeight } from "@/styles/margin";
+import { mobileWidth, tabletWidth } from "@/styles/size";
 
 const useStyle = makeStyles({
   root: {

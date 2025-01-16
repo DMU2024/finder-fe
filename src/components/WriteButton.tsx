@@ -3,8 +3,8 @@ import { Button, makeStyles } from "@fluentui/react-components";
 import { EditRegular } from "@fluentui/react-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { mainColor } from "../styles/color";
-import { sideBarWidth, tabletWidth } from "../styles/size";
+import { mainColor } from "@/styles/color";
+import { sideBarWidth, tabletWidth } from "@/styles/size";
 
 const useStyle = makeStyles({
   writeButton: {

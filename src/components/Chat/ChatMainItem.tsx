@@ -1,7 +1,7 @@
 import { makeStyles, mergeClasses, tokens } from "@fluentui/react-components";
 
-import { mainColor } from "../../styles/color";
-import { tabletWidth } from "../../styles/size";
+import { mainColor } from "@/styles/color";
+import { tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

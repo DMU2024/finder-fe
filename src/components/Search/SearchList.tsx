@@ -1,11 +1,11 @@
 import { makeStyles, Spinner, Table, TableBody, tokens } from "@fluentui/react-components";
 import { useEffect, useRef } from "react";
 
-import useDebounce from "../../hooks/useDebounce";
-import useIntersect from "../../hooks/useIntersect";
-import useSearchStore from "../../stores/search";
-import { tabletWidth } from "../../styles/size";
-import SearchListItem from "./SearchListItem";
+import SearchListItem from "@/components/Search/SearchListItem";
+import useDebounce from "@/hooks/useDebounce";
+import useIntersect from "@/hooks/useIntersect";
+import useSearchStore from "@/stores/search";
+import { tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

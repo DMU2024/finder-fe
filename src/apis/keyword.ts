@@ -1,4 +1,4 @@
-import { Instance } from "../utils/axios";
+import { Instance } from "@/utils/axios";
 
 interface Keyword {
   id: number;

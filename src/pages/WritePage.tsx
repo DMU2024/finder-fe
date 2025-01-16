@@ -1,7 +1,7 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 
-import WriteLostGoodsForm from "../components/Write/WriteLostGoodsForm";
-import { mobileWidth, tabletWidth } from "../styles/size";
+import WriteLostGoodsForm from "@/components/Write/WriteLostGoodsForm";
+import { mobileWidth, tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

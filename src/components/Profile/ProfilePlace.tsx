@@ -1,9 +1,9 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 import { GlobeLocationRegular } from "@fluentui/react-icons";
 
-import useGlobalStore from "../../stores/global";
-import { tabletWidth } from "../../styles/size";
-import ProfilePlaceListItem from "./ProfilePlaceListItem";
+import ProfilePlaceListItem from "@/components/Profile/ProfilePlaceListItem";
+import useGlobalStore from "@/stores/global";
+import { tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

@@ -1,8 +1,8 @@
 import { Image, makeStyles, tokens } from "@fluentui/react-components";
 
-import { BookMark } from "../../apis/bookmark";
-import useMarkerRedirect from "../../hooks/useMarkerRedirect";
-import { tabletWidth } from "../../styles/size";
+import { BookMark } from "@/apis/bookmark";
+import useMarkerRedirect from "@/hooks/useMarkerRedirect";
+import { tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

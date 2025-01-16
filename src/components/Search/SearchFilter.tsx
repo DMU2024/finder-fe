@@ -2,11 +2,11 @@ import { Card, makeStyles, tokens } from "@fluentui/react-components";
 import { DatePicker } from "@fluentui/react-datepicker-compat";
 import { DismissRegular } from "@fluentui/react-icons";
 
-import useSearchStore from "../../stores/search";
-import { mobileWidth, tabletWidth } from "../../styles/size";
-import { formatDate } from "../../utils/format";
-import SearchFilterDialog from "./SearchFilterDialog";
-import { localizedStrings } from "./SearchFilterOption";
+import SearchFilterDialog from "@/components/Search/SearchFilterDialog";
+import { localizedStrings } from "@/components/Search/SearchFilterOption";
+import useSearchStore from "@/stores/search";
+import { mobileWidth, tabletWidth } from "@/styles/size";
+import { formatDate } from "@/utils/format";
 
 const useStyles = makeStyles({
   root: {

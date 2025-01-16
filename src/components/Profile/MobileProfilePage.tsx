@@ -1,12 +1,12 @@
 import { makeStyles } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 
-import { getKeywords, Keyword } from "../../apis/keyword";
-import useAuthStore from "../../stores/auth";
-import { mainColor } from "../../styles/color";
-import ProfileLostGoods from "./LostGoods/ProfileLostGoods";
-import ProfileKeyword from "./ProfileKeyword";
-import ProfilePlace from "./ProfilePlace";
+import { getKeywords, Keyword } from "@/apis/keyword";
+import ProfileLostGoods from "@/components/Profile/LostGoods/ProfileLostGoods";
+import ProfileKeyword from "@/components/Profile/ProfileKeyword";
+import ProfilePlace from "@/components/Profile/ProfilePlace";
+import useAuthStore from "@/stores/auth";
+import { mainColor } from "@/styles/color";
 
 const useStyles = makeStyles({
   root: {

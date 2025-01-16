@@ -1,6 +1,6 @@
 import { createDarkTheme, createLightTheme } from "@fluentui/react-components";
 
-import { mainColor } from "./styles/color";
+import { mainColor } from "@/styles/color";
 
 const brandColor = {
   0: mainColor,

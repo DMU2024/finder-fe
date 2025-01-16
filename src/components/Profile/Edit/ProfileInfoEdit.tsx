@@ -11,7 +11,7 @@ import {
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { mainColor, skeletonColor } from "../../../styles/color";
+import { mainColor, skeletonColor } from "@/styles/color";
 
 const useStyles = makeStyles({
   root: {

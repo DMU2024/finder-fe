@@ -2,10 +2,10 @@ import { Image, TableCell, TableCellLayout, TableRow, tokens } from "@fluentui/r
 import { makeStyles } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
 
-import { LostFound } from "../../apis/lostfound";
-import { mainColor, secondaryColor } from "../../styles/color";
-import { tabletWidth } from "../../styles/size";
-import { unescapeHtml } from "../../utils/format";
+import { LostFound } from "@/apis/lostfound";
+import { mainColor, secondaryColor } from "@/styles/color";
+import { tabletWidth } from "@/styles/size";
+import { unescapeHtml } from "@/utils/format";
 
 const useStyles = makeStyles({
   tableRow: {

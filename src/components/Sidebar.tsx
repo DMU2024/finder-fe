@@ -3,7 +3,7 @@ import { ChatRegular, HomeRegular, PersonInfoRegular, SearchRegular } from "@flu
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { sideBarWidth, tabletWidth } from "../styles/size";
+import { sideBarWidth, tabletWidth } from "@/styles/size";
 
 const useStyle = makeStyles({
   root: {

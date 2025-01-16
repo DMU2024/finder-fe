@@ -1,18 +1,18 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 
-import { BookMark, getBookMark } from "../apis/bookmark";
-import { getKakaoScopes, getUser, User } from "../apis/user";
-import ProfileDetailEdit from "../components/Profile/Edit/ProfileDetailEdit";
-import ProfileLostGoods from "../components/Profile/LostGoods/ProfileLostGoods";
-import MobileProfilePage from "../components/Profile/MobileProfilePage";
-import ProfileHeader from "../components/Profile/ProfileHeader";
-import ProfileKeyword from "../components/Profile/ProfileKeyword";
-import ProfilePlace from "../components/Profile/ProfilePlace";
-import useAuthStore from "../stores/auth";
-import useGlobalStore from "../stores/global";
-import { headerMobileHeight } from "../styles/margin";
-import { tabletWidth } from "../styles/size";
+import { BookMark, getBookMark } from "@/apis/bookmark";
+import { getKakaoScopes, getUser, User } from "@/apis/user";
+import ProfileDetailEdit from "@/components/Profile/Edit/ProfileDetailEdit";
+import ProfileLostGoods from "@/components/Profile/LostGoods/ProfileLostGoods";
+import MobileProfilePage from "@/components/Profile/MobileProfilePage";
+import ProfileHeader from "@/components/Profile/ProfileHeader";
+import ProfileKeyword from "@/components/Profile/ProfileKeyword";
+import ProfilePlace from "@/components/Profile/ProfilePlace";
+import useAuthStore from "@/stores/auth";
+import useGlobalStore from "@/stores/global";
+import { headerMobileHeight } from "@/styles/margin";
+import { tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

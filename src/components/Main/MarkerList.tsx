@@ -2,12 +2,12 @@ import { Depths } from "@fluentui/react";
 import { Card, makeStyles } from "@fluentui/react-components";
 import { BookExclamationMarkRegular } from "@fluentui/react-icons";
 
-import useGlobalStore from "../../stores/global";
-import useMainStore from "../../stores/main";
-import { mainColor } from "../../styles/color";
-import { contentMargin, headerHeight } from "../../styles/margin";
-import { mobileWidth, tabletWidth } from "../../styles/size";
-import Item from "./Item";
+import Item from "@/components/Main/Item";
+import useGlobalStore from "@/stores/global";
+import useMainStore from "@/stores/main";
+import { mainColor } from "@/styles/color";
+import { contentMargin, headerHeight } from "@/styles/margin";
+import { mobileWidth, tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

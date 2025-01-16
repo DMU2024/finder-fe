@@ -3,13 +3,13 @@ import { TableCell, TableRow } from "@fluentui/react-table";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Marker } from "../../../apis/marker";
-import { getUserLostGoods } from "../../../apis/user";
-import useAuthStore from "../../../stores/auth";
-import useMainStore from "../../../stores/main";
-import usePositionStore from "../../../stores/position";
-import { mainColor, secondaryColor, skeletonColor } from "../../../styles/color";
-import { tabletWidth } from "../../../styles/size";
+import { Marker } from "@/apis/marker";
+import { getUserLostGoods } from "@/apis/user";
+import useAuthStore from "@/stores/auth";
+import useMainStore from "@/stores/main";
+import usePositionStore from "@/stores/position";
+import { mainColor, secondaryColor, skeletonColor } from "@/styles/color";
+import { tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

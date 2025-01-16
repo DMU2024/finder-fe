@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { BookMark } from "../apis/bookmark";
+import { BookMark } from "@/apis/bookmark";
 
 interface Global {
   bookmarkMap: Map<string, BookMark>;

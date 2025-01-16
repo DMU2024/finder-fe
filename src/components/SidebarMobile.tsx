@@ -2,11 +2,11 @@ import { Image, makeStyles, Tab, TabList, tokens } from "@fluentui/react-compone
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { getUser, postLogout, User } from "../apis/user";
-import useAuthStore from "../stores/auth";
-import useOptionStore from "../stores/option";
-import { mainColor } from "../styles/color";
-import { tabletWidth02 } from "../styles/size";
+import { getUser, postLogout, User } from "@/apis/user";
+import useAuthStore from "@/stores/auth";
+import useOptionStore from "@/stores/option";
+import { mainColor } from "@/styles/color";
+import { tabletWidth02 } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

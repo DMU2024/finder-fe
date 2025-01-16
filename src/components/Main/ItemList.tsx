@@ -5,14 +5,14 @@ import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { placeLostFound } from "../../apis/lostfound";
-import useIntersect from "../../hooks/useIntersect";
-import useAuthStore from "../../stores/auth";
-import useMainStore from "../../stores/main";
-import { mainColor } from "../../styles/color";
-import { contentMargin, headerHeight } from "../../styles/margin";
-import { mobileWidth, tabletWidth } from "../../styles/size";
-import Item from "./Item";
+import { placeLostFound } from "@/apis/lostfound";
+import Item from "@/components/Main/Item";
+import useIntersect from "@/hooks/useIntersect";
+import useAuthStore from "@/stores/auth";
+import useMainStore from "@/stores/main";
+import { mainColor } from "@/styles/color";
+import { contentMargin, headerHeight } from "@/styles/margin";
+import { mobileWidth, tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

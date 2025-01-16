@@ -4,11 +4,11 @@ import { StarFilled, StarRegular } from "@fluentui/react-icons";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import { useNavigate } from "react-router-dom";
 
-import useMainStore from "../../stores/main";
-import usePositionStore from "../../stores/position";
-import useWriteStore from "../../stores/write";
-import { mainColor } from "../../styles/color";
-import { mobileWidth } from "../../styles/size";
+import useMainStore from "@/stores/main";
+import usePositionStore from "@/stores/position";
+import useWriteStore from "@/stores/write";
+import { mainColor } from "@/styles/color";
+import { mobileWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   popup: {

@@ -1,5 +1,5 @@
-import { Instance } from "../utils/axios";
-import { formatDate } from "../utils/format";
+import { Instance } from "@/utils/axios";
+import { formatDate } from "@/utils/format";
 
 interface LostFound {
   _id: string;

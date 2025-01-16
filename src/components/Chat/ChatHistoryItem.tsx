@@ -1,8 +1,8 @@
 import { Image, makeStyles, tokens } from "@fluentui/react-components";
 
-import { ChatHistory } from "../../apis/chat";
-import { getUser, User } from "../../apis/user";
-import { backgroundColor, secondaryColor, skeletonColor } from "../../styles/color";
+import { ChatHistory } from "@/apis/chat";
+import { getUser, User } from "@/apis/user";
+import { backgroundColor, secondaryColor, skeletonColor } from "@/styles/color";
 
 const useStyles = makeStyles({
   root: {

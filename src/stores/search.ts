@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { LostFound, LostFoundQuery } from "../apis/lostfound";
+import { LostFound, LostFoundQuery } from "@/apis/lostfound";
 
 interface Search {
   query: LostFoundQuery | undefined;

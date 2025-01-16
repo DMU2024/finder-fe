@@ -8,11 +8,11 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { getLostFoundDetail, LostFoundDetail } from "../apis/lostfound";
-import useMarkerRedirect from "../hooks/useMarkerRedirect";
-import { mainColor } from "../styles/color";
-import { mobileWidth, tabletWidth } from "../styles/size";
-import { unescapeHtml } from "../utils/format";
+import { getLostFoundDetail, LostFoundDetail } from "@/apis/lostfound";
+import useMarkerRedirect from "@/hooks/useMarkerRedirect";
+import { mainColor } from "@/styles/color";
+import { mobileWidth, tabletWidth } from "@/styles/size";
+import { unescapeHtml } from "@/utils/format";
 
 const useStyles = makeStyles({
   root: {

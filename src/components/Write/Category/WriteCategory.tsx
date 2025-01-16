@@ -3,10 +3,14 @@ import { makeStyles } from "@fluentui/react-components";
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 
-import useWriteStore from "../../../stores/write";
-import { mainColor, skeletonColor } from "../../../styles/color";
-import { mobileWidth } from "../../../styles/size";
-import { categories, CategoryData, Subcategory } from "./WriteCategoryData";
+import {
+  categories,
+  CategoryData,
+  Subcategory
+} from "@/components/Write/Category/WriteCategoryData";
+import useWriteStore from "@/stores/write";
+import { mainColor, skeletonColor } from "@/styles/color";
+import { mobileWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   title: {

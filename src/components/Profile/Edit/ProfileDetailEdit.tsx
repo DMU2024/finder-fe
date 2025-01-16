@@ -3,10 +3,10 @@ import { Switch } from "@fluentui/react-components";
 import { useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 
-import { postRevokeKakaoScopes, postUnlink, postUserSetting } from "../../../apis/user";
-import useAuthStore from "../../../stores/auth";
-import { skeletonColor } from "../../../styles/color";
-import { tabletWidth } from "../../../styles/size";
+import { postRevokeKakaoScopes, postUnlink, postUserSetting } from "@/apis/user";
+import useAuthStore from "@/stores/auth";
+import { skeletonColor } from "@/styles/color";
+import { tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

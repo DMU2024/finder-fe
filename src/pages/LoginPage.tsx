@@ -2,11 +2,11 @@ import { makeStyles, tokens } from "@fluentui/react-components";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { getLoginURI, postLogin } from "../apis/user";
-import useAuthStore from "../stores/auth";
-import { mainColor } from "../styles/color";
-import { headerHeight, headerMobileHeight } from "../styles/margin";
-import { mobileWidth } from "../styles/size";
+import { getLoginURI, postLogin } from "@/apis/user";
+import useAuthStore from "@/stores/auth";
+import { mainColor } from "@/styles/color";
+import { headerHeight, headerMobileHeight } from "@/styles/margin";
+import { mobileWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

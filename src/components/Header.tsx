@@ -9,18 +9,18 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { postLogout } from "../apis/user";
-import useAuthStore from "../stores/auth";
-import useOptionStore from "../stores/option";
-import { backgroundColor, mainColor } from "../styles/color";
+import { postLogout } from "@/apis/user";
+import SidebarMobile from "@/components/SidebarMobile";
+import useAuthStore from "@/stores/auth";
+import useOptionStore from "@/stores/option";
+import { backgroundColor, mainColor } from "@/styles/color";
 import {
   contentMargin,
   contentMobileMargin,
   headerHeight,
   headerMobileHeight
-} from "../styles/margin";
-import { mobileWidth, sideBarWidth, tabletWidth, tabletWidth02 } from "../styles/size";
-import SidebarMobile from "./SidebarMobile";
+} from "@/styles/margin";
+import { mobileWidth, sideBarWidth, tabletWidth, tabletWidth02 } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

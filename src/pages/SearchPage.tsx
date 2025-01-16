@@ -2,17 +2,17 @@ import { makeStyles } from "@fluentui/react-components";
 import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 
-import { searchLostFound } from "../apis/lostfound";
-import SearchForm from "../components/Search/SearchForm";
-import SearchList from "../components/Search/SearchList";
-import useSearchStore from "../stores/search";
+import { searchLostFound } from "@/apis/lostfound";
+import SearchForm from "@/components/Search/SearchForm";
+import SearchList from "@/components/Search/SearchList";
+import useSearchStore from "@/stores/search";
 import {
   contentMargin,
   contentMobileMargin,
   headerHeight,
   headerMobileHeight
-} from "../styles/margin";
-import { mobileWidth, tabletWidth } from "../styles/size";
+} from "@/styles/margin";
+import { mobileWidth, tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

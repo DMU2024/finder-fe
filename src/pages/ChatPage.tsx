@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import useWebSocket from "react-use-websocket";
 
-import { Chat, ChatHistory, createChatRoom, getChatHistories, getMessages } from "../apis/chat";
-import { getUser, User } from "../apis/user";
-import ChatHistoryList from "../components/Chat/ChatHistoryList";
-import ChatMain from "../components/Chat/ChatMain";
-import useAuthStore from "../stores/auth";
-import { headerHeight } from "../styles/margin";
-import { tabletWidth } from "../styles/size";
-import { BASE_URL } from "../utils/axios";
+import { Chat, ChatHistory, createChatRoom, getChatHistories, getMessages } from "@/apis/chat";
+import { getUser, User } from "@/apis/user";
+import ChatHistoryList from "@/components/Chat/ChatHistoryList";
+import ChatMain from "@/components/Chat/ChatMain";
+import useAuthStore from "@/stores/auth";
+import { headerHeight } from "@/styles/margin";
+import { tabletWidth } from "@/styles/size";
+import { BASE_URL } from "@/utils/axios";
 
 const useStyles = makeStyles({
   root: {

@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import useMainStore from "../stores/main";
-import usePositionStore from "../stores/position";
+import useMainStore from "@/stores/main";
+import usePositionStore from "@/stores/position";
 
 const useMarkerRedirect = () => {
   const navigate = useNavigate();

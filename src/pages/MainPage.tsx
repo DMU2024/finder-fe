@@ -2,17 +2,17 @@ import { makeStyles } from "@fluentui/react-components";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { BookMark, deleteBookMark, getBookMark, postBookMark } from "../apis/bookmark";
-import { getCoord2RegionCode } from "../apis/kakaoMap";
-import ItemList from "../components/Main/ItemList";
-import ItemModal from "../components/Main/ItemModal";
-import KakaoMap from "../components/Main/KakaoMap";
-import MarkerList from "../components/Main/MarkerList";
-import useAuthStore from "../stores/auth";
-import useGlobalStore from "../stores/global";
-import useMainStore from "../stores/main";
-import usePositionStore from "../stores/position";
-import { mobileWidth, tabletWidth } from "../styles/size";
+import { BookMark, deleteBookMark, getBookMark, postBookMark } from "@/apis/bookmark";
+import { getCoord2RegionCode } from "@/apis/kakaoMap";
+import ItemList from "@/components/Main/ItemList";
+import ItemModal from "@/components/Main/ItemModal";
+import KakaoMap from "@/components/Main/KakaoMap";
+import MarkerList from "@/components/Main/MarkerList";
+import useAuthStore from "@/stores/auth";
+import useGlobalStore from "@/stores/global";
+import useMainStore from "@/stores/main";
+import usePositionStore from "@/stores/position";
+import { mobileWidth, tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
-import { LostFound } from "../apis/lostfound";
-import { Marker } from "../apis/marker";
+import { LostFound } from "@/apis/lostfound";
+import { Marker } from "@/apis/marker";
 
 interface Main {
   markerList: Marker[];

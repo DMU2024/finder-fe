@@ -1,4 +1,4 @@
-import { Instance } from "../utils/axios";
+import { Instance } from "@/utils/axios";
 
 interface Marker {
   _id: string;

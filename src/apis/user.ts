@@ -1,5 +1,5 @@
-import { Instance } from "../utils/axios";
-import { Marker } from "./marker";
+import { Marker } from "@/apis/marker";
+import { Instance } from "@/utils/axios";
 
 interface User {
   userId: number;

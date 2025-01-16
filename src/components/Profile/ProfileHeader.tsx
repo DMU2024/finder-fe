@@ -8,9 +8,9 @@ import {
   tokens
 } from "@fluentui/react-components";
 
-import { User } from "../../apis/user";
-import { mainColor } from "../../styles/color";
-import { tabletWidth } from "../../styles/size";
+import { User } from "@/apis/user";
+import { mainColor } from "@/styles/color";
+import { tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

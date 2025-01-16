@@ -1,10 +1,10 @@
 import { makeStyles, tokens } from "@fluentui/react-components";
 import React, { useEffect, useState } from "react";
 
-import { deleteKeyword, getKeywords, Keyword, postKeyword } from "../../apis/keyword";
-import useAuthStore from "../../stores/auth";
-import { mainColor, skeletonColor } from "../../styles/color";
-import { tabletWidth } from "../../styles/size";
+import { deleteKeyword, getKeywords, Keyword, postKeyword } from "@/apis/keyword";
+import useAuthStore from "@/stores/auth";
+import { mainColor, skeletonColor } from "@/styles/color";
+import { tabletWidth } from "@/styles/size";
 
 const useStyles = makeStyles({
   root: {

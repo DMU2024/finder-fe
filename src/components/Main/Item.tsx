@@ -2,12 +2,12 @@ import { Divider, Image, makeStyles, tokens } from "@fluentui/react-components";
 import { Star32Filled, Star32Regular } from "@fluentui/react-icons";
 import { useNavigate } from "react-router-dom";
 
-import { LostFound } from "../../apis/lostfound";
-import { Marker } from "../../apis/marker";
-import useMainStore from "../../stores/main";
-import { mainColor } from "../../styles/color";
-import { mobileWidth } from "../../styles/size";
-import { unescapeHtml } from "../../utils/format";
+import { LostFound } from "@/apis/lostfound";
+import { Marker } from "@/apis/marker";
+import useMainStore from "@/stores/main";
+import { mainColor } from "@/styles/color";
+import { mobileWidth } from "@/styles/size";
+import { unescapeHtml } from "@/utils/format";
 
 const useStyle = makeStyles({
   root: {

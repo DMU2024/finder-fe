@@ -16,8 +16,8 @@ import {
 import { DismissRegular } from "@fluentui/react-icons";
 import { Fragment, useState } from "react";
 
-import useSearchStore from "../../stores/search";
-import { categoryOption, colorOption } from "./SearchFilterOption";
+import { categoryOption, colorOption } from "@/components/Search/SearchFilterOption";
+import useSearchStore from "@/stores/search";
 
 interface Props {
   title: string;
