@@ -9,7 +9,7 @@ interface Option {
 const useOptionStore = create(
   persist<Option>(
     (set) => ({
-      isDarkTheme: false,
+      isDarkTheme: matchMedia("(prefers-color-scheme: dark)").matches,
       setIsDarkTheme: (value) => set({ isDarkTheme: value })
     }),
     {
