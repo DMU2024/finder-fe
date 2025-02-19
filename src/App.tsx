@@ -10,6 +10,7 @@ import SidebarMobile from "@/components/SidebarMobile";
 import WriteButton from "@/components/WriteButton";
 import ChatPage from "@/pages/chat";
 import DetailPage from "@/pages/detail";
+import ErrorPage from "@/pages/error";
 import LoginPage from "@/pages/login";
 import MainPage from "@/pages/main";
 import ProfilePage from "@/pages/profile";
@@ -41,6 +42,7 @@ function App() {
                 <Route element={<ProtectedRoute element={<WritePage />} />} path="/write" />
                 <Route element={<ProtectedRoute element={<ChatPage />} />} path="/chat" />
                 <Route element={<ProtectedRoute element={<ProfilePage />} />} path="/profile" />
+                <Route element={<ErrorPage />} path="*" />
               </Routes>
             </div>
           </div>
